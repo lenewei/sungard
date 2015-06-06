@@ -5,9 +5,9 @@ var hawk = angular.module('hawk');
 
 hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform,$cordovaBarcodeScanner,$state) {
     $scope.user = {
-        firstName:"etet",
-        lastName:"222",
-        comments:"222"
+        firstName:"Steven",
+        lastName:"Xu",
+        comments:"This My Comments"
     };
 
     $scope.generateQRCode = function () {
