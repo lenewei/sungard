@@ -7,12 +7,11 @@ hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform
     $scope.user = {};
 
     $scope.generateQRCode = function () {
-        //var theQRString ="";
-        //angular.forEach($scope.user, function(value, key) {
-        //    theQRString =  theQRString.concat(key+":"+value+",");
-        //});
-        //$scope.QR = theQRString.slice(0,theQRString.lastIndexOf(","));
-        $scope.QR = "yeyeyey:yeyyey,"
+        var theQRString ="";
+        angular.forEach($scope.user, function(value, key) {
+            theQRString =  theQRString.concat(key+":"+value+",");
+        });
+        $scope.QR = theQRString.slice(0,theQRString.lastIndexOf(","));
     }
 
     $ionicModal.fromTemplateUrl('templates/QRCodeDialog.html', {
