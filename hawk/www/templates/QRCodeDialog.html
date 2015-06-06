@@ -1,0 +1,28 @@
+    <ion-modal-view>
+        <ion-header-bar>
+            <h1 class="title"><b>QR Code</b></h1>
+            <div class="buttons">
+                <button class="button  button-icon icon ion-ios-close-empty" ng-click="closeModal()"></button>
+            </div>
+        </ion-header-bar>
+        <!--<div class="bar bar-subheader">-->
+            <!--<h3 class="title">Please Scan The Code </h3>-->
+        <!--</div>-->
+        <ion-content>
+                <div class="list">
+                    <div class="item item-divider">
+                        Please Scan The QR Code to continue ....
+                    </div>
+                    <div class="item">
+                        <pre>{{QR}}</pre>
+                            <qrcode version="2" error-correction-level="M" size="200" data="{{QR}}"></qrcode>
+                    </div>
+                    <div class="item item-divider">
+                        Detail
+                    </div>
+                    <div class="item">
+                        test
+                    </div>
+                </div>
+        </ion-content>
+    </ion-modal-view>

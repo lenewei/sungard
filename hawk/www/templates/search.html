@@ -1,5 +1,24 @@
 <ion-view view-title="Search">
   <ion-content>
-    <h1>Search</h1>
+
+      <div class="list">
+          <label class="item item-input">
+              <input type="text" placeholder="First Name" ng-model="user.firstName">
+          </label>
+          <label class="item item-input">
+              <input type="text" placeholder="Last Name" ng-model="user.LastName">
+          </label>
+          <label class="item item-input">
+              <textarea placeholder="Comments" ng-model="user.comments"></textarea>
+          </label>
+
+          <div class="item">
+              <div class="button-bar">
+                  <button class="button icon-left ion-qr-scanner button-balanced" ng-click="scanBarcode()">Scann QR</button>
+                  <button class="button button-positive">Submit</button>
+                  <button class="button icon-right ion-share button-calm" ng-click="openModal()">Generate QR</button>
+              </div>
+          </div>
+      </div>
   </ion-content>
 </ion-view>

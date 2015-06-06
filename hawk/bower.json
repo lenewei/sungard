@@ -13,6 +13,7 @@
     "lodash": "~3.9.0",
     "ngstorage": "~0.3.0",
     "angular-jwt": "~0.0.7",
-    "angular-translate-loader-url": "~2.6.1"
+    "angular-translate-loader-url": "~2.6.1",
+    "angular-qrcode":"~5.1.0"
   }
 }
