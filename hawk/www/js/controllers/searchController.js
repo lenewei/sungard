@@ -3,7 +3,7 @@
  */
 var hawk = angular.module('hawk');
 
-hawk.controller('SearchController', function ($scope, $ionicModal,$cordovaBarcodeScanner) {
+hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform,$cordovaBarcodeScanner) {
     $scope.user = {};
 
     $scope.generateQRCode = function () {
