@@ -3,15 +3,15 @@
  */
 var hawk = angular.module('hawk');
 
-hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform,$cordovaBarcodeScanner) {
-    $scope.user = {};
+hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform,$cordovaBarcodeScanner,$state) {
+    $scope.user = {
+        firstName:"Steven",
+        lastName:"Xu",
+        comments:"This My Comments"
+    };
 
     $scope.generateQRCode = function () {
-        var theQRString ="";
-        angular.forEach($scope.user, function(value, key) {
-            theQRString =  theQRString.concat(key+":"+value+",");
-        });
-        $scope.QR = theQRString.slice(0,theQRString.lastIndexOf(","));
+        $scope.QR = angular.toJson($scope.user);
     }
 
     $ionicModal.fromTemplateUrl('templates/QRCodeDialog.html', {
@@ -46,7 +46,8 @@ hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform
                 .scan()
                 .then(function (barcodeData) {
                     // Success! Barcode data is here
-                    alert(barcodeData.text);
+                    //alert(barcodeData.text);
+                    $scope.user = angular.fromJson(barcodeData.text);
                     console.log("Barcode Format -> " + barcodeData.format);
                     console.log("Cancelled -> " + barcodeData.cancelled);
                 }, function (error) {
