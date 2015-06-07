@@ -10,7 +10,7 @@
 <meta name="build-details" data-number="0" data-built="" />
    
    
-   <title>Quantum - Logon</title>
+   <title>Quantum</title>
 
    
    
@@ -50,12 +50,174 @@
                <h1>Quantum</h1>
             </a>
             
-         </div>
+
+
+
+
+<script id="siteMenuTemplate" type="text/template">
+   <ul id="siteMenuDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+      
+         <li class="menu search"><input type="text" id="siteMenuSearch" placeholder="Search" /></li>
+         <li class="menu-panel">
+               <div id="menuContentdealing" class="category-dealing color color-green hide" data-area="Dealing">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Foreign Exchange</li><li  class="item"><a href="/dealing/fx" data-module="FXDEAL">FX</a></li><li  class="item"><a href="/dealing/fx-back-to-back" data-module="FXDEAL">FX Back-to-Back</a></li><li  class="item"><a href="/dealing/fx-swap" data-module="FXDEAL">FX Swap</a></li><li  class="item"><a href="/dealing/currency-option" data-module="CODEALS">Currency Option</a></li></ul><ul class="unstyled"><li class="nav-header">Money Market & Securities</li><li  class="item"><a href="/dealing/money-market" data-module="MMDEALS">Money Market</a></li><li  class="item"><a href="/dealing/repo" data-module="RADEALS">Repo</a></li><li  class="item"><a href="/dealing/security" data-module="SECDEALS">Securities</a></li></ul><ul class="unstyled"><li class="nav-header">Interest Rate Options</li><li  class="item"><a href="/dealing/interest-rate-option" data-module="IODEALS">Interest Rate Option</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Swaps</li><li  class="item"><a href="/dealing/cross-currency-swap" data-module="SWAPCCY">Cross Currency Swap</a></li><li  class="item"><a href="/dealing/interest-rate-swap" data-module="SWAPINT">Interest Rate Swap</a></li></ul><ul class="unstyled"><li class="nav-header">Forwards & Futures</li><li  class="item"><a href="/dealing/fra" data-module="FRADEALS">FRA</a></li><li  class="item"><a href="/dealing/futures" data-module="FUDEALS">Futures and ETOs</a></li><li  class="item"><a href="/dealing/initial-margin" data-module="IMDEALS">Initial Margin</a></li></ul><ul class="unstyled"><li class="nav-header">Equities</li><li  class="item"><a href="/dealing/unit" data-module="UNDEAL">Unit</a></li><li  class="item"><a href="/dealing/unit-holding" data-module="UNHDEAL">Unit Holding</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Other</li><li  class="item"><a href="/dealing/linked-deals" data-module="DEALSET">Deal Set</a></li><li  class="item"><a href="/fees/fee-schedule" data-module="FEESCHED">Fees</a></li><li  class="item"><a href="/dealing/fx-request" data-module="HDGREQS">FX Requests</a></li><li  class="item"><a href="/dealing/internal-swap" data-module="INTSWAP">Internal Swap</a></li><li  class="item"><a href="/dealing/letter-of-credit" data-module="LCDEALS">Letter of Credit</a></li><li  class="item"><a href="/dealing/quote" data-module="QUOTES">Quotes</a></li></ul></div>
+               </div>
+               <div id="menuContentreporting" class="category-reporting color color-yellow hide" data-area="Reporting">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Front Office</li><li  class="item"><a href="/reporting/cost-of-funds" data-module="COSTFENQ">Cost of Funds</a></li><li  class="item"><a href="/reporting/deal-revaluation" data-module="ANALYSE">Deal Revaluation</a></li><li  class="item"><a href="/reporting/limits" data-module="LMTENQ">Limits</a></li><li  class="item"><a href="/reporting/market-value-cost-of-funds" data-module="MVCOFENQ">Market Value Cost of Funds</a></li><li  class="item"><a href="/reporting/maturity-profile" data-module="MATPFENQ">Maturity Profile</a></li><li  class="item"><a href="/reporting/quotes" data-module="QUOTEENQ">Quotes</a></li><li  class="item"><a href="/reporting/transactions-by-action" data-module="TRNSACTN">Transactions by Action</a></li><li  class="item"><a href="/reporting/transactions-by-deal" data-module="TRNSDEAL">Transactions by Deal</a></li></ul><ul class="unstyled"><li class="nav-header">Back Office</li><li  class="item"><a href="/reporting/bank-account-statements" data-module="BNKACENQ">Bank Account Statements</a></li><li  class="item"><a href="/reporting/bank-interest-statements" data-module="BANKSTMT">Bank Interest Statements</a></li><li  class="item"><a href="/reporting/cash-flows" data-module="CFLOWENQ">Cash Flows</a></li><li  class="item"><a href="/reporting/deal-statements" data-module="STMTENQ">Deal Statements</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Accounting</li><li  class="item"><a href="/reporting/accruals" data-module="ACRLENQ">Accruals</a></li><li  class="item"><a href="/reporting/position" data-module="POSNENQ">Position</a></li><li  class="item"><a href="/reporting/futures-margin" data-module="MARGENQ">Futures Margin</a></li><li  class="item"><a href="/reporting/currency-revaluation" data-module="CCYRVENQ">Currency Translation</a></li><li  class="item"><a href="/reporting/general-ledger-balance-sheet" data-module="GLBALENQ">General Ledger Account Sets</a></li><li  class="item"><a href="/reporting/hedge-accounting" data-module="HRWBENCH">Hedge Accounting</a></li><li  class="item"><a href="/reporting/general-ledger-transactions" data-module="GLTNENQ">General Ledger Transactions</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">System</li><li  class="item"><a href="/reporting/audit" data-module="AUDENQ">Audit</a></li><li  class="item"><a href="/reporting/deal-audit" data-module="DEALENQ">Deal Audit</a></li><li  class="item"><a href="/reporting/deal-search" data-module="DEALFIND">Deal Search</a></li><li  class="item"><a href="/reporting/logons" data-module="LOGENQ">Logons</a></li><li  class="item"><a href="/reporting/message-log" data-module="MSGENQ">Message Log</a></li></ul><ul class="unstyled"><li class="nav-header">Other</li><li  class="item"><a href="/reporting/ad-hoc" data-module="ADHOCRPT">Ad Hoc Reporting</a></li></ul></div>
+               </div>
+               <div id="menuContentprocessing" class="category-processing color color-purple hide" data-area="Processing">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Deal Processing</li><li  class="item"><a href="/processing/currency-options-diary" data-module="CCYOPTN">Currency Options</a></li><li  class="item"><a href="/processing/extend-deals" data-module="BULKEXTD">Extend Deals</a></li><li  class="item"><a href="/processing/interest-rate-options-diary" data-module="IROPTN">Interest Rate Options</a></li><li  class="item"><a href="/processing/mature-deals" data-module="BULKMATR">Mature Deals</a></li><li  class="item"><a href="/processing/ndf-rate-fix" data-module="BULKNDFS">Rate Fix NDFs</a></li><li  class="item"><a href="/processing/rate-set-deals" data-module="BULKRSET">Rate Set Deals</a></li><li  class="item"><a href="/processing/roll-deals" data-module="BULKROLL">Roll Deals</a></li><li  class="item"><a href="/processing/update-index" data-module="INDXUPD">Update Index</a></li><li  class="item"><a href="/fees/fee-generator" data-module="FEEPROCR">Process Fees</a></li></ul><ul class="unstyled"><li class="nav-header">Weighted Average Closeout</li><li  class="item"><a href="/processing/weighted-average-closeout" data-module="WACOPROC">Processor</a></li><li  class="item"><a href="/processing/weighted-average-closeout-log" data-module="WACOLOG">Logs</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Back Office</li><li  class="item"><a href="/straightthroughprocessing/confirmations" data-module="CNFMATCH">Confirmations</a></li><li  class="item"><a href="/straightthroughprocessing/corporate-action-notification" data-module="CANOTIF">Corporate Action Notification</a></li><li  class="item"><a href="/straightthroughprocessing/diary" data-module="DIARY">Diary</a></li><li  class="item"><a href="/straightthroughprocessing/eft" data-module="EFT">EFTs</a></li><li  class="item"><a href="/straightthroughprocessing/settlement" data-module="SETTLE">Settlements</a></li></ul><ul class="unstyled"><li class="nav-header">Approval</li><li  class="item"><a href="/straightthroughprocessing/deal-approval" data-module="APPROVE">Deal</a></li><li  class="item"><a href="/straightthroughprocessing/settlement-approval" data-module="SETAPP">Settlement</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Bank Accounts</li><li  class="item"><a href="/processing/bank-interest-statements" data-module="BNKSTPRO">Account Interest</a></li><li  class="item"><a href="/processing/bank-account-statements" data-module="BNKACPRO">Account Statements</a></li></ul><ul class="unstyled"><li class="nav-header">Electronic Messages</li><li  class="item"><a href="/straightthroughprocessing/confirmation-messages" data-module="CNFMSGS">Confirmation</a></li><li  class="item"><a href="/straightthroughprocessing/echos-messages" data-module="ECHOMSGS">ECHOS</a></li><li  class="item"><a href="/straightthroughprocessing/eft-messages" data-module="EFTMSGS">EFT</a></li><li  class="item"><a href="/straightthroughprocessing/free-format-messages" data-module="FFMTN99">Free Format MTn99</a></li></ul></div>
+               </div>
+               <div id="menuContentcashmanagement" class="category-cashmanagement color color-orange hide" data-area="Cash Management">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Cash Management</li><li  class="item"><a href="/cashmanagement/cash-explorer" data-module="CASHMGMT">CashXplorer</a></li></ul><ul class="unstyled"><li class="nav-header">Flows</li><li  class="item"><a href="/banking/account-adjustment" data-module="BAADJ">Account Adjustment</a></li><li  class="item"><a href="/dealing/actual-cash-flow" data-module="CFLOACT">Actual Cash Flow</a></li><li  class="item"><a href="/banking/cash-transfer" data-module="BAXFER">Cash Transfer</a></li><li  class="item"><a href="/dealing/forecast-cash-flows" data-module="CASHFORE">Cash Forecast</a></li><li  class="item"><a href="/banking/interest-adjustment" data-module="INTADJ">Interest Adjustment</a></li><li  class="item"><a href="/dealing/projected-cash-flow" data-module="CFLOPROJ">Projected Cash Flow</a></li><li  class="item"><a href="/banking/stock-transfer" data-module="SAXFER">Stock Transfer</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Bank Import</li><li  class="item"><a href="/banking/bank-statement" data-module="BKRBKSTM">Bank Statement</a></li><li  class="item"><a href="/banking/import-balances" data-module="IMPTBAL">Import Balances</a></li></ul><ul class="unstyled"><li class="nav-header">Bank Reconciliation</li><li  class="item"><a href="/banking/prior-day-match" data-module="BKRPDMTH">Prior Day Match</a></li><li  class="item"><a href="/banking/intraday-match" data-module="BKRIDMTH">Intraday Match</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Auto Match Setup</li><li  class="item"><a href="/banking/detail-match-script" data-module="BKRDMS">Detail Match Script</a></li><li  class="item"><a href="/banking/intraday-match-script" data-module="BKRIMS">Intraday Match Script</a></li><li  class="item"><a href="/banking/balance-match-script" data-module="BKRBMS">Balance Match Script</a></li><li  class="item"><a href="/banking/chain-match-script" data-module="BKRSCHN">Script Chain</a></li></ul></div>
+               </div>
+               <div id="menuContentaccounting" class="category-accounting color color-purple hide" data-area="Accounting">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Update G/L</li><li  class="item"><a href="/processing/accruals" data-module="ACRLPRO">Accruals</a></li><li  class="item"><a href="/processing/position" data-module="POSNPRO">Position</a></li><li  class="item"><a href="/processing/futures-margin" data-module="MARGPRO">Futures Margin</a></li><li  class="item"><a href="/processing/currency-revaluation" data-module="CCYRVPRO">Currency Translation</a></li><li  class="item"><a href="/accounting/general-ledger-journal" data-module="GLADJ">General Ledger Journal</a></li></ul><ul class="unstyled"><li class="nav-header">General Ledger</li><li  class="item"><a href="/accounting/general-ledger-close" data-module="GLCLOSE">G/L Close</a></li><li  class="item"><a href="/processing/end-of-year-posting" data-module="GLEOY">G/L Year End</a></li><li  class="item"><a href="/utility/general-ledger-interface" data-module="GLIFACE">G/L Interface</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Hedge Relationships</li><li  class="item"><a href="/accounting/hedge-relationship" data-module="HRDEALS">Hedge Relationship</a></li><li  class="item"><a href="/accounting/hedge-strategy" data-module="HRTYPE">Hedge Strategy</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Exception</li><li  class="item"><a href="/accounting/set-base-currency-amounts" data-module="GLSETBAL">Set Base Currency Amount</a></li><li  class="item"><a href="/processing/assign-exchange-rate" data-module="ASEXENQ">Assign Exchange Rate</a></li><li  class="item"><a href="/processing/override-fx-rate-type" data-module="OVRDFXRT">Override FX Rate Type</a></li></ul></div>
+               </div>
+               <div id="menuContentinstruments" class="category-instruments color color-teal hide" data-area="Instruments">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Foreign Exchange</li><li  class="item"><a href="/instruments/fx" data-module="FXTYPE">FX</a></li><li  class="item"><a href="/instruments/currency-option" data-module="COTYPE">Currency Option</a></li></ul><ul class="unstyled"><li class="nav-header">Money Market & Securities</li><li  class="item"><a href="/instruments/money-market" data-module="MMTYPE">Money Market</a></li><li  class="item"><a href="/instruments/repo" data-module="RATYPE">Repo</a></li><li  class="item"><a href="/instruments/security" data-module="SECTYPE">Securities</a></li></ul><ul class="unstyled"><li class="nav-header">Interest Rate Options</li><li  class="item"><a href="/instruments/interest-rate-option" data-module="IOTYPE">Interest Rate Option</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Swaps</li><li  class="item"><a href="/instruments/cross-currency-swap" data-module="SWPINCCY">Cross Currency Swap</a></li><li  class="item"><a href="/instruments/interest-rate-swap" data-module="SWPININT">Interest Rate Swap</a></li></ul><ul class="unstyled"><li class="nav-header">Forwards & Futures</li><li  class="item"><a href="/instruments/fra" data-module="FRATYPE">FRA</a></li><li  class="item"><a href="/instruments/futures-contract" data-module="FUTYPE">Futures Contract</a></li><li  class="item"><a href="/instruments/futures-eto" data-module="FUCTRL">Futures and ETOs</a></li></ul><ul class="unstyled"><li class="nav-header">Equities</li><li  class="item"><a href="/instruments/unit" data-module="UNTYPE">Unit</a></li><li  class="item"><a href="/instruments/unitholding" data-module="UNHTYPE">Unit Holding</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Cash Management</li><li  class="item"><a href="/instruments/bank-flow" data-module="BFLOTYPE">Bank Flow</a></li><li  class="item"><a href="/instruments/cash-flow" data-module="CFLOCODE">Cash Flow</a></li><li  class="item"><a href="/instruments/cash-transfer" data-module="BAXCODE">Cash Transfer</a></li><li  class="item"><a href="/instruments/stock-transfer" data-module="SAXCODE">Stock Transfer</a></li></ul><ul class="unstyled"><li class="nav-header">Other</li><li  class="item"><a href="/instruments/deal-set" data-module="DSTYPE">Deal Set</a></li><li  class="item"><a href="/fees/fee-base-template" data-module="FEEBASET">Fee Base Template</a></li><li  class="item"><a href="/fees/formula-builder" data-module="FEEGENTR">Fee Formula</a></li><li  class="item"><a href="/instruments/letter-of-credit" data-module="LCTYPE">Letter of Credit</a></li><li  class="item"><a href="/instruments/security-identifier" data-module="SECISSUE">Security Identifier</a></li></ul></div>
+               </div>
+               <div id="menuContentrates" class="category-rates color color-teal hide" data-area="Rates">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Foreign Exchange</li><li  class="item"><a href="/rates/fx-rate" data-module="FXRATES">FX</a></li><li  class="item"><a href="/rates/fx-volatility" data-module="FXVOLRT">FX Volatility</a></li></ul><ul class="unstyled"><li class="nav-header">Interest Rates</li><li  class="item"><a href="/rates/deal-margin" data-module="DEALMARG">Deal Margin</a></li><li  class="item"><a href="/rates/issuer-instrument" data-module="IIRATE">Issuer Instrument</a></li><li  class="item"><a href="/rates/issuer-instrument-margin" data-module="INTMARG">Issuer Instrument Margin</a></li><li  class="item"><a href="/rates/yield" data-module="YIELDRT">Yield</a></li></ul><ul class="unstyled"><li class="nav-header">Interest Rate Volatility</li><li  class="item"><a href="/rates/interest-rate-option-volatility" data-module="IRORATE">Interest Rate Options</a></li><li  class="item"><a href="/rates/swaption-volatility" data-module="SWAPRATE">Swaptions</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Futures</li><li  class="item"><a href="/rates/futures" data-module="FURATE">Futures</a></li><li  class="item"><a href="/rates/eto" data-module="ETORATE">ETO</a></li><li  class="item"><a href="/rates/eto-volatility" data-module="ETOVOLRT">ETO Volatility</a></li></ul><ul class="unstyled"><li class="nav-header">Static</li><li  class="item"><a href="/rates/zero-curve-definition" data-module="ZCRATE">Zero Curve</a></li><li  class="item"><a href="/static/rate-name" data-module="RATENAME">Rate Name</a></li><li  class="item"><a href="/static/rate-type" data-module="RATETYPE">Rate Type</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Other</li><li  class="item"><a href="/rates/account-interest" data-module="BNKRATES">Account Interest</a></li><li  class="item"><a href="/rates/index-rate" data-module="INDXRATE">Index</a></li></ul></div>
+               </div>
+               <div id="menuContentrules" class="category-rules color color-blue hide" data-area="Rules">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Defaults</li><li  class="item"><a href="/rules/analysis-codes-defaulting-rule" data-module="ACDCTRL">Analysis Code</a></li><li  class="item"><a href="/rules/bank-account-rule" data-module="ACCDEF">Bank Account</a></li><li  class="item"><a href="/rules/broker-account-rule" data-module="BRKDEF">Broker Account</a></li><li  class="item"><a href="/rules/counterparty-cash-account-rule" data-module="CPACCDEF">Counterparty Bank Account</a></li><li  class="item"><a href="/rules/counterparty-stock-account-rule" data-module="CPSTKDEF">Counterparty Stock Account</a></li><li  class="item"><a href="/rules/deal-allocation-defaulting-rule" data-module="DACTRL">Deal Allocation</a></li><li  class="item"><a href="/rules/inter-company-bank-account" data-module="ICCOADEF">Inter-Company Bank Account</a></li><li  class="item"><a href="/rules/stock-account-rule" data-module="STKDEF">Stock Account</a></li><li  class="item"><a href="/rules/unit-fee-defaults" data-module="FEEDEF">Unit Fee</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Rules</li><li  class="item"><a href="/rules/approval-control" data-module="APAUCTRL">Approval and Authorization</a></li><li  class="item"><a href="/static/business-day-calendar" data-module="CALMAINT">Business Day Calendar</a></li><li  class="item"><a href="/rules/confirmation-control" data-module="ADVCTRL">Confirmation</a></li><li  class="item"><a href="/static/counterparty-contact" data-module="CPCONTAC">Counterparty Contact</a></li><li  class="item"><a href="/static/counterparty-limit" data-module="CPYLMT">Counterparty Limits</a></li><li  class="item"><a href="/rules/counterparty-netting" data-module="NETDEFS">Counterparty Netting</a></li><li  class="item"><a href="/instruments/deal-set-rule" data-module="DSRULES">Deal Set</a></li><li  class="item"><a href="/rules/electronic-confirmation-format-rule-mode" data-module="CONFFMTE">Electronic Confirmation Format</a></li><li  class="item"><a href="/rules/fx-request-rule-set" data-module="HDGSITE">FX Request Rule Set</a></li><li  class="item"><a href="/rules/management-control-rule" data-module="MGTCTRL">Management</a></li><li  class="item"><a href="/rules/paper-confirmation-format-rule-mode" data-module="CONFFMTP">Paper Confirmation Format</a></li><li  class="item"><a href="/rules/relationship" data-module="RELCTRL">Relationship</a></li><li  class="item"><a href="/static/utilization-date" data-module="UTILDATE">Utilization Dates</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Unapproved Defaults</li><li  class="item"><a href="/rules/unapproved-bank-account-rule" data-module="ACCDEFU">Bank Account</a></li><li  class="item"><a href="/rules/unapproved-broker-account-rule" data-module="BRKDEFU">Broker Account</a></li><li  class="item"><a href="/rules/unapproved-counterparty-cash-account-rule" data-module="CPACCDFU">Counterparty Bank Account</a></li><li  class="item"><a href="/rules/unapproved-counterparty-stock-account-rule" data-module="CPSTKDFU">Counterparty Stock Account</a></li><li  class="item"><a href="/rules/unapproved-stock-account-rule" data-module="STKDEFU">Stock Account</a></li></ul></div>
+               </div>
+               <div id="menuContentstatic" class="category-static color color-blue hide" data-area="Static">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Static</li><li  class="item"><a href="/static/counterparty" data-module="CPARTY">Counterparty</a></li><li  class="item"><a href="/static/counterparty-role" data-module="CPROLE">Counterparty Role</a></li><li  class="item"><a href="/static/counterparty-type" data-module="CPTYPE">Counterparty Type</a></li><li  class="item"><a href="/static/country" data-module="COUNTRY">Country</a></li><li  class="item"><a href="/static/currency" data-module="CURRENCY">Currency</a></li><li  class="item"><a href="/static/currency-control" data-module="CCY_CTRL">Currency Pair</a></li><li  class="item"><a href="/static/data-translation" data-module="DATATRAN">Data Translation</a></li><li  class="item"><a href="/static/dealer" data-module="DEALER">Dealer</a></li><li  class="item"><a href="/static/dealing-line" data-module="DEALLINE">Dealing Line</a></li></ul><ul class="unstyled"><li class="nav-header">Back Office</li><li  class="item"><a href="/static/approver" data-module="APPROVER">Approver</a></li><li  class="item"><a href="/static/cash-account" data-module="BANKACC">Bank Account</a></li><li  class="item"><a href="/static/broker-account" data-module="BROKACC">Broker Account</a></li><li  class="item"><a href="/static/counterparty-bank-account" data-module="CPDELACC">Counterparty Bank Account</a></li><li  class="item"><a href="/static/counterparty-stock-account" data-module="CPDELSTK">Counterparty Stock Account</a></li><li  class="item"><a href="/static/external-method" data-module="PAYMETHD">External Method</a></li><li  class="item"><a href="/static/money-market-fund" data-module="MMFUNDS">Money Market Fund</a></li><li  class="item"><a href="/static/signature-list" data-module="SIGNLIST">Signature List</a></li><li  class="item"><a href="/static/stock-account" data-module="STOKACC">Stock Account</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Static</li><li  class="item"><a href="/static/entity" data-module="BUSTRUCT">Entity</a></li><li  class="item"><a href="/static/entity-role" data-module="ENTROLE">Entity Role</a></li><li  class="item"><a href="/static/futures-fee" data-module="FUFEE">Exchange Fees</a></li><li  class="item"><a href="/static/facility" data-module="FACILITY">Facility</a></li><li  class="item"><a href="/static/fee-name" data-module="FEENAME">Fee Name</a></li><li  class="item"><a href="/static/futures-exchange" data-module="EXCHANGE">Futures Exchange</a></li><li  class="item"><a href="/static/futures-final-trading-day" data-module="FUFTDAYS">Futures Final Trading Day</a></li><li  class="item"><a href="/static/index-definition" data-module="INDXDEFN">Index Definition</a></li><li  class="item"><a href="/static/industry" data-module="INDUSTRY">Industry</a></li></ul><ul class="unstyled"><li class="nav-header">Accounting</li><li  class="item"><a href="/static/accounting-calendar" data-module="ACTGCAL">Accounting Calendar</a></li><li  class="item"><a href="/rules/accounting-period-defaulting-rule" data-module="ACCPEROD">Accounting Period</a></li><li  class="item"><a href="/static/accounting-rules" data-module="ACCTRULE">Accounting Rule</a></li><li  class="item"><a href="/static/accounting-type" data-module="ACCTTYPE">Accounting Type</a></li><li  class="item"><a href="/static/general-ledger" data-module="GLSET">General Ledger</a></li><li  class="item"><a href="/static/general-ledger-balancesheet-template" data-module="GLBALSEL">G/L Account Set</a></li><li  class="item"><a href="/static/general-ledger-account-templates" data-module="GLATMPLT">G/L Account Template</a></li><li  class="item"><a href="/utility/general-ledger-interface-mapping" data-module="GLIFMAP">G/L Interface Mapping</a></li><li  class="item"><a href="/static/inter-company-posting-rules" data-module="ICPOSTRL">Inter-Company Posting Rule</a></li><li  class="item"><a href="/static/posting-rules" data-module="POSTRULE">Posting Rule</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Static</li><li  class="item"><a href="/static/limits-add-on-percentage" data-module="LMTADDON">Limits Add On Percentage</a></li><li  class="item"><a href="/static/limit-risk-weighting" data-module="RSKLMT">Limits Risk Weighting</a></li><li  class="item"><a href="/static/location" data-module="LOCATION">Location</a></li><li  class="item"><a href="/static/rate-name" data-module="RATENAME">Rate Name</a></li><li  class="item"><a href="/static/rate-type" data-module="RATETYPE">Rate Type</a></li><li  class="item"><a href="/static/ratings-agency" data-module="RATINGAG">Ratings Agency</a></li><li  class="item"><a href="/static/stock-location" data-module="STOCKLOC">Stock Location</a></li><li  class="item"><a href="/static/strategy" data-module="STRATEGY">Strategy</a></li><li  class="item"><a href="/static/tax" data-module="TAXTYPE">Tax</a></li></ul><ul class="unstyled"><li class="nav-header">Unapproved Static</li><li  class="item"><a href="/static/unapproved-cash-account" data-module="BANKACCU">Bank Account</a></li><li  class="item"><a href="/static/unapproved-broker-account" data-module="BROKACCU">Broker Account</a></li><li  class="item"><a href="/static/unapproved-stock-account" data-module="STOKACCU">Stock Account</a></li><li  class="item"><a href="/static/unapproved-counterparty" data-module="CPARTYU">Counterparty</a></li><li  class="item"><a href="/static/unapproved-counterparty-bank-account" data-module="CPDELACU">Counterparty Bank Account</a></li><li  class="item"><a href="/static/unapproved-counterparty-stock-account" data-module="CPDELSTU">Counterparty Stock Account</a></li><li  class="item"><a href="/static/unapproved-facility" data-module="FACILITU">Facility</a></li><li  class="item"><a href="/static/unapproved-money-market-fund" data-module="MMFUNDSU">Money Market Fund</a></li></ul></div>
+               </div>
+               <div id="menuContentconfiguration" class="category-configuration color color-warm-gray hide" data-area="Configuration">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Configuration</li><li  class="item"><a href="/configuration/analysis-code-maintenance" data-module="RPTFMTS">Analysis Code</a></li><li  class="item"><a href="/configuration/crystal" data-module="RPTFMTS">Crystal Mapping</a></li><li  class="item"><a href="/configuration/external-method-source" data-module="DATASRC">External Method Source</a></li><li  class="item"><a href="/configuration/swift-local-authentication" data-module="KEYMAN">Swift Local Authentication</a></li></ul><ul class="unstyled"><li class="nav-header">System</li><li  class="item"><a href="/configuration/logon-screen-settings" data-module="LOGONMSG">Logon Message</a></li><li  class="item"><a href="/configuration/security-settings" data-module="LOGONSEC">Logon Security</a></li><li  class="item"><a href="/configuration/password-filter-settings" data-module="PWDFILTR">Password Filters</a></li><li  class="item"><a href="/configuration/data-security-settings" data-module="DATASEC">Data Security</a></li><li  class="item"><a href="/configuration/workflow-settings" data-module="OPRTSET">Operational Settings</a></li><li  class="item"><a href="/configuration/ldap-authentication-settings" data-module="LDAPAUTH">LDAP Authentication</a></li><li  class="item"><a href="/configuration/smtp-settings" data-module="SMTPSET">SMTP Settings</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Users</li><li  class="item"><a href="/static/user" data-module="CTUSR">User</a></li><li  class="item"><a href="/static/user-group" data-module="CTGRPS">Group</a></li><li  class="item"><a href="/static/unapproved-user" data-module="CTUSRU">Unapproved User</a></li><li  class="item"><a href="/static/unapproved-user-group" data-module="CTGRPSU">Unapproved Group</a></li><li  class="item"><a href="/configuration/applied-module-security" data-module="MENUENQ">Applied Module Security</a></li></ul><ul class="unstyled"><li class="nav-header">Licensing</li><li  class="item"><a href="/utility/licensing" data-module="ORGMAINT">License</a></li></ul></div>
+                  <div class="column"></div>
+               </div>
+               <div id="menuContentutility" class="category-utility color color-warm-gray hide" data-area="Utility">
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Service Health</li><li  class="item"><a href="/utility/bank-import-status" data-module="BKIMPORT">Bank File Import Status</a></li><li  class="item"><a href="/utility/confirmation-match-import-status" data-module="CNFMTSVC">Confirmation Match Import Status</a></li><li  class="item"><a href="/utility/deal-import-status" data-module="DLIMPORT">Deal Import Status</a></li><li  class="item"><a href="/utility/static-data-import-status" data-module="SDIMPORT">Static Data Import Status</a></li></ul><ul class="unstyled"><li class="nav-header">Tools</li><li  class="item"><a href="/utility/calculate-index" data-module="INDXCALC">Calculate Index</a></li><li  class="item"><a href="/utility/deal-detail" data-module="DEALDETS">Deal Details</a></li><li  class="item"><a href="/utility/revaluation-importer" data-module="REVALIMP">Imported Valuations</a></li><li  class="item"><a href="/utility/reapply-cash-flows-and-accounting" data-module="GLACREDO">Reapply Cash Flows and Accounting</a></li><li  class="item"><a href="/utility/active-user-sessions" data-module="QMCTOOL">Active User Sessions</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Back Office</li><li  class="item"><a href="/utility/bank-account-conversion" data-module="BACON">Bank Account Conversion</a></li><li  class="item"><a href="/utility/counterparty-delivery-instruction-conversion" data-module="CPDICON">Counterparty Delivery Instruction Conversion</a></li><li  class="item"><a href="/banking/set-statement-date" data-module="BKSTINIT">Set Statement Date</a></li></ul></div>
+                  <div class="column"></div>
+               </div>
+
+            <div id="menuContentSearchResults" class="hide">
+               <div class="column"></div>
+               <div class="column"></div>
+               <div class="column"></div>
+            </div>
+         </li>
+               <li class="menu area category-dealing color-green"><a tabindex="-1" href="#" data-area="dealing">Dealing</a></li>
+               <li class="menu area category-reporting color-yellow"><a tabindex="-1" href="#" data-area="reporting">Reporting</a></li>
+               <li class="menu area category-processing color-purple"><a tabindex="-1" href="#" data-area="processing">Processing</a></li>
+               <li class="menu area category-cashmanagement color-orange"><a tabindex="-1" href="#" data-area="cashmanagement">Cash Management</a></li>
+               <li class="menu area category-accounting color-purple"><a tabindex="-1" href="#" data-area="accounting">Accounting</a></li>
+               <li class="menu area category-instruments color-teal"><a tabindex="-1" href="#" data-area="instruments">Instruments</a></li>
+               <li class="menu area category-rates color-teal"><a tabindex="-1" href="#" data-area="rates">Rates</a></li>
+               <li class="menu area category-rules color-blue"><a tabindex="-1" href="#" data-area="rules">Rules</a></li>
+               <li class="menu area category-static color-blue"><a tabindex="-1" href="#" data-area="static">Static</a></li>
+               <li class="menu area category-configuration color-warm-gray"><a tabindex="-1" href="#" data-area="configuration">Configuration</a></li>
+               <li class="menu area category-utility color-warm-gray"><a tabindex="-1" href="#" data-area="utility">Utility</a></li>
+         <li class="menu divider"></li>
+         <li class="menu target"><a href="/">Home</a></li>
+   </ul>
+</script>         </div>
          <ul class="nav pull-right" id="siteMenu">
             
 
+   <li class="dropdown" id="notifications" style="display: none" data-bind="visible: true">
+      
+      <a href="#" data-bind="click: deferredGetList" class="dropdown-toggle" data-toggle="dropdown" id="notificiationsToggle">
+         <i class="icon-bell icon-white"></i> <span id="unreadCount" data-bind="text: unreadCount(), visible: unreadCount()">0</span>
+      </a>
+
+      
+      <ul class="dropdown-menu" id="notificationsPanel">
+         <li class="nav-header">
+            <h3>Latest Notifications</h3>
+         </li>
+
+         
+         <li class="big-item" style="display: none" data-bind="visible: !isLoading() && !unreadItemsExist()">
+            <span class="muted">No recent activity</span>
+         </li>
+
+         <li class="big-item" data-bind="visible: isLoading()">
+            <img src="/content/img/ajax-loader.gif" width="16" height="11" alt="Loading..." />
+         </li>
+
+         
+         <!-- ko foreach: unreadList -->
+         <li data-bind="css: $data.categoryColour">
+            <a href="#" data-bind="attr: { href: $data.targetUrl }, click: function () { $parent.openItem($data) }" class="item">
+               <span data-bind="click: function () { $parent.dismiss($data) }, clickBubble: false" class="close" title="Remove from list">×</span>
+               <span class="icon"><i class="icon-ok-sign" data-bind="classes: $parent.getStatusIcon(status), attr: { title: $parent.getStatusString(status) }"></i></span>
+               <span data-bind="text: title"></span>
+               <div>
+                  <span class="muted" data-bind="text: (message.length > 40 ? message.substring(0, 37) + '...' : message), attr: { title: message }"></span> <span class="muted" data-bind="timeago: timestamp"></span>
+               </div>
+            </a>
+         </li>
+         <!-- /ko -->
+
+         
+         <li class="nav-header clearfix" data-bind="visible: inProgressList().length">In Progress<img class="pull-right" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..."></li>
+         <!-- ko foreach: inProgressList -->
+         <li data-bind="css: $data.categoryColour">
+            <a>
+               <span data-bind="text: title"></span>
+               <div>
+                  <span class="muted" data-bind="text: message"></span> <span class="muted" data-bind="timeago: timestamp"></span>
+               </div>
+            </a>
+         </li>
+         <!-- /ko -->
+
+         
+         <li class="toolbar clearfix">
+            <a href="#" class="pull-right" style="display: none" data-bind="visible: !isLoading() && unreadItemsExist(), click: dismissAll, clickBubble: false">Clear List</a>
+            <a href="/notifications" class="pull-left">Show Earlier Notifications</a>
+         </li>
+
+      </ul>
+   </li>   <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="logonMenuToggle"><span id="userName"></span> <b class="caret"></b></a>
+      <ul class="dropdown-menu" id="logonMenu">
+         <li class="show-office"><a href="/account/logoff" id="logOff">Log Off</a></li>
+            <li><a href="/account/change-password">Change Password</a></li>
+         <li><a href="/account/user-account-settings">User Account Settings</a></li>
+          
+         <li class="divider show-office"></li>
+         <li><a href="/elmah.axd">Error Log</a></li>
+         <li class="show-office"><a title="Database Name/Site">QA50JRYRPACKSMOKE_YORK3</a></li>
+                  <li class="divider"></li>
+         <li><a href="/testing">Development Testing</a></li>
+         <li class="divider"></li>
+         <li><a href="/Home/LandingPage">Landing Page</a></li>
+         
+                  <li class="divider"></li>
+         <li><a href="/about">About Quantum</a></li>
+      </ul>
+   </li>
 
 
+               <li class="dropdown">
+                  <a href="#" id="pageWidthToggle" title="Toggle full page width"><i class="icon-fullscreen icon-white"></i></a>
+               </li>
             <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="showHelpPanel" id="helpToggle" 
                   title="Toggle help panel"><i class="icon-question-sign icon-white"></i></a>
@@ -92,8 +254,20 @@
                      
 <header class="header row-fluid restrict main">
    <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
-
+            <h6>Quantum 
+               </h6>
+            <h1>
    
+
+
+<div data-bind="css: {'long' : $root.pageTitle().length > 2}">
+   <!-- ko foreach: $root.pageTitle -->
+   <span class="key" data-bind="visible: true, text: keyProperty" style="display:none;"></span>
+   <!-- /ko -->
+</div>
+
+
+</h1>
 
 </header>
 
@@ -104,63 +278,36 @@
 
    <div id="content">
       
-
-
-
-<form action="/account/logon?ReturnUrl=%2f" method="post">   <div class="modal-scrollable">
-      <div class="modal hide in" id="logOnDialog" style="display: block; margin-top: -200px; width: 460px; margin-left: -230px; z-index: 1101;" >
-         <div class="modal-header">
-            <div class="row-fluid"><h3 class="span8">Log On</h3></div>
-         </div>
-         <div class="modal-body container-panel">
-
-            
-
-
-
-
-            <div class="panel size2" style="width: 96%;">
+            <div class="shift-up">
+               
                
 
-
-<div class="editor field"><label for="UserName">Username</label><input autocomplete="off" autofocus="autofocus" class="text-box single-line" data-bind="value: userName, fieldMeta: userName" id="UserName" name="UserName" type="text" value="" /></div>
-               
-
-
-<div class="editor field">
-   <label for="Password">Password</label>
-   <input autocomplete="off" class="text-box single-line password" data-bind="value: password, fieldMeta: password" id="Password" name="Password" type="password" value="" />
-   
-</div>
-
-
-               <div class="field size2">
-                  <label for="Site">Site</label>
-                  <select id="Site" name="Site"><option>NUNITQTTRUNKDEV</option>
-<option>QA50JRYRPACKSMOKE_YORK3</option>
-<option>QA50JRYRPACKSMOKE_YORK</option>
-<option>NUNITQTTRUNKDEVORACLE</option>
-<option>NUNITSQL</option>
-<option>NUNITSQLREF</option>
-<option>NUNITSBUSQL</option>
-<option>NUNITSBUSQLREF</option>
-<option>EQUITIESSQL</option>
-<option>EQUITIESSQLREF</option>
-<option>DEV50JRYRPACKREF_Oracle11</option>
-<option>QA50JRYRPACKSMOKE_SQL2008</option>
-</select>
-                     
-               </div>
-               <input name="__RequestVerificationToken" type="hidden" value="GRtYjM996HtmTNIGNQWKb6AU6TVa7ryrxuBd-v8AJ1YDLbTU1RNuS3bfQFT71rV94ES2EP54XPfwgGsOGfKHn6ydZTGBp4rHpWTg8qJ8emc1" />
             </div>
-         </div>
-         <div class="modal-footer">
-            <div class="field" style="float: right; width: 50%;"><input id="logonButton" type="submit" value="Log On" class="btn btn-primary btn-large" style="height: 40px;"/></div>
-            <div class="field" style="float: right; padding-right: 20px;"><a id="forgottenPassword" href="#" style="line-height: 40px;">Forgotten Password?</a></div>
-         </div>
-      </div>
-   </div>
+            <div id="editor" class="container-panel" data-bind="">
+               
+
+   
+
+<form action="/?Count=0&amp;Keys=System.Collections.Generic.Dictionary%602%2BKeyCollection%5BSystem.String%2CSystem.Object%5D&amp;Values=System.Collections.Generic.Dictionary%602%2BValueCollection%5BSystem.String%2CSystem.Object%5D" id="adhoc" method="post">            <div id="AdhocReport">
+        
+                
+                <div data-bind="visible: $data.adhocUrl, height: { relativeElement: window, offset: 100 }" style="display: none;" class="crystal">
+                    <div class="loading" data-bind="visible: $data.adhocViewerLoading">
+                        <span>Loading Report</span>
+                        <img src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." />
+                    </div>
+                    <iframe id="AdhocReportFrame" scrolling="auto"  data-bind=" attr: { src: $data.adhocUrl }, event: { error: $data.adhocError.bind($data), load: $data.adhocLoaded.bind($data) }"  seamless ></iframe>
+
+                </div>
+
+            </div>
 </form>
+
+
+
+
+               
+            </div>
 
       
 
@@ -176,7 +323,7 @@
             
             
    
-<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: '817c105f-edd3-4363-847e-1402e6f55eea'"></div></form><script id="817c105f-edd3-4363-847e-1402e6f55eeaTemplate" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
+<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: 'c174e6cb-0fd5-46d7-8050-d77e9eaffce2'"></div></form><script id="c174e6cb-0fd5-46d7-8050-d77e9eaffce2Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
    <ul data-bind="foreach: model.messages, css: { 'unstyled' : model.messages().length === 1 }">
       <li>
          <span data-bind="text: $data"></span>
@@ -187,7 +334,32 @@
 
    
 
-
+<div id="exportDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="Export" aria-hidden="true">
+   <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="exportModalLabel">Export</h3>
+   </div>
+   <div class="modal-body">
+      <p>
+         Choose an export format for the report:
+      </p>
+      <p>                        
+         <label>
+            <input type="radio" name="ExportFileType" value="csv" data-bind="checked: exportFileType">
+            CSV — data behind view (for use in Excel)</label>
+         <label>
+            <input type="radio" name="ExportFileType" value="xml" data-bind="checked: exportFileType">
+            XML — data behind view (for integration)</label>
+          <label>
+              <input type="radio" name="ExportFileType" value="pdf" data-bind="checked: exportFileType">
+              PDF — complete report formatted to current view (for printing)</label>
+      </p>
+   </div>
+   <div class="modal-footer">
+      <button class="btn btn-primary" data-bind="click: exportView" data-dismiss="modal">Export</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>                        
+   </div>
+</div>
          </div>
       </div>
 
@@ -198,18 +370,18 @@
     <h3>You are no longer authenticated</h3>
   </div>
   <div class="modal-body">
-    <p>Please <a href="/account/logon?ReturnUrl=%2Faccount%2Flogon%3FReturnUrl%3D%252f">logon again</a></p>
+    <p>Please <a href="/account/logon?ReturnUrl=%2F">logon again</a></p>
   </div>
   <div class="modal-footer">
-    <a href="/account/logon?ReturnUrl=%2Faccount%2Flogon%3FReturnUrl%3D%252f" class="btn btn-primary">Logon</a>
+    <a href="/account/logon?ReturnUrl=%2F" class="btn btn-primary">Logon</a>
   </div>
 </div>
 
       
-      <input name="__PageIdToken" type="hidden" value="f2c4ad03-43b3-4dbd-a7ec-d0d91dcad785" />
+      <input name="__PageIdToken" type="hidden" value="ba66d1b0-4c65-4469-88e8-eb372d5d11ac" />
 
       
-      <input name="__RequestVerificationToken" type="hidden" value="Hs7MhWFCSdOt5GCMTA9sA2w5TmpTeGDVy2q1G0lS4WMvhh1fr8h8qOepctO34OMsSig3ypA4U2gLTpseE7vsMKXGiW7GKCsvi-iBFENzOzA1" />
+      <input name="__RequestVerificationToken" type="hidden" value="CbkdDrbEMTRNc5zmZ0b5S8zYAqA5qUphllP2OacT7NfVGFpZyr2ahJ6QQbmo8cJP-Ico_CHoXH5LwMSjPlvSiHrEcnrPBGh_k92kHpS4rdUxjgGEeb7eR49dpadA_vkP2TQ0fs1v7uxXfcb1tysxTg2" />
    </div>
 
       <footer class="container-fluid"><div class="restrict"><span>&copy; 2015 SunGard</span></div></footer>
@@ -503,10 +675,6 @@
 <script src="/Scripts/dependencies/kendoui/kendo.all.js"></script>
 <script src="/Scripts/dependencies/kendoui/knockout-kendo.js"></script>
 
-
-
-
-
 <script type="text/javascript">
 
    $(function ()
@@ -518,18 +686,29 @@
       ag.siteRoot = "/";
       ag.decimalSymbol = ".";
       ag.digitGroupingSymbol = ",";
-      ag.dateShortFormat = "MM/DD/YYYY";
+      ag.dateShortFormat = "DD/MM/YYYY";
       ag.applicationPath = "/";
       ag.area = "";
-      ag.controller = "account";
-      ag.action = "logon";
-      ag.serviceUrl = "/account";
+      ag.controller = "home";
+      ag.action = "index";
+      ag.serviceUrl = "/";
       ag.initExpiry(".JRY_EXP", "/account/logon");
-            $(".timeago").livestamp();
+      
+      ag.perspective = "Default";
+      ag.siteMenu = new ag.SiteMenuViewModel({
+         menuUrl: "/ui/sitemenu",
+         dealSearchUrl: "/ui/dealsearch",
+         staticDataSearchUrl: "/ui/staticdatasearch"
+      });
+      
+      ag.dom.notificationsInit();
+      $(".timeago").livestamp();
    });
 
 </script>
-<script src="/Scripts/ag/strings.js"></script>
+
+   <script src="/Scripts/ag/strings.js"></script>
+<script src="/Scripts/ag/config.js"></script>
 
 <script src="/Scripts/ag/ag.js"></script>
 <script src="/Scripts/ag/utils/network.js"></script>
@@ -1040,33 +1219,71 @@
    
    
    <script type="text/javascript">
-
       $(function ()
       {
-         var siteSelector = "#Site";
-
          
-   var siteName = ag.dom.siteName();
-         if (siteName && siteName.length)
-            $(siteSelector).val(siteName);
-         $("form").on("submit", function ()
-         {
-            PubSub.publish(ag.topics.Logon, true);
 
-            
-      ag.dom.siteName($(siteSelector).val());
-         });
 
-         
-         var forgottenPasswordUrl = "/account/forgotten-password";
-         $("#forgottenPassword").click(function ()
-         {
-            var siteName = $(siteSelector).val();
-            window.location.href = forgottenPasswordUrl + (siteName ? "?site=" + siteName : "");
-            return false;
-         });
+
+ag.utils.checkConfigExists();
+var app = new ag.HomeViewModel(
+{
+   tabs: [],
+   serviceUrl: ag.serviceUrl,
+   typeMetaDataUrl: "/typedataview",
+   itemKey: "none",
+      editProperty: "name",
+   listMetaData: {"views":null,"viewTables":null},
+   lookups: {},
+   lookupData: {},
+   dependencies: ag.config.dependencies,
+   availableOperators: {"3":"between","0":"equal to","2":"greater than","4":"one of","1":"less than","5":"contains","1027":"not between","1024":"not equal to","1026":"not greater than","1028":"not one of","1025":"not less than","1029":"doesn\x27t contain","6":"one of data","1030":"not one of data"},
+   typeMetadata: {},
+   browseEditors: {},
+   responseOnly: "",
+   postOnly: "",
+   itemEditable: "",
+   clientSideNavDisabled: false,
+   editAction: "edit",
+   actionToInvoke: "",
+   fieldCategories: ag.config.fieldCategories,
+   isUnapproved: false,
+   isReadOnly: false,
+   hierarchicalGroupName: "Group",
+   hasHierarcicalDiagram: false,
+   browseColumnsUseAlphanumSortingString: ""
       });
+       var user=   localStorage.getItem("user");
+        user=user&&JSON.parse(user);
+          if(user)
+          {
 
+              $("#userName").text(user.userName);
+              $.extend(app,user);
+          }
+          else
+              ag.navigate("/account/logon.html");
+
+app.currencies = ag.utils.inflateCurrencies([["default",2,8,8,10210002]]);
+
+   
+      app.init({"landingPage":{"reportParameters":null,"showQueryString":false,"origin":"localhost","reportName":null,"reportId":null,"reportUrl":"\x2freporting\x2fAdhoc\x2fReport","reportTitle":null,"currentQuery":null,"displayAdhoc":false}});
+   
+
+
+
+   var actions = app.actions = app.actions || {};
+
+      var menuCommands = app.menuCommands = app.menuCommands || {};
+      var quickMenuCommands = app.quickMenuCommands = app.quickMenuCommands || {};
+
+console.log(app);
+
+         ag.utils.applyBindings(app);
+
+         
+   ag.siteMenu.open();
+      });
    </script>
 
 

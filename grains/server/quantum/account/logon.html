@@ -1,0 +1,1116 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+   
+   <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="build-details" data-number="0" data-built="" />
+   
+   
+   <title>Quantum - Logon</title>
+
+   
+   
+<link href="/Content/bootstrap.css" rel="stylesheet"/>
+<link href="/Content/body.css" rel="stylesheet"/>
+<link href="/Content/bootstrap-responsive.css" rel="stylesheet"/>
+<link href="/Content/bootstrap-notify/bootstrap-notify.css" rel="stylesheet"/>
+<link href="/Content/bootstrap-modal.css" rel="stylesheet"/>
+<link href="/Content/styles.css" rel="stylesheet"/>
+<link href="/Content/richtexteditor/redactor.css" rel="stylesheet"/>
+<link href="/Content/kendoui/kendo.common.css" rel="stylesheet"/>
+<link href="/Content/kendoui/kendo.default.css" rel="stylesheet"/>
+<link href="/Content/kendoui/kendo.dataviz.css" rel="stylesheet"/>
+<link href="/Content/kendoui/kendo.dataviz.default.css" rel="stylesheet"/>
+
+
+      <link rel="shortcut icon" href="/favicon.ico" />
+
+
+   
+   
+
+   
+</head>
+<body class="category-warm-gray hide-container banner-standard">
+   <div class="page-container ">
+      
+
+<div class="navbar navbar-fixed-top">
+   <div class="navbar-inner container-fluid">
+      <div class="restrict">
+         <div class="nav dropdown">
+            <a id="logo" href="#" data-toggle="dropdown" class="brand">
+               <div class="hamburger">
+                  <div class="icon-bar"></div><div class="icon-bar"></div><div class="icon-bar"></div>
+               </div>
+               <h1>Quantum</h1>
+            </a>
+            
+         </div>
+         <ul class="nav pull-right" id="siteMenu">
+            
+
+
+
+            <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="showHelpPanel" id="helpToggle" 
+                  title="Toggle help panel"><i class="icon-question-sign icon-white"></i></a>
+            </li>
+         </ul>
+      </div>
+   </div>
+</div>
+
+      
+
+      <div class="app-container">
+
+         <div class="alerts user-select-text">
+   <div id="alert_success" class="alert alert-success" data-duration="5000" style="display: none">
+      <button class="close" data-dismiss="toggleable-alert">&times;</button>
+      <span class="pre-wrap"></span>
+   </div>
+   <div id="alert_error" class="alert alert-error" data-duration="20000" style="display: none">
+      <button class="close" data-dismiss="toggleable-alert">&times;</button>
+      <span class="pre-wrap"></span>
+   </div>
+</div>
+
+         <div class="app-panel" style="">
+
+            
+
+            <div class="container-row">
+               <div class="container-fluid">
+                  
+
+
+                     
+<header class="header row-fluid restrict main">
+   <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+
+   
+
+</header>
+
+<section id="main" class="report restrict form">
+                     
+   <div class="clearfix status" data-bind="css:{'status-text': false}">
+   </div>
+
+   <div id="content">
+      
+
+
+
+<form action="" method="post">   <div class="modal-scrollable">
+      <div class="modal hide in" id="logOnDialog" style="display: block; margin-top: -200px; width: 460px; margin-left: -230px; z-index: 1101;" >
+         <div class="modal-header">
+            <div class="row-fluid"><h3 class="span8">Log On</h3></div>
+         </div>
+         <div class="modal-body container-panel">
+
+
+             <div style="display: none;" id="messageArea" class="alert alert-error pre-wrap">Logon was unsuccessful. Please try again.<ul><li>The user name or password provided is incorrect.</li></ul></div>
+
+
+
+            <div class="panel size2" style="width: 96%;">
+               
+
+
+<div class="editor field"><label for="UserName">Username</label><input autocomplete="off" autofocus="autofocus" class="text-box single-line" data-bind="value: userName, fieldMeta: userName" id="UserName" name="UserName" type="text" value="" /></div>
+               
+
+
+<div class="editor field">
+   <label for="Password">Password</label>
+   <input autocomplete="off" class="text-box single-line password" data-bind="value: password, fieldMeta: password" id="Password" name="Password" type="password" value="" />
+   
+</div>
+
+
+               <div class="field size2">
+                  <label for="Site">Site</label>
+                  <select id="Site" name="Site"><option>NUNITQTTRUNKDEV</option>
+<option>QA50JRYRPACKSMOKE_YORK3</option>
+<option>QA50JRYRPACKSMOKE_YORK</option>
+<option>NUNITQTTRUNKDEVORACLE</option>
+<option>NUNITSQL</option>
+<option>NUNITSQLREF</option>
+<option>NUNITSBUSQL</option>
+<option>NUNITSBUSQLREF</option>
+<option>EQUITIESSQL</option>
+<option>EQUITIESSQLREF</option>
+<option>DEV50JRYRPACKREF_Oracle11</option>
+<option>QA50JRYRPACKSMOKE_SQL2008</option>
+</select>
+                     
+               </div>
+               <input name="__RequestVerificationToken" type="hidden" value="GRtYjM996HtmTNIGNQWKb6AU6TVa7ryrxuBd-v8AJ1YDLbTU1RNuS3bfQFT71rV94ES2EP54XPfwgGsOGfKHn6ydZTGBp4rHpWTg8qJ8emc1" />
+            </div>
+         </div>
+         <div class="modal-footer">
+             <div class="field" style="float: right; width: 50%;"><input id="createButton" type="button" value="Create" class="btn btn-primary btn-large" style="height: 40px;display: none;"/></div>
+
+             <div class="field" style="float: right; width: 50%;"><input id="logonButton" type="button" value="Log On" class="btn btn-primary btn-large" style="height: 40px;"/></div>
+            <div class="field" style="float: right; padding-right: 20px;"><a id="forgottenPassword" href="#" style="line-height: 40px;">Forgotten Password?</a></div>
+         </div>
+      </div>
+   </div>
+</form>
+
+      
+
+
+   </div>
+</section>
+
+
+
+               </div>
+               <div id="helpPanelContent" class="sidebar"></div>
+            </div>
+            
+            
+   
+<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: '817c105f-edd3-4363-847e-1402e6f55eea'"></div></form><script id="817c105f-edd3-4363-847e-1402e6f55eeaTemplate" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
+   <ul data-bind="foreach: model.messages, css: { 'unstyled' : model.messages().length === 1 }">
+      <li>
+         <span data-bind="text: $data"></span>
+      </li>
+   </ul>
+   <p>Do you want to continue?</p>
+</div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
+
+   
+
+
+         </div>
+      </div>
+
+      
+      
+<div class="modal hide static" id="authenticationErrorDialog">
+  <div class="modal-header">
+    <h3>You are no longer authenticated</h3>
+  </div>
+  <div class="modal-body">
+    <p>Please <a href="/account/logon?ReturnUrl=%2Faccount%2Flogon%3FReturnUrl%3D%252f">logon again</a></p>
+  </div>
+  <div class="modal-footer">
+    <a href="/account/logon?ReturnUrl=%2Faccount%2Flogon%3FReturnUrl%3D%252f" class="btn btn-primary">Logon</a>
+  </div>
+</div>
+
+      
+      <input name="__PageIdToken" type="hidden" value="f2c4ad03-43b3-4dbd-a7ec-d0d91dcad785" />
+
+      
+      <input name="__RequestVerificationToken" type="hidden" value="Hs7MhWFCSdOt5GCMTA9sA2w5TmpTeGDVy2q1G0lS4WMvhh1fr8h8qOepctO34OMsSig3ypA4U2gLTpseE7vsMKXGiW7GKCsvi-iBFENzOzA1" />
+   </div>
+
+      <footer class="container-fluid"><div class="restrict"><span>&copy; 2015 SunGard</span></div></footer>
+
+
+
+   
+   
+   <div class="modal explorer hide" data-bind="classes: mode" id="explorerDialog">
+      <div class="modal-header">
+         <div class="row-fluid">
+            <h3 data-bind="text: lookupDisplayName" class="span8">Explorer</h3>
+               <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <input class="search span4" data-bind="value: search.text, valueUpdate: 'keyup'" type="text" placeholder="Search" />
+         </div>
+      </div>
+      <div class="modal-body">
+            <div class="row-fluid modal-toolbar">
+      <div class="span7">
+         
+         <ul class="breadcrumb" data-bind="visible: parents().length > 0">
+            <!-- ko if: navigableParents().length > 0 -->
+            <!-- ko foreach: navigableParents() -->
+            <li><a href="#" data-bind="text: $root.getParentItemDisplayName($data), click: $root.navigateToParent"></a><span class="divider">&rsaquo;</span></li>
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: immediateParent() -->
+            <li class="active" data-bind="text: $root.getParentItemDisplayName(immediateParent())"></li>
+            <!-- /ko -->
+         </ul>
+      </div>
+
+      <div data-bind="with: pager" class="span5">
+         <div class="btn-group pull-right">
+            <a class="btn disabled clearfix" href="#" data-bind="command: loadPreviousPageCommand, click: keepPageTargetsShown"><i class="icon-chevron-left"></i></a>
+            <div class="btn-group">
+               <a class="btn dropdown-toggle" href="#" data-toggle="dropdown" data-bind="visible: hasPageTargets, dropdown: { show: showPageTargets, canHide: canPageTargetsHide }"><i class="icon-list"></i></a>
+               <div class="dropdown-menu pull-right page-targets">
+                  <table class="grid table table-condensed">
+                     <thead>
+                        <tr data-bind="foreach: pageTargetColumns">
+                           <th data-bind="gridColumn: $data">
+                              <span data-bind="text: displayName"></span>
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody data-bind="foreach: pageTargets">
+                        <tr data-bind="foreach: $parent.pageTargetColumns, click: $parent.selectPageTarget.bind($parent), css: {'selected': $parent.isPageTargetSelected($data), 'divider': $parent.isPageTargetDivider($data)}">
+                           <td data-bind="gridCell: $parent"></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <a class="btn" href="#" data-bind="command: loadNextPageCommand, click: keepPageTargetsShown"><i class="icon-chevron-right"></i></a>
+         </div>
+         <span data-bind="text: itemsShowing"></span>
+      </div>
+   </div>
+   <div class="items">
+      <p data-bind="visible: !view() || !view().fields()" class="muted">Loading...</p>
+      <div data-bind="visible: view() && view().fields()" style="display: none">
+         <table class="grid table" data-bind="value: items, searchHighlight: search.searchTerms">
+            <thead>
+               <tr data-bind="foreach: view().displayFields()">
+                  <th data-bind="gridColumn: $data">
+                     <span data-bind="text: displayName"></span>
+                     <i data-bind="css: { 'icon-chevron-up' : !$parent.sorter.gridSortDesc(), 'icon-chevron-down' : $parent.sorter.gridSortDesc() }"></i>
+                  </th>
+               </tr>
+            </thead>
+            <tbody data-bind="foreach: items">
+               <tr data-bind="foreach: $root.view().displayFields(), css: {'selected': $root.isSelected($data)}">
+                  <td data-bind="gridCell: $parent, gridCellIcon: { icon: $root.iconFromType, column: $root.getIconFieldKey() }, gridCellFormatter: $root.formatGridCell"></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <ul class="collection fluid"
+       data-bind="visible: mode() == 'multi',
+         collection: selectedItems,
+         optionsText: '__text__',
+         optionsTitle: '__text__',
+         beforeRemove: $root.beforeRemoveSelected,
+         sortable: { template: 'selectedAllMultiselectItemTemplate', data: selectedItems }"
+       data-lookup-compare-key="key"
+       data-multiselect-sortable="false"></ul>
+
+      </div>
+
+      <div class="modal-footer" data-bind="visible: mode() == 'multi'">
+         <a href="#" class="btn btn-primary" data-dismiss="modal" data-bind="click: saveSelection">OK</a>
+         <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+      </div>
+   </div>
+
+
+
+   
+   <div class="inline explorer hide">
+      <div class="row-fluid">
+            <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+
+         <input class="search span4" data-bind="value: search.text, valueUpdate: 'keyup'" type="text" placeholder="Search" />
+      </div>
+         <div class="row-fluid modal-toolbar">
+      <div class="span7">
+         
+         <ul class="breadcrumb" data-bind="visible: parents().length > 0">
+            <!-- ko if: navigableParents().length > 0 -->
+            <!-- ko foreach: navigableParents() -->
+            <li><a href="#" data-bind="text: $root.getParentItemDisplayName($data), click: $root.navigateToParent"></a><span class="divider">&rsaquo;</span></li>
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: immediateParent() -->
+            <li class="active" data-bind="text: $root.getParentItemDisplayName(immediateParent())"></li>
+            <!-- /ko -->
+         </ul>
+      </div>
+
+      <div data-bind="with: pager" class="span5">
+         <div class="btn-group pull-right">
+            <a class="btn disabled clearfix" href="#" data-bind="command: loadPreviousPageCommand, click: keepPageTargetsShown"><i class="icon-chevron-left"></i></a>
+            <div class="btn-group">
+               <a class="btn dropdown-toggle" href="#" data-toggle="dropdown" data-bind="visible: hasPageTargets, dropdown: { show: showPageTargets, canHide: canPageTargetsHide }"><i class="icon-list"></i></a>
+               <div class="dropdown-menu pull-right page-targets">
+                  <table class="grid table table-condensed">
+                     <thead>
+                        <tr data-bind="foreach: pageTargetColumns">
+                           <th data-bind="gridColumn: $data">
+                              <span data-bind="text: displayName"></span>
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody data-bind="foreach: pageTargets">
+                        <tr data-bind="foreach: $parent.pageTargetColumns, click: $parent.selectPageTarget.bind($parent), css: {'selected': $parent.isPageTargetSelected($data), 'divider': $parent.isPageTargetDivider($data)}">
+                           <td data-bind="gridCell: $parent"></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <a class="btn" href="#" data-bind="command: loadNextPageCommand, click: keepPageTargetsShown"><i class="icon-chevron-right"></i></a>
+         </div>
+         <span data-bind="text: itemsShowing"></span>
+      </div>
+   </div>
+   <div class="items">
+      <p data-bind="visible: !view() || !view().fields()" class="muted">Loading...</p>
+      <div data-bind="visible: view() && view().fields()" style="display: none">
+         <table class="grid table" data-bind="value: items, searchHighlight: search.searchTerms">
+            <thead>
+               <tr data-bind="foreach: view().displayFields()">
+                  <th data-bind="gridColumn: $data">
+                     <span data-bind="text: displayName"></span>
+                     <i data-bind="css: { 'icon-chevron-up' : !$parent.sorter.gridSortDesc(), 'icon-chevron-down' : $parent.sorter.gridSortDesc() }"></i>
+                  </th>
+               </tr>
+            </thead>
+            <tbody data-bind="foreach: items">
+               <tr data-bind="foreach: $root.view().displayFields(), css: {'selected': $root.isSelected($data)}">
+                  <td data-bind="gridCell: $parent, gridCellIcon: { icon: $root.iconFromType, column: $root.getIconFieldKey() }, gridCellFormatter: $root.formatGridCell"></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <ul class="collection fluid"
+       data-bind="visible: mode() == 'multi',
+         collection: selectedItems,
+         optionsText: '__text__',
+         optionsTitle: '__text__',
+         beforeRemove: $root.beforeRemoveSelected,
+         sortable: { template: 'selectedAllMultiselectItemTemplate', data: selectedItems }"
+       data-lookup-compare-key="key"
+       data-multiselect-sortable="false"></ul>
+
+   </div>
+
+
+
+
+   <div class="modal hide" id="notificationErrorDialog" data-bind="showModalDialog: showErrorDialog, withlight: errorNotification">
+   <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 data-bind="text: title"></h3>
+   </div>
+   <div class="modal-body">
+      <div class="muted pull-right ">
+         <span data-bind="text: message"></span> <span data-bind="timeago: timestamp"></span>
+      </div>
+      <ul data-bind="foreach: errors" class="spacer-top">
+         <li data-bind="text: $data"></li>
+      </ul>
+   </div>
+   <div class="modal-footer">
+      <a href="#" data-bind="visible: targetUrl(), attr: { href: targetUrl }" class="btn btn-primary">Go To Module</a> 
+      <a href="#" data-dismiss="modal" class="btn">Close</a>
+   </div>
+</div>
+
+   
+<script type="text/html" id="expressionBuilderDialogTemplate">
+   <div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="expressionBuilderDialog">
+      <form>
+         <div class="modal-header">
+            <div class=" row-fluid">
+               <h3 class="span8">Expression Builder</h3>
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+
+            </div>
+         </div>
+         <div class="modal-body container-panel">
+               <div class="row-fluid" data-bind="if: $root.lookupAction">
+      <div class="btn-group pull-right" style="margin-bottom: 6px">
+         <a href="#" class="btn"
+            data-bind="explorerToggle: { source: $root.lookupAction, selectedItems: [], keyField: 'key', mode: 'single' },
+            saveCallback: function(items) { updateExpressionWithSelectedLookupItem(items); },
+            requestData: getExpressionLookupRequestData"
+            data-val="true">
+            <i class="icon-plus"></i>
+         </a>
+      </div>
+   </div>
+   <div class="field" style="width: 100%">
+      <textarea class="text-area multi-line expression"
+                spellcheck="false"
+                data-bind="value: expression, valueUpdate: 'keyup click', caretPosition: expressionCursorPosition, hasFocus: expressionFocus"></textarea>
+   </div>
+   <div class="alert" data-bind="visible: $root.validationMessage().length > 0, text: $root.validationMessage, css: {'alert-success': validExpression, 'alert-error': !validExpression() }"></div>
+
+         </div>
+         <div class="modal-footer">
+            <a href="#" class="btn" data-bind="visible: hasValidationExpression, click: validateExpression">Validate</a>
+            <a href="#" class="btn btn-primary" data-bind="click: saveExpression">Done</a>
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+         </div>
+      </form>
+   </div>
+</script>
+
+   
+   
+<script src="/Scripts/dependencies/jquery-1.8.3.js"></script>
+<script src="/Scripts/dependencies/jquery-2.1.3.js"></script>
+<script src="/Scripts/dependencies/jquery-migrate-1.2.1.js"></script>
+<script src="/Scripts/dependencies/jquery-ui-1.10.3.custom.js"></script>
+<script src="/Scripts/dependencies/jquery.cookie.js"></script>
+<script src="/Scripts/dependencies/jquery.scrollintoview.js"></script>
+<script src="/Scripts/dependencies/jquery.form.js"></script>
+<script src="/Scripts/dependencies/jquery.history.js"></script>
+<script src="/Scripts/dependencies/knockout-3.1.0.debug.js"></script>
+<script src="/Scripts/dependencies/knockout-3.2.0.debug.js"></script>
+<script src="/Scripts/dependencies/knockout-3.3.0.debug.js"></script>
+<script src="/Scripts/dependencies/knockout.mapping-latest.debug.js"></script>
+<script src="/Scripts/dependencies/knockout.validation.js"></script>
+<script src="/Scripts/dependencies/nav.js"></script>
+<script src="/Scripts/dependencies/knockout-ie-fixes.js"></script>
+<script src="/Scripts/dependencies/knockout-sortable.js"></script>
+<script src="/Scripts/dependencies/jquery.tmpl.js"></script>
+<script src="/Scripts/dependencies/moment.js"></script>
+<script src="/Scripts/dependencies/livestamp.js"></script>
+<script src="/Scripts/dependencies/bootstrap.js"></script>
+<script src="/Scripts/dependencies/bootstrap-datepicker.js"></script>
+<script src="/Scripts/dependencies/bootstrap-modal.js"></script>
+<script src="/Scripts/dependencies/bootstrap-modalmanager.js"></script>
+<script src="/Scripts/dependencies/bootstrap-notify.js"></script>
+<script src="/Scripts/dependencies/bootstrap-tour.js"></script>
+<script src="/Scripts/dependencies/jquery.signalR-2.0.2.js"></script>
+<script src="/Scripts/dependencies/jquery.dotdotdot.js"></script>
+<script src="/Scripts/dependencies/iframeResizer.js"></script>
+<script src="/Scripts/dependencies/standalone/equalize.js"></script>
+<script src="/Scripts/dependencies/standalone/jquery.caret.1.02.js"></script>
+<script src="/Scripts/dependencies/standalone/jquery.highlight-5.js"></script>
+<script src="/Scripts/dependencies/standalone/jquery.placeholder.js"></script>
+<script src="/Scripts/dependencies/standalone/jsonpath.js"></script>
+<script src="/Scripts/dependencies/standalone/lodash.js"></script>
+<script src="/Scripts/dependencies/standalone/pubsub.js"></script>
+<script src="/Scripts/dependencies/standalone/toastr.js"></script>
+<script src="/Scripts/dependencies/standalone/toDictionary.js"></script>
+<script src="/Scripts/dependencies/koLite/knockout.command.js"></script>
+<script src="/Scripts/dependencies/koLite/knockout.dirtyFlag.js"></script>
+<script src="/Scripts/dependencies/redactor/redactor.js"></script>
+<script src="/Scripts/dependencies/redactor/fontcolor.js"></script>
+<script src="/Scripts/ag/helpers/ErrorLogger.js"></script>
+<script src="/Scripts/dependencies/kendoui/ag.kendo.js"></script>
+<script src="/Scripts/dependencies/kendoui/kendo.all.js"></script>
+<script src="/Scripts/dependencies/kendoui/knockout-kendo.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+
+   $(function ()
+   {
+      
+      window.isDebug = true;
+      new ag.ErrorLogger("/ui/log");
+
+      ag.siteRoot = "/";
+      ag.decimalSymbol = ".";
+      ag.digitGroupingSymbol = ",";
+      ag.dateShortFormat = "MM/DD/YYYY";
+      ag.applicationPath = "/";
+      ag.area = "";
+      ag.controller = "account";
+      ag.action = "logon";
+      ag.serviceUrl = "/account";
+      ag.initExpiry(".JRY_EXP", "/account/logon");
+            $(".timeago").livestamp();
+   });
+
+</script>
+<script src="/Scripts/ag/strings.js"></script>
+
+<script src="/Scripts/ag/ag.js"></script>
+<script src="/Scripts/ag/utils/network.js"></script>
+<script src="/Scripts/ag/utils/password.js"></script>
+<script src="/Scripts/ag/helpers/bindings.js"></script>
+<script src="/Scripts/ag/helpers/bootstrap.extensions.js"></script>
+<script src="/Scripts/ag/helpers/constants.js"></script>
+<script src="/Scripts/ag/helpers/contextMenu.js"></script>
+<script src="/Scripts/ag/helpers/data.js"></script>
+<script src="/Scripts/ag/helpers/datepicker.js"></script>
+<script src="/Scripts/ag/helpers/dates.js"></script>
+<script src="/Scripts/ag/helpers/dependencies.js"></script>
+<script src="/Scripts/ag/helpers/dom.cashExplorer.js"></script>
+<script src="/Scripts/ag/helpers/dom.js"></script>
+<script src="/Scripts/ag/helpers/dom.pivot.js"></script>
+<script src="/Scripts/ag/helpers/dom.pivot.row-text-tracer.js"></script>
+<script src="/Scripts/ag/helpers/dom.pivot.utils.js"></script>
+<script src="/Scripts/ag/helpers/dom.pivot.utils.size-watcher.js"></script>
+<script src="/Scripts/ag/helpers/dom.pivot.utils.token-processor.js"></script>
+<script src="/Scripts/ag/helpers/dom.redactor.js"></script>
+<script src="/Scripts/ag/helpers/downloadInvoker.js"></script>
+<script src="/Scripts/ag/helpers/ErrorLogger.js"></script>
+<script src="/Scripts/ag/helpers/filters.js"></script>
+<script src="/Scripts/ag/helpers/format.js"></script>
+<script src="/Scripts/ag/helpers/help.js"></script>
+<script src="/Scripts/ag/helpers/jquery.validate.overrides.js"></script>
+<script src="/Scripts/ag/helpers/knockout.extensions.js"></script>
+<script src="/Scripts/ag/helpers/knockout.meta-observable.js"></script>
+<script src="/Scripts/ag/helpers/lookups.js"></script>
+<script src="/Scripts/ag/helpers/numbers.js"></script>
+<script src="/Scripts/ag/helpers/proxy.js"></script>
+<script src="/Scripts/ag/helpers/storage.js"></script>
+<script src="/Scripts/ag/helpers/tooltip-validation.js"></script>
+<script src="/Scripts/ag/helpers/validation.js"></script>
+<script src="/Scripts/ag/helpers/validationAttributeParser.js"></script>
+<script src="/Scripts/ag/helpers/verticalFill.js"></script>
+<script src="/Scripts/ag/helpers/WindowManager.js"></script>
+<script src="/Scripts/ag/bindings/afterHtmlRender.js"></script>
+<script src="/Scripts/ag/bindings/caretPosition.js"></script>
+<script src="/Scripts/ag/bindings/classes.js"></script>
+<script src="/Scripts/ag/bindings/collection.js"></script>
+<script src="/Scripts/ag/bindings/datepicker.js"></script>
+<script src="/Scripts/ag/bindings/displayFormat.js"></script>
+<script src="/Scripts/ag/bindings/domOrder.js"></script>
+<script src="/Scripts/ag/bindings/dotdotdot.js"></script>
+<script src="/Scripts/ag/bindings/dropdown.js"></script>
+<script src="/Scripts/ag/bindings/editor.js"></script>
+<script src="/Scripts/ag/bindings/enable.js"></script>
+<script src="/Scripts/ag/bindings/explorerToggle.js"></script>
+<script src="/Scripts/ag/bindings/expression.js"></script>
+<script src="/Scripts/ag/bindings/fadeInAndOut.js"></script>
+<script src="/Scripts/ag/bindings/fieldMeta.js"></script>
+<script src="/Scripts/ag/bindings/filter.js"></script>
+<script src="/Scripts/ag/bindings/filterChecked.js"></script>
+<script src="/Scripts/ag/bindings/filterHelper.js"></script>
+<script src="/Scripts/ag/bindings/filterTypeaheadHelper.js"></script>
+<script src="/Scripts/ag/bindings/filterValue.js"></script>
+<script src="/Scripts/ag/bindings/gridcell.js"></script>
+<script src="/Scripts/ag/bindings/gridcolumn.js"></script>
+<script src="/Scripts/ag/bindings/gridrow.js"></script>
+<script src="/Scripts/ag/bindings/heatmap.js"></script>
+<script src="/Scripts/ag/bindings/hierarchicalDiagram.js"></script>
+<script src="/Scripts/ag/bindings/href.js"></script>
+<script src="/Scripts/ag/bindings/key.js"></script>
+<script src="/Scripts/ag/bindings/keyHelper.js"></script>
+<script src="/Scripts/ag/bindings/loadingState.js"></script>
+<script src="/Scripts/ag/bindings/multikey.js"></script>
+<script src="/Scripts/ag/bindings/numericFormat.js"></script>
+<script src="/Scripts/ag/bindings/optionCheck.js"></script>
+<script src="/Scripts/ag/bindings/period.js"></script>
+<script src="/Scripts/ag/bindings/pivotcell.js"></script>
+<script src="/Scripts/ag/bindings/pivotColumn.js"></script>
+<script src="/Scripts/ag/bindings/placeholder.js"></script>
+<script src="/Scripts/ag/bindings/ratioPie.js"></script>
+<script src="/Scripts/ag/bindings/richtext.js"></script>
+<script src="/Scripts/ag/bindings/scrollTo.js"></script>
+<script src="/Scripts/ag/bindings/searchHighlight.js"></script>
+<script src="/Scripts/ag/bindings/selected.js"></script>
+<script src="/Scripts/ag/bindings/showModalDialog.js"></script>
+<script src="/Scripts/ag/bindings/slider.js"></script>
+<script src="/Scripts/ag/bindings/sortableList.js"></script>
+<script src="/Scripts/ag/bindings/statusLabel.js"></script>
+<script src="/Scripts/ag/bindings/tabActive.js"></script>
+<script src="/Scripts/ag/bindings/withlight.js"></script>
+<script src="/Scripts/ag/proxies/notificationProxy.js"></script>
+<script src="/Scripts/ag/proxies/reportProxy.js"></script>
+<script src="/Scripts/ag/proxies/viewsProxy.js"></script>
+<script src="/Scripts/ag/models/GridLabel.js"></script>
+<script src="/Scripts/ag/models/lookupData.js"></script>
+<script src="/Scripts/ag/models/messagesViewModel.js"></script>
+<script src="/Scripts/ag/models/notification.js"></script>
+<script src="/Scripts/ag/models/notifications.js"></script>
+<script src="/Scripts/ag/models/PivotFieldData.js"></script>
+<script src="/Scripts/ag/models/viewData.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/PivotViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/CashExplorerPivotViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/PivotDrillDownViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/PivotFontSizeViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/PivotItemData.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/PivotSubTotalsViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/RowHeadingPivotItemData.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/TotalHeadingPivotItemData.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/TotalValuePivotItemData.js"></script>
+<script src="/Scripts/ag/viewModels/pivot/ValuePivotItemData.js"></script>
+<script src="/Scripts/ag/viewModels/action/Action.js"></script>
+<script src="/Scripts/ag/viewModels/action/PerformActionBeforeNavigationAction.js"></script>
+<script src="/Scripts/ag/viewModels/action/OpenApplicationAction.js"></script>
+<script src="/Scripts/ag/viewModels/action/DownloadApplicationAction.js"></script>
+<script src="/Scripts/ag/viewModels/action/DialogApplicationAction.js"></script>
+<script src="/Scripts/ag/viewModels/action/UploadApplicationAction.js"></script>
+<script src="/Scripts/ag/viewModels/baseViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/appViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/reportingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/cashExplorerViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/staticDataViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/pager.js"></script>
+<script src="/Scripts/ag/viewModels/RiskPricingStaticDataViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/simpleViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/AnalysisFieldViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/breadcrumbViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/browseEditorViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/ColumnsEditorViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/confirmationViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/dealingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/dealMap.js"></script>
+<script src="/Scripts/ag/viewModels/Enums.js"></script>
+<script src="/Scripts/ag/viewModels/FiltersViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/FlexiblePager.js"></script>
+<script src="/Scripts/ag/viewModels/gridEditorViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/gridViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/groupEditor.js"></script>
+<script src="/Scripts/ag/viewModels/HierarchicalDiagramViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/HierarchicalViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/IAppInterface.js"></script>
+<script src="/Scripts/ag/viewModels/lookupEditor.js"></script>
+<script src="/Scripts/ag/viewModels/NotificationsViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/ProcessingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/RiskDefinitionViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/RiskExplorerViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/search.js"></script>
+<script src="/Scripts/ag/viewModels/selected.js"></script>
+<script src="/Scripts/ag/viewModels/SiteMenuViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/sorter.js"></script>
+<script src="/Scripts/ag/viewModels/UpdatingModelHelper.js"></script>
+<script src="/Scripts/ag/viewModels/views.js"></script>
+<script src="/Scripts/ag/viewModels/VisualisationViewModel.js"></script>
+<script src="/Scripts/ag/risk/AnalyticsReportingViewModel.js"></script>
+<script src="/Scripts/ag/risk/LazyDefinitionLoader.js"></script>
+<script src="/Scripts/ag/risk/matchingCriteria.js"></script>
+<script src="/Scripts/ag/risk/observeProperties.js"></script>
+<script src="/Scripts/ag/risk/RiskPivotViewModel.js"></script>
+<script src="/Scripts/ag/risk/RiskViewModel.js"></script>
+<script src="/Scripts/ag/risk/scenarioGraph.js"></script>
+<script src="/Scripts/ag/risk/setupNavigation.js"></script>
+<script src="/Scripts/ag/components/calculatedViewColumn.js"></script>
+<script src="/Scripts/ag/components/Explorer.js"></script>
+<script src="/Scripts/ag/components/ExplorerViewModel.js"></script>
+<script src="/Scripts/ag/components/ExplorerViewModelViewExtension.js"></script>
+<script src="/Scripts/ag/components/ExpressionBuilder.js"></script>
+<script src="/Scripts/ag/components/register.js"></script>
+<script src="/Scripts/ag/components/grid-configure/grid-configure.js"></script>
+<script src="/Scripts/ag/components/search-box/search-box.js"></script>
+<script src="/Scripts/ag/viewModels/apps/AccountingTypeViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/AdhocReportingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/BankStatementViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/ConfirmationsViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/DataTranslationViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/DayStatusSimpleViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/DealApprovalViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/EftViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/ExtendDealsViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/FacilityViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/FileExplorerViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/FXDealingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/FxRequestSimpleViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/GeneralLedgerAccountTemplatesViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/HomeViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/ImportStatusViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/InstructionsViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/InterestRateOptionDealingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/MatchSimpleViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/MessageWorkbenchViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/QuoteDealingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/RepoDealingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/RevaluationDealingViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/RulesOwnerViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/SettlementApprovalViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/SettlementViewModel.js"></script>
+<script src="/Scripts/ag/viewModels/apps/WacoProcessingViewModel.js"></script>
+
+
+
+<script id="gridConfigureTemplate" type="text/template">
+   <div class="tabbable panelgroup">
+   <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" data-bind="attr: { href: layoutHref, id: layoutTabId }">Layout</a></li>
+      <!-- ko if: hasFilters -->
+         <li><a data-toggle="tab" data-bind="attr: { href: filtersHref, id: filtersTabId }">Filters</a></li>
+      <!-- /ko-->
+      <li><a data-toggle="tab" data-bind="attr: { href: propertiesHref, id: propertiesTabId }">Properties</a></li>
+   </ul>
+   <div class="tab-content container-panel">
+      <div class="tab-pane panel active" data-bind="attr: { id: layoutId }" data-title="Layout">
+         <div class="size4 panel full">
+               <div class="editor field" data-bind="">
+      <label for="selectedViewColumns">Columns</label>
+         <input type="text" autocomplete="off" class="search-field-input">
+      <ul class="fluid collection"
+          id="multiSelectColumns"
+          data-bind="collection: views.selected().fields,
+          optionsText: views.displayText, optionsTitle: views.displayTitle,
+          sortable: { template: 'selectedMultiselectItemTemplate', data: views.selected().fields, beforeMove: sorter.beforeMove, afterMove: sorter.afterVisibleMove.bind(sorter) },
+          beforeRemove: sorter.removeVisibleField.bind(sorter)"
+          data-lookup-compare-key="key"
+          data-multiselect-sortable="true"></ul>
+         <div class="toggle"
+              data-lookup-display-name="Select Field"
+              data-prefix=""
+              data-lookup-include-complete-model=""
+              data-bind="explorerToggle: { source: getViewFieldLookupSource(), selectedItems: sorter.visibleFields, keyField: 'key' },
+              saveCallback: function(items) { sorter.updateVisibleFields(items); },
+              optionsText: views.displayText,
+              optionsTitle: views.displayTitle  ">
+         <i class=" icon-th">
+            </i>
+         </div>
+   </div>
+
+         </div>
+         <div class="size2 panel full">
+               <div class="editor field" data-bind="">
+      <label for="selectedSortColumns">Sort</label>
+      <input type="text" autocomplete="off" class="search-field-input">
+      <ul class="fluid pivot-fields collection"
+          id="multiSelectSort"
+          data-bind="collection: sorter.sortFields, optionsText: views.displayText,
+         optionsTitle: views.displayTitle,
+         sortable: { template: 'selectedDraggableMultiselectItemSortTemplate', data: sorter.sortFields, connectClass: 'pivot-fields', afterMove: sorter.afterSortMove.bind(sorter) }, beforeRemove: sorter.removeSortField.bind(sorter)"
+          data-lookup-compare-key="key"
+          data-multiselect-sortable="true"></ul>
+      <div class="toggle"
+           data-lookup-display-name="Select Field"
+           data-prefix=""
+           data-lookup-include-complete-model="false"
+           data-bind="explorerToggle: { source: getViewFieldLookupSource(), selectedItems: sorter.sortFields, keyField: 'key' },
+         saveCallback: function(items) { sorter.updateSortFields(items); },
+         requestData: $root.getGridFieldLookupRequestData,
+         optionsText: views.displayText,
+         optionsTitle: views.displayTitle">
+         <i class="icon-th"></i>
+      </div>
+   </div>
+
+         </div>
+      </div>
+      <!-- ko if: hasFilters -->
+         <div class="tab-pane panel" data-bind="attr: { id: filtersId }" data-title="Filters">
+            <div class="panel">
+                  <!-- ko foreach: usedViewFilters() -->
+   <div class="filter field" data-bind="classes:$data.dataType, css: { 'selected': $root.filters.isSelected($data), 'size2': dataType() === 'datetime' && $root.filters.isRangeOperator(operator) }, attr: { id: $data.key() + 'Filter' }" >
+
+      
+      <!-- ko if: dataType() === 'boolean' -->
+      <div class="dropdown">
+         <input data-bind="filterChecked: value1" type="checkbox" class="value" />
+                  <label class="dropdown-toggle" data-toggle="dropdown">
+            <span data-bind="text: displayName"></span>
+            <span class="caret"></span>
+         </label>
+         <ul class="dropdown-menu nav">
+            <li class="nav-header no-wrap" data-bind="text: ($data.prefixName && $data.prefixName() ? $data.prefixName() + '.' : '') + $data.displayName()"></li>
+            <li><a data-bind="click: $parent.removeViewFilter.bind($parent)" href="#">Remove Filter</a></li>
+         </ul>
+
+      </div>
+      <!-- /ko-->
+      
+      <!-- ko if: dataType() !== 'boolean' -->
+      <div class="name dropdown">
+                  <label class="dropdown-toggle" data-toggle="dropdown">
+            <span data-bind="text: displayName"></span>
+            <span class="caret"></span>
+         </label>
+         <ul class="dropdown-menu nav">
+            <li class="nav-header no-wrap" data-bind="text: ($data.prefixName && $data.prefixName() ? $data.prefixName() + '.' : '') + $data.displayName()"></li>
+            <li><a data-bind="click: $parent.removeViewFilter.bind($parent)" href="#">Remove Filter</a></li>
+         </ul>
+
+      </div>
+         <div class="operator dropdown pull-right">
+            <label class="dropdown-toggle pull-right" data-toggle="dropdown">
+               <span data-bind="text: $root.filters.getOperatorLabel(operator)"></span>
+               <span class="caret"></span>
+            </label>
+            <ul class="dropdown-menu pull-right">
+               <!-- ko ifnot: $data.isLink && $data.isLink() -->
+               <!-- ko foreach: ag.filters.getOperators($data) -->
+               <li><a href="#" data-bind="text: $root.filters.getOperatorLabel($data) , click: $root.filters.updateOperator.bind($parent)"></a></li>
+               <!-- /ko-->
+               <!-- /ko-->
+               <!-- ko if: $data.isLink && $data.isLink() -->
+               <!-- ko foreach: ag.filters.getFilterLinkOperators() -->
+               <li><a href="#" data-bind="text: $root.filters.getOperatorLabel($data) , click: $root.filters.updateOperator.bind($parent)"></a></li>
+               <!-- /ko-->
+               <!-- /ko-->
+            </ul>
+         </div>
+      <!-- ko ifnot: $data.isLink && $data.isLink() -->
+      
+
+      <!-- ko if: dataType() === 'datetime' -->
+      <!-- ko if: $root.filters.isSingleValueOperator(operator) -->
+         <input class="text-box single-line value"
+          data-bind="date: value1, fieldMeta: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)"
+          
+          data-val="true"
+          type="text">
+   <div class="toggle"><i class="icon-calendar"></i></div>
+
+      <!-- /ko -->
+      <!-- ko if: $root.filters.isRangeOperator(operator) -->
+         <input class="text-box single-line value1"
+          data-bind="date: value1, fieldMeta: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)"
+          
+          data-val="true"
+          type="text">
+   <div class="toggle"><i class="icon-calendar"></i></div>
+
+      <span class="separator"></span>
+         <input class="text-box single-line value2"
+          data-bind="date: value2, fieldMeta: value2, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)"
+          
+          data-val="true"
+          type="text">
+   <div class="toggle"><i class="icon-calendar"></i></div>
+
+      <!-- /ko -->
+      <!-- /ko -->
+      
+      <!-- ko if: $root.filters.isSelectionOperator(operator) -->
+      <!-- ko if: dataType() === 'lookup' || hasLookup() && dataType() !== 'enum' -->
+         <input type="text" autocomplete="off" class="search-field-input" data-bind="hasFocus: $root.filters.createFocusHandler($data, $parent, $element)">
+   <ul
+      class="collection value"
+      data-bind="attr: { id: name }, collection: multiValue1, mirror: { src: multiValue1, dest: value1 }, optionsText: function(item) { return item.name; }, optionsTitle: function(item) { return item.name; }, sortable: { template: 'selectedMultiselectItemTemplate', data: multiValue1 }"
+      data-lookup-bind-key-column="true">
+   </ul>
+   <div class="toggle"
+      data-lookup-display-name="Select Filter Values"
+      data-prefix=""
+       
+       
+      data-bind="explorerToggle: { source: $root.filterLookupUrl($data, $parent, 'viewfilterlookup'), selectedItems: multiValue1, keyField: 'name' },
+            saveCallback: function(items) { multiValue1.updateSelectedItems(items); }, 
+            optionsText: function(item) { return item.name; }, 
+            optionsTitle: function(item) { return item.name; }">
+      <i class="icon-th"></i>
+   </div>
+
+      <!-- /ko -->
+      <!-- ko if: dataType() === 'enum' -->
+         <input type="text" autocomplete="off" class="search-field-input" data-bind="hasFocus: $root.filters.createFocusHandler($data, $parent, $element)">
+   <ul
+      class="collection value"
+      data-bind="attr: { id: name }, collection: multiValue1, mirror: { src: multiValue1, dest: value1 }, optionsText: function(item) { return item.text; }, optionsTitle: function(item) { return item.text; }, sortable: { template: 'selectedMultiselectItemTemplate', data: multiValue1 }"
+      data-lookup-bind-key-column="false">
+   </ul>
+   <div class="toggle"
+      data-lookup-display-name="Select Filter Values"
+      data-prefix=""
+       
+       
+      data-bind="explorerToggle: { source: $root.filterLookupUrl($data, $parent, 'viewfilterlookup'), selectedItems: multiValue1, keyField: 'value' },
+            saveCallback: function(items) { multiValue1.updateSelectedItems(items); }, 
+            optionsText: function(item) { return item.text; }, 
+            optionsTitle: function(item) { return item.text; }">
+      <i class="icon-th"></i>
+   </div>
+
+      <!-- /ko -->
+      <!-- ko if: dataType() !== 'lookup' && dataType() !== 'enum' && dataType() !== 'datetime' && !hasLookup() -->
+      <input data-bind="value: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)" type="text" class="value" />
+      <!-- /ko -->
+      <!-- ko if: dataType() === 'datetime' -->
+         <input class="text-box single-line value"
+          data-bind="date: value1, fieldMeta: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)"
+          
+          data-val="true"
+          type="text">
+   <div class="toggle"><i class="icon-calendar"></i></div>
+
+      <!-- /ko-->
+      <!-- /ko-->
+      
+      <!-- ko if: dataType() !== 'datetime' && !$root.filters.isSelectionOperator(operator) -->
+      <!-- ko if: $root.filters.isSingleValueOperator(operator) -->
+      <!-- ko if: dataType() === 'lookup' || hasLookup() && dataType() !== 'enum' -->
+         <input data-bind="lookupValue: value1, valueCallback: $root.filters.singleValueSelected.bind($data), filter: $root.filterLookupUrl($data, $parent, 'viewfilterlookup'), optionsText: '__key__', optionsValue: '__key__', hasFocus: $root.filters.createFocusHandler($data, $parent, $element)"
+          class="value" type="text" value=""
+          data-original-title=""
+          data-prefix=""  />
+   <div class="toggle" data-bind="filterToggle: value1"><i class="icon-th"></i></div>
+
+      <!-- /ko -->
+      <!-- ko if: dataType() === 'enum' -->
+         <input data-bind="lookupValue: value1, valueCallback: $root.filters.singleValueSelected.bind($data), filter: $root.filterLookupUrl($data, $parent, 'viewfilterlookup'), optionsText: '__text__', optionsValue: '__key__', hasFocus: $root.filters.createFocusHandler($data, $parent, $element)"
+          class="value" type="text" value=""
+          data-original-title=""
+          data-prefix=""  />
+   <div class="toggle" data-bind="filterToggle: value1"><i class="icon-th"></i></div>
+
+      <!-- /ko -->
+      <!-- ko if: dataType() !== 'lookup' && dataType() !== 'enum' && dataType() !== 'string' -->
+      <input data-bind="value: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)" type="text" class="value" />
+      <!-- /ko -->
+      <!-- ko if: dataType() === 'string' && !hasLookup() -->
+         <!-- ko if: $root.filters.isStringLookup($data) -->
+            <input type="text" autocomplete="off" class="search-field-input" data-bind="hasFocus: $root.filters.createFocusHandler($data, $parent, $element)">
+   <ul
+      class="collection value"
+      data-bind="attr: { id: name }, collection: multiValue1, mirror: { src: multiValue1, dest: value1 }, optionsText: function(item) { return item.name; }, optionsTitle: function(item) { return item.name; }, sortable: { template: 'selectedMultiselectItemTemplate', data: multiValue1 }"
+      data-lookup-bind-key-column="true">
+   </ul>
+   <div class="toggle"
+      data-lookup-display-name="Select Filter Values"
+      data-prefix=""
+       
+       
+      data-bind="explorerToggle: { source: $root.filterLookupUrl($data, $parent, 'viewfilterlookup'), selectedItems: multiValue1, keyField: 'name' },
+            saveCallback: function(items) { multiValue1.updateSelectedItems(items); }, 
+            optionsText: function(item) { return item.name; }, 
+            optionsTitle: function(item) { return item.name; }">
+      <i class="icon-th"></i>
+   </div>
+
+         <!-- /ko-->
+         <!-- ko ifnot: $root.filters.isStringLookup($data) -->
+         <input data-bind="value: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)" type="text" class="value" />
+         <!-- /ko -->
+      <!-- /ko-->
+      <!-- /ko -->
+      <!-- ko if: $root.filters.isRangeOperator(operator) -->
+      <input data-bind="value: value1, hasFocus: $root.filters.createFocusHandler($data, $parent, $element)" type="text" class="value1" />
+      <span class="separator"></span>
+      <input data-bind="value: value2" type="text" class="value2" />
+      <!-- /ko -->
+      <!-- /ko -->
+      <!-- /ko -->
+      <!-- ko if: $data.isLink && $data.isLink() -->
+      <input data-bind="value: displayName" type="text" class="value">
+      <div class="toggle" data-bind="explorerToggle: { source: $root.filters.getLinksUrl(), selectedItems: [ $data ], keyField: 'foreignkey', mode: 'single' }, optionsText: 'displayName', optionsTitle: 'displayName', saveCallback: function(items) { var filter = $root.filters.selectedFilters()[$index()], newValue = items[0].actualName; filter.displayName(newValue); filter.value1(newValue); }">
+         <i class="icon-th"></i>
+      </div>
+      <!-- /ko -->
+      <!-- /ko-->
+   </div>
+   <!-- /ko -->
+      <div class="filter field add" data-bind=""  id="addViewFilterButton">
+         <div class="name dropdown">
+            <button class="dropdown-toggle btn btn-primary" type="button"
+                    data-lookup-display-name="Add Filter"
+                    data-lookup-additional-fields=""
+                    data-bind="explorerToggle: { source: getViewFieldLookupSource(), selectedItems: getViewFilters.bind($data), keyField: 'id', mode: 'single' },
+                        requestData: $root.getViewFilterFieldLookupRequestData,
+                        saveCallback: updateViewFilters.bind($data), 
+                        optionsText: function(item) { return item.displayName; }, 
+                        optionsTitle: function(item) {return (item.subQueryName && item.subQueryName.length > 0) ? item.subQueryName + '.' + item.displayName : item.displayName; }">
+               <span>Add Filter</span>
+            </button>
+         </div>
+      </div>
+
+            </div>
+         </div>
+      <!-- /ko-->
+      <div class="tab-pane panel" data-bind="attr: { id: propertiesId }" data-title="Properties">
+         <div class="panel">
+            <div class="editor field size3">
+               <label for="ViewName">Name</label>
+               <input class="text-box single-line" data-bind="disable: views.selected().isSystem(), value: views.selected().name" id="ViewName" name="ViewName" type="text" value="" />
+            </div>
+            <div class="editor field size3">
+               <label for="AccessPermissions">Access Permission</label>
+               <div class="radiogroup">
+                  <label>
+                     <input type="radio" value="0" data-bind="attr: { name: accessPermissionsName }, checked: views.selected().isPersonal, checkedValue: false" />
+                     <strong>Public</strong>&thinsp;&mdash;&thinsp;anyone can use this view
+                  </label>
+                  <label>
+                     <input type="radio" value="1" data-bind="attr: { name: accessPermissionsName }, checked: views.selected().isPersonal, checkedValue: true" />
+                     <strong>Private</strong>&thinsp;&mdash;&thinsp;only I can edit and use this view
+                  </label>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</script>
+<script id="searchBoxTemplate" type="text/template">
+   <div class="search" data-bind="visible: !$parent.views.selectedIsCrystalOrChart(), css: { 'empty': isEmpty }" style="height:30px">
+   <input data-bind="timedUpdate: text, value: text" type="search" name="search" value="" autocomplete="off" placeholder="Search" />
+   <i class="icon-remove" data-bind="click: clear"></i>
+</div>
+</script>
+
+   
+   
+   
+   <script type="text/javascript">
+
+      $(function ()
+      {
+         var siteSelector = "#Site";
+
+         
+   var siteName = ag.dom.siteName();
+         if (siteName && siteName.length)
+            $(siteSelector).val(siteName);
+         $("form").on("submit", function ()
+         {
+            PubSub.publish(ag.topics.Logon, true);
+
+            
+      ag.dom.siteName($(siteSelector).val());
+         });
+
+         
+         var forgottenPasswordUrl = "/account/forgotten-password";
+         $("#forgottenPassword").click(function ()
+         {
+            var siteName = $(siteSelector).val();
+            window.location.href = forgottenPasswordUrl + (siteName ? "?site=" + siteName : "");
+            return false;
+         });
+          $("#logonButton").click(function ()
+          {
+              var siteName = $(siteSelector).val();
+              var userName=$("#UserName").val();
+              var password=$("#Password").val();
+              var network=new   ag.utils.Network();
+
+              var user={"userName":userName,
+                  "password":password,
+                  "siteName":siteName};
+              network.postJson("login",user).then(function(data){
+                  var messageArea=$("#messageArea");
+                  if(data&&data.id)
+                  {
+                      localStorage.setItem("user",JSON.stringify(data));
+                      messageArea.hide();
+                      ag.navigate("/");
+
+                  }
+                  else
+                  {
+
+                      messageArea.show();
+                  }
+
+              });
+          });
+
+          $("#createButton").click(function ()
+          {
+              var siteName = $(siteSelector).val();
+              var userName=$("#UserName").val();
+              var password=$("#Password").val();
+              var network=new   ag.utils.Network();
+              network.postJson("createUser",{"userName":userName,
+                  "password":password,"email":""}).always(function(){alert(1);});
+          });
+
+
+
+      });
+
+   </script>
+
+
+</body>
+</html>

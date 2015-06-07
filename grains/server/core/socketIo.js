@@ -3,13 +3,30 @@ var restify  = require('restify'),
     fs       = require('fs'),
     configuration = require('../configuration.js')
 
+ controllers = {},
+     controllers_path = process.cwd() + '/server/controllers';
+fs.readdirSync(controllers_path).forEach(function (file) {
+    if (file.indexOf('.js') != -1) {
+        controllers[file.split('.')[0]] = require(controllers_path + '/' + file)
+    }
+})
+
 var server = restify.createServer();
 var io = socketio.listen(server);
 
-server.get(/\/\w+/, function indexHTML(req, res, next) {
-    if(req.url.indexOf("img")>=0)
-       console.log(req.url);
+server
+    .use(restify.fullResponse())
+    .use(restify.bodyParser())
 
+///\/\w+\/\w+/
+
+server.get("/", restify.serveStatic({
+    directory: './server/quantum',
+    default: 'index.html'
+}));
+
+
+server.get(/\./, function indexHTML(req, res, next) {
     fs.readFile(  './server/quantum'+req.url, function (err, data) {
         if (err) {
             next(err);
@@ -21,6 +38,24 @@ server.get(/\/\w+/, function indexHTML(req, res, next) {
         next();
     });
 });
+
+/*
+server.get("/b", function(req, res, next) {
+
+        res.json({
+            type: true,
+            data: {"name":"baseline"}
+        });
+    var controllers = {},
+    }
+})
+*/
+
+server.post("/account/login", controllers.user.login)
+server.post("/account/createUser", controllers.user.createUser)
+//server.put("/account/user/:id", controllers.user.updateUser)
+//server.del("/account/:id", controllers.user.deleteUser)
+//server.get("/account/user/:id", controllers.user.viewUser)
 
 // Chatroom
 // usernames which are currently connected to the chat

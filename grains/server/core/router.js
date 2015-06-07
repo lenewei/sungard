@@ -21,12 +21,27 @@ server.get("/", restify.serveStatic({
     default: 'index.html'
 }));
 
+server.get("/c", function(req, res, next) {
+        var articleModel = new Article(req.body);
+        res.json({
+            type: true,
+            data: {"name":"c"}
+        });
+    }
+    );
+
+
+
+
+
 // Article Start
 server.post("/articles", controllers.article.createArticle)
 server.put("/articles/:id", controllers.article.updateArticle)
 server.del("/articles/:id", controllers.article.deleteArticle)
 server.get({path: "/articles/:id", version: "1.0.0"}, controllers.article.viewArticle)
 server.get({path: "/articles/:id", version: "2.0.0"}, controllers.article.viewArticle_v2)
+
+
 
 // This is comment operations referenced in article
 server.put("/articles/:id/comments", controllers.article.createArticleComment)
