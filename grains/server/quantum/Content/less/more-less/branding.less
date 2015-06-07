@@ -1,0 +1,265 @@
+﻿//
+// Branding definitions - mainly colors for background, borders and shadows
+//
+
+// texture backgrounds
+body {
+   background-image: url("img/linen-base.png");
+}
+
+// colored cover over the background
+.page-container::before {
+   content: "";
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   .opacity(45);
+   z-index: -1;
+   background-color: @category-warm-gray;
+}
+
+// editor page
+.form {
+   background-color: @panelBackground;
+}
+
+// reporting page
+.report {
+   background-color: @containerBackground;
+   border: @containerBorder;
+   border-top-color: @panelBorderColor;
+   border-radius: 0 1px 0 0; // get rid of 1px hanging border
+   padding: 0 @containerPadding @containerPadding @containerPadding;
+   .colored-shadow();
+   .clearfix();
+   position: relative;
+
+   // form within a reporting page
+   &.form {
+      background-color: @panelBackground;
+      padding-top: @containerPadding - 5px;
+   }
+
+   .bordered.padded {
+      > .header {
+         // overlap the borders above and below
+         margin: -1px;
+         z-index: 1;
+         border-width: 0 1px;
+         border-style: solid;
+         width: auto;
+      }
+      > * {
+         padding-left: @containerPadding;
+         padding-right: @containerPadding;
+      }
+   }
+}
+
+// positioning and size of category border in the header
+.header.main::before {
+   width: 2*@categoryBorderWidth;
+   height: 100px;
+   margin-left: -@containerPadding;
+   margin-top: -@containerPadding;
+   position: absolute;
+}
+
+// the touches of colour
+// ---------------------
+.make-colorful(@category, @categoryColor, @darkenBanner:true) {
+   // the main color that is used to mix in with the grays
+   @pageBackground: hsl(hue(@categoryColor), saturation(@categoryColor)/2, 89%);
+
+   // some colouring (or default colouring) should happen regardless of banner colour
+   (~".category-@{category}") {
+      // bar next to title
+      .header.main::before {
+         background-color: @categoryColor;
+      }
+
+      .page.breadcrumb, .header.main, .report {
+         .colored-shadow(mix(darken(@panelBackground, 90%), @category-warm-gray, 40%), 0.6);
+      }
+
+      // set defaults for the gray borders
+      @sectionBorder: mix(darken(@mainBorderColor, 30%), @category-warm-gray, 80%);
+      @sectionBorderLight: mix(darken(@mainBorderColor, 21%), @category-warm-gray, 80%);
+
+      .page.breadcrumb {
+         border-right-color: @sectionBorder;
+         border-left-color: @sectionBorderLight;
+      }
+
+      #loading-page .page.breadcrumb {
+         border-bottom-color: @sectionBorder;
+      }
+
+   }
+
+   // these colourings only happen when there is a standard (colourless) banner
+   (~".category-@{category}.banner-standard") {
+      // colored drop shadow on the page container
+      .page.breadcrumb, .header.main, .report {
+         .colored-shadow(mix(darken(@panelBackground, 90%), @categoryColor, 40%), 0.6);
+      }
+
+      @sectionBorder: mix(darken(@mainBorderColor, 30%), @categoryColor, 80%);
+      @sectionBorderLight: mix(darken(@mainBorderColor, 21%), @categoryColor, 80%);
+
+      // colored overlay of background image
+      .page-container::before {
+         background-color: @categoryColor;
+      }
+
+      .page.breadcrumb {
+         border-top: none;
+         border-right-color: @sectionBorder;
+         border-left-color: @sectionBorderLight;
+         border-radius: 0 0 1px 0; // get rid of 1px hanging border
+      }
+
+      #loading-page .page.breadcrumb {
+         border-bottom-color: @sectionBorder;
+      }
+
+      .bordered.padded > .header {
+         border-left-color: darken(mix(@sectionBorder, @brandingMainPanelBackground), 5%);
+         border-right-color: darken(mix(@sectionBorder, @brandingMainPanelBackground), 9%);
+      }
+
+      .report {
+         border-left-color: @sectionBorderLight;
+         border-right-color: @sectionBorder;
+         border-bottom-color: @sectionBorder;
+      }
+
+      // border on the page header
+      .header.main {
+         border-left-color: darken(@categoryColor, 7%);
+         border-right-color: @sectionBorder;
+      }
+
+      @backgroundGray: mix(@panelBackground, @pageBackground, 80%);
+
+      // shade the grey
+      .nav-tabs > .active > a,
+      .nav-tabs > .active > a:hover,
+      .checkbox.field label:hover,
+      .radio.field label:hover,
+      .report.form,
+      .browse,
+      .page.breadcrumb,
+      .bordered,
+      .modal,
+      .modal-footer,
+      .table-pivot tr.head,
+      .table-pivot tr.head .frozen {
+         background-color: @backgroundGray;
+      }
+
+      // backgrounds for tabs and multi select
+      @backgroundHighlight: hsl(hue(@categoryColor), saturation(@categoryColor)/3, 89%);
+      @backgroundHighlightOutline: darken(@backgroundHighlight, 10%);
+
+      .nav-tabs, .search-choice .dropdown-toggle {
+         background-color: @backgroundHighlight;
+         border-color: @backgroundHighlightOutline;
+      }
+
+      .nav-tabs > .active > a {
+         border-color: @backgroundHighlightOutline @backgroundHighlightOutline transparent @backgroundHighlightOutline;
+      }
+
+      .nav-tabs > li > a:hover {
+         border-left-color: @backgroundHighlightOutline;
+         border-top-color: @backgroundHighlightOutline;
+         border-right-color: @backgroundHighlightOutline;
+      }
+
+      // shade the normal buttons as well
+      @backgroundButton: darken(@backgroundGray, 5%);
+      .btn {
+         background-color: darken(@backgroundButton, 1%);
+      }
+
+      .btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
+         background-color: lighten(@backgroundButton, 3%);
+      }
+
+      // shade the headings
+      .panel h2 {
+         color: mix(@grayDark, @categoryColor, 70%);
+         .opacity(80);
+      }
+
+      // color the start bar on the profile preview
+      .profile-preview .start:before {
+         background-color: @categoryColor;
+      }
+   }
+
+   (~"body .color-@{category}.menu.selected"),
+   (~"body .color-@{category}.item") {
+      // border on the menu
+      border-color: @categoryColor!important;
+   }
+   // menu panel border
+   (~"#siteMenuDropDown .menu-panel > div.color-@{category}::before") {
+      background-color: @categoryColor;
+   }
+
+   // label background colours
+   (~".label-@{category}") {
+      .label-color(@categoryColor);
+   }
+
+   // bar on notification panel items
+   (~"#notificationsPanel .@{category} .item") {
+      border-left-color: @categoryColor;
+   }
+
+   // bar on toasts
+   (~".toast.@{category}::before") {
+      background-color: @categoryColor;
+   }
+
+   // banner colour to highlight EnvironmentDetails
+   (~".banner-@{category} .navbar") {
+      .bg-banner(@categoryColor, @darkenBanner);
+
+      .brand:hover .hamburger {
+         .bg-hover(@categoryColor, @darkenBanner);
+      }
+   }
+}
+
+// banner should not be darkened for some colours
+.bg-banner(@color, @darkenBanner) when (@darkenBanner = true) {
+   background-color: darken(@color, 5%);
+}
+
+.bg-banner(@color, @darkenBanner) when (@darkenBanner = false) {
+   background-color: @color;
+}
+
+.bg-hover(@color, @darkenBanner) when (@darkenBanner = true) {
+   background-color: @color;
+}
+
+.bg-hover(@color, @darkenBanner) when (@darkenBanner = false) {
+   background-color: lighten(@color, 5%);
+}
+
+
+.make-colorful(green, @category-green);
+.make-colorful(purple, @category-purple);
+.make-colorful(red, @category-red);
+.make-colorful(orange, @category-orange);
+.make-colorful(yellow, @category-yellow);
+.make-colorful(teal, @category-teal, false);
+.make-colorful(blue, @category-blue);
+.make-colorful(warm-gray, @category-warm-gray);
+.make-colorful(cool-gray, @category-cool-gray);

@@ -1,0 +1,545 @@
+﻿//
+// Anything that doesn't fit in the other less files
+//
+
+//@import "common-imports.less";
+
+html {
+   height: 100%;
+}
+
+// always allocate the page scrollbar area
+body {
+   overflow-y: scroll;
+   height: 100%;
+   padding-bottom: 0;
+   .box-sizing(border-box);
+   // this stops the content from moving when
+   // a modal is shown
+   &.modal-open {
+      padding-right: 17px;
+      overflow-y: hidden;
+
+      .navbar-fixed-top .navbar-inner {
+         // set navigation bar to show a scrollbar so that total width stays the same
+         // revisit when navigation is redone
+         overflow-y: scroll;
+      }
+
+      &.page-overflow {
+         // hide scrollbars of following internal containers as well
+         .page-container, .modal-scrollable, .page-container .navbar-fixed-top {
+            overflow-y: hidden;
+         }
+      }
+   }
+
+   .modal-scrollable {
+      background-image: url(about:blank);
+   }
+
+   &.window-mode {
+      // Hide the navbar when in window-mode
+      .navbar-fixed-top .navbar-inner {
+         display: none;
+      }
+
+      padding-top: 0;
+   }
+}
+
+@footerHeight: 26px;
+
+.page-container {
+   min-height: 100%;
+   margin-bottom: -@footerHeight * 1.5;
+
+   &:after {
+      content: "";
+      display: block;
+      height: @footerHeight * 1.5;
+   }
+}
+
+footer {
+   height: @footerHeight;
+   margin-top: @footerHeight / 2;
+   background-color: @brandingBannerBackground;
+   color: @brandingPrimaryText;
+   font-size: @baseFontSize - 1;
+   background-image: url("img/footer.png");
+   background-repeat: repeat-x;
+   background-size: 250px 4px;
+
+   div {
+      padding-left: 5px;
+   }
+
+   span {
+      .opacity(80);
+      display: inline-block;
+      padding-top: @footerHeight - @baseLineHeight - 2px;
+   }
+}
+
+// restrict rows inside fluid containers
+.restrict {
+   max-width: 1170px;
+   margin-left: auto;
+   margin-right: auto;
+   .box-sizing(border-box);
+}
+
+.transition {
+   .transition(0.5s);
+}
+
+// remove width restrictions when page is displayed in full
+.full-width .restrict {
+   max-width: 100%;
+}
+
+// remove all padding
+.no-padding {
+   padding: 0;
+}
+
+.content-only {
+   margin: 0;
+   border: 0;
+   display: none;
+}
+
+.center {
+   text-align: center;
+}
+
+// [AG 2/5/2012] A couple of hacks to get Bootstrap dropdown menus to display inside
+// sidebar grouped panels that normally have overflow set to hidden.
+.tab-content, .tab-content > .active, .pill-content > .active {
+   overflow: visible;
+}
+
+.collapse-horizontal {
+   .transition (width 0.5s ease);
+   overflow: hidden;
+   width: 0;
+}
+
+.relativecontainer {
+   position: relative;
+}
+
+button.sidebartoggle {
+   display: block;
+   position: absolute;
+   top: 4px;
+   right: 4px;
+}
+
+// Editor
+#editor {
+   position: relative;
+}
+
+// crystal viewer
+.crystal {
+   height: 800px; // TODO: set fixed height for now
+   iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      border: 1px solid @tableBorder;
+      box-sizing: border-box;
+   }
+
+   .loading {
+      position: absolute;
+      margin: 20px;
+   }
+}
+
+// stop text from wrapping on whitespace
+.no-wrap {
+   white-space: nowrap;
+}
+
+
+// search settings
+// highlight search in grid
+@highlightColour: yellow;
+
+.highlight {
+   background-color: @highlightColour;
+   color: darken(@highlightColour, 35%);
+   text-shadow: none;
+}
+
+// max width of the search box
+@searchWidth: 120px;
+
+.search {
+   position: relative;
+
+   input {
+      padding-right: 15px;
+      width: @searchWidth;
+      margin-bottom: 20px;
+      margin-top: 2px;
+      .transition(width 0.15s linear);
+   }
+
+   .icon-remove {
+      position: absolute;
+      top: 8px;
+      right: 5px;
+      .opacity(70);
+      .transition(opacity 0.15s linear);
+   }
+
+   &.empty {
+      input {
+         // min width of the search box for when it's empty
+         width: 50px;
+
+         &:focus {
+            width: @searchWidth;
+         }
+      }
+
+      .icon-remove {
+         .opacity(0);
+      }
+   }
+}
+
+// browse dropdown panel
+.browse {
+   background-color: @panelBackground;
+   z-index: 100;
+   // prompt user to click on the row
+   tr:hover {
+      cursor: pointer;
+   }
+   // make sure the search field doesn't grow and shrink on the browse
+   .search.empty input {
+      width: @searchWidth;
+   }
+}
+
+// touch related
+.touch {
+   .hidden-touch {
+      display: none !important;
+   }
+   // make the header static so that it behaves when the on-screen keyboard comes up
+   .navbar-fixed-top {
+      position: static;
+      margin-bottom: 20px;
+   }
+
+   body {
+      padding-top: 0;
+   }
+}
+
+// hide webkit presentation of the date field so that the field sizes properly
+input[type="datetime"], input[type="datetime-local"], input[type="date"] {
+   -webkit-appearance: none;
+}
+
+.no-touch {
+   input[type="datetime"], input[type="datetime-local"], input[type="date"] {
+      -webkit-appearance: inherit;
+   }
+}
+
+// placeholder related
+.placeholderWrap {
+   position: relative;
+   display: inline-block;
+
+   label {
+      color: @grayLight;
+      position: absolute;
+      top: 6px;
+      left: 5px; // Might have to adjust this based on font-size
+      pointer-events: none;
+      display: block;
+   }
+
+   &.placeholder-changed label {
+      display: none;
+   }
+}
+
+.group-editor {
+   margin-top: 18px;
+}
+
+#userAccountSettingsAlert {
+   margin-top: -45px;
+
+   a {
+      font-weight: normal;
+   }
+}
+
+.top-border-radius {
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+
+   h3 {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+   }
+}
+
+.target {
+   cursor: pointer;
+}
+
+// For any elements containing text with /r/n
+.pre-wrap {
+   white-space: pre-wrap;
+}
+
+h3 small {
+   font-size: 10px;
+}
+
+// Disable tours for now
+#tourButton {
+   display: none;
+}
+
+// hide container panel on the page
+.hide-container {
+   .header.main, section#main.form {
+      background-color: transparent;
+      border-color: transparent !important;
+      box-shadow: none !important;
+
+      &::before {
+         background-color: transparent !important;
+      }
+
+      h6 {
+         display: none;
+      }
+   }
+}
+
+// show loading-page while loading
+.page-container.loading {
+   // hide colour bar to avoid flicker
+   .header.main:before {
+      height: 0px;
+   }
+
+   #loading-page {
+      display: block;
+   }
+}
+
+#loading-page {
+   display: none;
+   text-align: center;
+   margin-bottom: -32px;
+}
+
+.margin-reset {
+   width: 100%;
+   margin: 0;
+}
+
+/* ----- moved from other places ------ */
+.btn-toolbar .nav {
+   margin-bottom: 0;
+}
+
+// close button that sits top right of container
+.close.top-right {
+   position: absolute;
+   right: @baseLineHeight / 2;
+   top: @baseLineHeight / 2;
+   z-index: 100;
+}
+
+// spacers
+.spacer-top {
+   margin-top: @baseLineHeight;
+}
+
+.spacer-bottom {
+   margin-bottom: @baseLineHeight;
+}
+
+.spacer-left {
+   margin-left: 5px;
+}
+
+.spacer-right {
+   margin-right: 5px;
+}
+
+// shift up the toolbar marked to be shifted into the header
+.shift-up {
+   position: absolute !important;
+   right: @containerPadding;
+   left: @containerPadding;
+   top: 0;
+   width: auto;
+
+   .btn-toolbar.shift {
+      position: absolute;
+      right: 0;
+      top: -40px;
+   }
+}
+
+#showImmediatelyLabel {
+   display: inline;
+}
+
+// put a background on the help panel
+#helpPanelContent {
+   padding: 0;
+
+   > div {
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.5);
+   }
+}
+
+// status panel
+.status {
+   margin: -16px -20px -4px;
+   padding: 4px 20px 0;
+   min-height: 20px;
+
+   a {
+      color: white;
+
+      &:hover {
+         text-decoration: underline;
+         text-shadow: none;
+      }
+   }
+
+   span.pull-left > span {
+      color: mix(@category-yellow, @textColor, 50%);
+   }
+
+   &.status-text {
+      border-top: 1px solid mix(@category-yellow, @tableBorder);
+      border-bottom: 1px solid mix(@category-yellow, @tableBorder);
+      margin-bottom: 16px;
+      background-color: lighten(@category-yellow, 30%);
+      padding-bottom: 5px;
+      min-height: inherit;
+   }
+}
+
+// Default label colour for status panel badge
+.label-default {
+   .label-color(@category-warm-gray);
+}
+
+// Analytics colored label for status panel
+.label-analytics {
+   .label-color(@infoText);
+}
+
+
+// patching up the query config panel in prior day/intraday matching
+.query-config-patch {
+   margin: -20px -5px 20px !important;
+
+   .tabs .nav-tabs {
+      margin: 0 0 11px -35px !important;
+      padding-right: 35px;
+      width: 100%;
+   }
+}
+
+
+// class to assign when element requires text selection
+.user-select-text {
+   .user-select(text);
+}
+
+.profiler-results {
+   .user-select(text);
+}
+
+// Kendo overrides
+.k-tooltip.k-chart-tooltip {
+   background-image: none;
+   .border-radius(2px);
+   padding: 5px;
+}
+
+// when running within an Office application
+// - hide stuff that is not applicable
+// - make it look a bit flatter to make it fit in with Office
+.office {
+   background-image: none;
+   // banner
+   .navbar-inner {
+      .box-shadow(none);
+   }
+
+   .brand {
+      background-position-x: 0;
+      pointer-events: none;
+      cursor: default;
+
+      .hamburger, span {
+         display: none;
+      }
+   }
+
+   #notifications, #pageWidthToggle {
+      display: none;
+   }
+
+   #logonMenu {
+      li {
+         display: none;
+
+         &.show-office {
+            display: inherit;
+         }
+      }
+   }
+   // app container
+   .app-container {
+      section#main, header.main, .page.breadcrumb {
+         .box-shadow(~"none!important");
+      }
+   }
+}
+
+.report.iframe {
+   padding: 0;
+
+   iframe {
+      margin-top: -1px;
+      margin-bottom: -4px;
+   }
+}
+
+.fake-file-input{
+   pointer-events: none;
+}
+
+input[type='file']{
+   position: absolute; 
+   top: 0; 
+   width: 90px; 
+   height: 35px; 
+   left: -50px; 
+   overflow: hidden; 
+   opacity: 0;
+}

@@ -1,0 +1,366 @@
+﻿//
+// Panel and field sizing - logic that generates the different sizes of fields 
+//                          and panels at the different page sizes
+//
+
+// ---------------------------------------------------------------------------------------
+// mixins for panels and fields of different sizes
+// ---------------------------------------------------------------------------------------
+
+// Variables
+// ---------
+// @panelColumns     = number of columns in the main layout grid (e.g. 12)
+// @panelGutterWidth = percentage size of the space between the grid columns
+// @panelColumnWidth = percentage size of the width of one grid column
+//
+// .sized-field (@PanelColumns, @FieldColumns, @FieldSize)
+// --------------------------------------------------------
+// @PanelColumns = how wide is the panel in terms of columns in the layout grid (e.g. 6 for a 50% panel)
+// @FieldColumns = how wide is the field in terms of columns in the layout grid (e.g. 2 to fit 6 fields on a row)
+// @FieldSize    = Fields come in 6 sizes (1-6)
+// 
+
+// when the field size doesn't extend over the panel width, size the field to fit to the grid columns
+.sized-field (@PanelColumns, @FieldColumns, @FieldSize) when (@PanelColumns / @FieldColumns >= @FieldSize) {
+   (~"> .field.size@{FieldSize}") {
+      width: ((@FieldSize * @panelColumnWidth * @FieldColumns) + (@panelGutterWidth * (@FieldSize * @FieldColumns - 1 ))) * (@panelColumns / @PanelColumns) !important;
+   }
+}
+
+// when the field size extends the panel width, size the field to the maximum in the panel
+.sized-field (@PanelColumns, @FieldColumns, @FieldSize) when (@PanelColumns / @FieldColumns < @FieldSize) {
+   (~"> .field.size@{FieldSize}") {
+      width: 100% - (@panelGutterWidth * (@panelColumns / @PanelColumns)) !important;
+   }
+}
+
+//
+// .sized-panel (@PanelColumns, @FieldColumns, @Factor)
+// --------------------------------------------------------
+// size the panels to how many grid columns they occupy
+//
+// @PanelColumns = how wide is the panel in terms of columns in the layout grid (e.g. 6 for a 50% panel)
+// @FieldColumns = how wide is the field in terms of columns in the layout grid (e.g. 2 to fit 6 fields on a row)
+// @Factor       = adjustment factor to compensate for the nesting
+// 
+.sized-panel (@PanelColumns, @FieldColumns: 3, @Factor: 1) {
+   @HalfGutter: @panelGutterWidth * (@panelColumns / @PanelColumns) / 2;
+
+   // use the grid column and gutter width to size the panel
+   width: ((@panelColumnWidth + @panelGutterWidth) * @PanelColumns * @Factor);
+
+   // default sized field
+   > .field {
+      // when no size is specified for a field, set width to size1
+      width: ((@panelColumnWidth * @FieldColumns) + (@panelGutterWidth * (@FieldColumns - 1 ))) * (@panelColumns / @PanelColumns);
+
+      // field left margins are a gutter width wide, but need to be adjusted to the size of the panel the field is in
+      margin-left: @HalfGutter;
+      margin-right: @HalfGutter;
+   }
+
+   // a heading is always as wide as the panel
+   > .heading {
+      width: 100% - (@HalfGutter * 2);
+      margin-left: @HalfGutter;
+      margin-right: @HalfGutter;
+   }
+
+   // fields in a full sized panel completely fill the panel
+   &.full > .field {
+      width: 100% - (@HalfGutter * 2);
+      margin-left: @HalfGutter;
+      margin-right: @HalfGutter;
+   }
+}
+
+
+// ---------------------------------------------------------------------------------------
+// generation of panels and fields of different sizes
+// ---------------------------------------------------------------------------------------
+
+// generate a sized panel and size all fields inside it
+.sized-panel-and-fields (@PanelColumns, @FieldColumns: 3, @Factor: 1) {
+   // generate the sized panel
+   .sized-panel(@PanelColumns, @FieldColumns, @Factor);
+
+   // generate field widths for all 6 field sizes
+   .sized-field(@PanelColumns, @FieldColumns, 1);
+   .sized-field(@PanelColumns, @FieldColumns, 2);
+   .sized-field(@PanelColumns, @FieldColumns, 3);
+   .sized-field(@PanelColumns, @FieldColumns, 4);
+   .sized-field(@PanelColumns, @FieldColumns, 5);
+   .sized-field(@PanelColumns, @FieldColumns, 6);
+}
+
+// generate the 6 panel sizes based on a field size of 2 grid columns
+.container-panel {
+   .panel { .sized-panel-and-fields(12, 2); }
+
+   // all fields below a deep-full sized panel completely fill the panel
+   // this includes fields in nested panels
+   .panel.deep-full {
+      .field, .field.size2 {
+         @HalfGutter: 0.625%;
+         width: 100% - (@HalfGutter * 2);
+         margin-left: @HalfGutter;
+         margin-right: @HalfGutter;
+      }
+   }
+
+   .size6.panel {
+      .sized-panel-and-fields(12, 2);
+      .size6.panel { .sized-panel(12, 2); }
+      .size5.panel { .sized-panel(10, 2); }
+      .size4.panel { .sized-panel(8, 2); }
+      .size3.panel { .sized-panel(6, 2); }
+      .size2.panel { .sized-panel(4, 2); }
+      .size1.panel { .sized-panel(2, 2); }
+   }
+   .size5.panel {
+      .sized-panel-and-fields(10, 2);
+      .size6.panel,
+      .size5.panel { .sized-panel(10, 2, 6/5); }
+      .size4.panel { .sized-panel(8, 2, 6/5); }
+      .size3.panel { .sized-panel(6, 2, 6/5); }
+      .size2.panel { .sized-panel(4, 2, 6/5); }
+      .size1.panel { .sized-panel(2, 2, 6/5); }
+   }
+   .size4.panel {
+      .sized-panel-and-fields(8, 2);
+      .size6.panel,
+      .size5.panel,
+      .size4.panel { .sized-panel(8, 2, 6/4); }
+      .size3.panel { .sized-panel(6, 2, 6/4); }
+      .size2.panel { .sized-panel(4, 2, 6/4); }
+      .size1.panel { .sized-panel(2, 2, 6/4); }
+   }
+   .size3.panel {
+      .sized-panel-and-fields(6, 2);
+      .size6.panel,
+      .size5.panel,
+      .size4.panel,
+      .size3.panel { .sized-panel(6, 2, 6/3); }
+      .size2.panel { .sized-panel(4, 2, 6/3); }
+      .size1.panel { .sized-panel(2, 2, 6/3); }
+   }
+   .size2.panel {
+      .sized-panel-and-fields(4, 2);
+      .size6.panel,
+      .size5.panel,
+      .size4.panel,
+      .size3.panel,
+      .size2.panel { .sized-panel(4, 2, 6/2); }
+      .size1.panel { .sized-panel(2, 2, 6/2); }
+   }
+   .size1.panel {
+      .sized-panel-and-fields(2, 2);
+   }
+}
+
+@media (max-width: 1000px) {
+   // generate the 6 panel sizes based on a field size of 3 grid columns
+   .container-panel {
+      .panel { .sized-panel-and-fields(12, 3); }
+      .size6.panel {
+         .sized-panel-and-fields(12, 3);
+         .size6.panel { .sized-panel(12, 3); }
+         .size5.panel { .sized-panel(9, 3); }
+         .size4.panel { .sized-panel(9, 3); }
+         .size3.panel { .sized-panel(6, 3); }
+         .size2.panel { .sized-panel(3, 3); }
+         .size1.panel { .sized-panel(3, 3); }
+      }
+      // panel sizes 4, 5 become 3 of the 4 columns
+      .size5.panel {
+         .sized-panel-and-fields(9, 3);
+         .size5.panel { .sized-panel(9, 3, 4/3); }
+         .size4.panel { .sized-panel(6, 3, 4/3); }
+         .size3.panel { .sized-panel(6, 3, 4/3); }
+         .size2.panel { .sized-panel(3, 3, 4/3); }
+         .size1.panel { .sized-panel(3, 3, 4/3); }
+      }
+      .size4.panel {
+         .sized-panel-and-fields(9, 3);
+         .size4.panel { .sized-panel(9, 3, 4/3); }
+         .size3.panel { .sized-panel(6, 3, 4/3); }
+         .size2.panel { .sized-panel(9, 3, 4/3); }
+         .size1.panel { .sized-panel(3, 3, 4/3); }
+      }
+      // panel size 3 becomes 2 of the 4 columns so that 2 threes still fit together
+      .size3.panel {
+         .sized-panel-and-fields(6, 3);
+         .size3.panel { .sized-panel(6, 3, 6/3); }
+         .size2.panel { .sized-panel(3, 3, 6/3); }
+         .size1.panel { .sized-panel(3, 3, 6/3); }
+      }
+      // panel sizes 1, 2 become 1 of the 4 columns
+      .size2.panel {
+         .sized-panel-and-fields(3, 3);
+         .size2.panel { .sized-panel(3, 3, 12/3); }
+         .size1.panel { .sized-panel(3, 3, 12/3); }
+      }
+      .size1.panel {
+         .sized-panel-and-fields(3, 3);
+      }
+   }
+
+   // hide the padding when in full width mode
+   .full-width .container-fluid {
+      padding-left: 0;
+      padding-right: 0;
+   }
+}
+
+@media (max-width: 800px) {
+   // generate the 6 panel sizes based on a field size of 4 grid columns
+   .container-panel {
+      .panel { .sized-panel-and-fields(12, 4); }
+      .size6.panel {
+         .sized-panel-and-fields(12, 4);
+         .size6.panel { .sized-panel(12, 4); }
+         .size5.panel { .sized-panel(8, 4); }
+         .size4.panel { .sized-panel(8, 4); }
+         .size3.panel { .sized-panel(12, 4); }
+         .size2.panel { .sized-panel(4, 4); }
+         .size1.panel { .sized-panel(4, 4); }
+      }
+      // panel sizes 4, 5 become 2 of the 3 columns
+      .size5.panel {
+         .sized-panel-and-fields(8, 4);
+         .size5.panel { .sized-panel(8, 4, 3/2); }
+         .size4.panel { .sized-panel(4, 4, 3/2); }
+         .size3.panel { .sized-panel(4, 4, 3/2); }
+         .size2.panel { .sized-panel(4, 4, 3/2); }
+         .size1.panel { .sized-panel(4, 4, 3/2); }
+      }
+      .size4.panel {
+         .sized-panel-and-fields(8, 4);
+         .size4.panel { .sized-panel(8, 4, 3/2); }
+         .size3.panel { .sized-panel(4, 4, 3/2); }
+         .size2.panel { .sized-panel(8, 4, 3/2); }
+         .size1.panel { .sized-panel(4, 4, 3/2); }
+      }
+      // panel size 3 spans all 3 columns to avoid strange breaks
+      .size3.panel {
+         .sized-panel-and-fields(12, 4);
+         .size3.panel { .sized-panel(12, 4); }
+         .size2.panel { .sized-panel(4, 4); }
+         .size1.panel { .sized-panel(4, 4); }
+      }
+      // panel sizes 1, 2 become 1 of the 3 columns
+      .size2.panel {
+         .sized-panel-and-fields(4, 4);
+         .size2.panel { .sized-panel(4, 4, 3); }
+         .size1.panel { .sized-panel(4, 4, 3); }
+      }
+      .size1.panel {
+         .sized-panel-and-fields(4, 4);
+      }
+   }
+
+   // hide the vertical separators when only three columns are showing
+   .border-left.panel {
+      background-image: none;
+   }
+}
+
+@media (max-width: 700px) {
+   // always hide the padding from now on
+   .container-fluid {
+      padding-left: 0;
+      padding-right: 0;
+   }
+}
+
+@media (max-width: 590px) {
+   // generate the 6 panel sizes based on a field size of 6 grid columns
+   // panel sizes 1 to 6 are all the same because the max is 2
+   // even the size 1 column is spread over two columns, basically stacking the panels
+   .container-panel {
+      .panel { .sized-panel-and-fields(12, 6); }
+      .size6.panel {
+         .sized-panel-and-fields(12, 6);
+         .size6.panel { .sized-panel(12, 6); }
+         .size5.panel { .sized-panel(12, 6); }
+         .size4.panel { .sized-panel(12, 6); }
+         .size3.panel { .sized-panel(12, 6); }
+         .size2.panel { .sized-panel(12, 6); }
+         .size1.panel { .sized-panel(12, 6); }
+      }
+      .size5.panel {
+         .sized-panel-and-fields(12, 6);
+         .size5.panel { .sized-panel(12, 6); }
+         .size4.panel { .sized-panel(12, 6); }
+         .size3.panel { .sized-panel(12, 6); }
+         .size2.panel { .sized-panel(12, 6); }
+         .size1.panel { .sized-panel(12, 6); }
+      }
+      .size4.panel {
+         .sized-panel-and-fields(12, 6);
+         .size4.panel { .sized-panel(12, 6); }
+         .size3.panel { .sized-panel(12, 6); }
+         .size2.panel { .sized-panel(12, 6); }
+         .size1.panel { .sized-panel(12, 6); }
+      }
+      .size3.panel {
+         .sized-panel-and-fields(12, 6);
+         .size3.panel { .sized-panel(12, 6); }
+         .size2.panel { .sized-panel(12, 6); }
+         .size1.panel { .sized-panel(12, 6); }
+      }
+      .size2.panel {
+         .sized-panel-and-fields(12, 6);
+         .size2.panel { .sized-panel(12, 6); }
+         .size1.panel { .sized-panel(12, 6); }
+      }
+      .size1.panel {
+         .sized-panel-and-fields(12, 6);
+      }
+   }
+}
+
+@media (max-width: 480px) {
+   // set all panel sizes to 100% width which stacks all panels
+   .container-panel {
+      .panel { .sized-panel-and-fields(12, 12); }
+      .size6.panel {
+         .sized-panel-and-fields(12, 12);
+         .size6.panel { .sized-panel(12, 12); }
+         .size5.panel { .sized-panel(12, 12); }
+         .size4.panel { .sized-panel(12, 12); }
+         .size3.panel { .sized-panel(12, 12); }
+         .size2.panel { .sized-panel(12, 12); }
+         .size1.panel { .sized-panel(12, 12); }
+      }
+      .size5.panel {
+         .sized-panel-and-fields(12, 12);
+         .size5.panel { .sized-panel(12, 12); }
+         .size4.panel { .sized-panel(12, 12); }
+         .size3.panel { .sized-panel(12, 12); }
+         .size2.panel { .sized-panel(12, 12); }
+         .size1.panel { .sized-panel(12, 12); }
+      }
+      .size4.panel {
+         .sized-panel-and-fields(12, 12);
+         .size4.panel { .sized-panel(12, 12); }
+         .size3.panel { .sized-panel(12, 12); }
+         .size2.panel { .sized-panel(12, 12); }
+         .size1.panel { .sized-panel(12, 12); }
+      }
+      .size3.panel {
+         .sized-panel-and-fields(12, 12);
+         .size3.panel { .sized-panel(12, 12); }
+         .size2.panel { .sized-panel(12, 12); }
+         .size1.panel { .sized-panel(12, 12); }
+      }
+      .size2.panel {
+         .sized-panel-and-fields(12, 12);
+         .size2.panel { .sized-panel(12, 12); }
+         .size1.panel { .sized-panel(12, 12); }
+      }
+      .size1.panel {
+         .sized-panel-and-fields(12, 12);
+      }
+   }
+}

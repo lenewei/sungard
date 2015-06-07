@@ -6,13 +6,16 @@ var restify  = require('restify'),
 var server = restify.createServer();
 var io = socketio.listen(server);
 
-server.get('/', function indexHTML(req, res, next) {
-    fs.readFile(__dirname + '/index.html', function (err, data) {
+server.get(/\/\w+/, function indexHTML(req, res, next) {
+    if(req.url.indexOf("img")>=0)
+       console.log(req.url);
+
+    fs.readFile(  './server/quantum'+req.url, function (err, data) {
         if (err) {
             next(err);
             return;
         }
-        res.setHeader('Content-Type', 'text/html');
+       // res.setHeader('Content-Type', 'text/html');
         res.writeHead(200);
         res.end(data);
         next();

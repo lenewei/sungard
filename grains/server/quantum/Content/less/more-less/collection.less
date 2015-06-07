@@ -1,0 +1,157 @@
+﻿//
+// collection editor
+//
+
+//@import "common-imports.less";
+
+input[type="text"].search-field-input {
+   position: absolute !important;
+   z-index: 1;
+   background: transparent !important;
+   border: 0 !important;
+   border-color: transparent !important;
+   box-shadow: none !important;
+   left: 2px;
+
+   &:focus + ul.collection {
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+      border-color: rgba(82, 168, 236, 0.8) !important;
+   }
+}
+
+.collection {
+   width: 100%;
+   margin-bottom: 2px;
+   background-color: inherit;
+
+   &[disabled] {
+      background-color: #eeeeee;
+      border-color: #dddddd;
+
+      // hide toggle when collection is disabled
+      &+.toggle {
+         display: none;
+      }
+
+      .icon-remove {
+         display: none;
+      }
+   }
+
+   td {
+      padding-right: 3px;
+      vertical-align: top;
+
+      // last column contains delete button
+      &:last-child {
+         padding-right: 0;
+         width: 1%;
+         min-width: 1%!important;
+      }
+
+      // cancel out the field's float
+      .field {
+         float: none;
+      }
+   }
+
+   &.collection-editor td {
+
+      // default column min-width to avoid scrunching up of fields
+      min-width: 75px;
+
+      // make the min-width larger when there are fewer columns
+      &:first-child:nth-last-child(1),
+      &:first-child:nth-last-child(1) ~ td,
+      &:first-child:nth-last-child(2),
+      &:first-child:nth-last-child(2) ~ td,
+      &:first-child:nth-last-child(3),
+      &:first-child:nth-last-child(3) ~ td,
+      &:first-child:nth-last-child(4),
+      &:first-child:nth-last-child(4) ~ td {
+         min-width: 150px;
+      }
+      &:first-child:nth-last-child(5),
+      &:first-child:nth-last-child(5) ~ td {
+         min-width: 135px;
+      }
+      &:first-child:nth-last-child(6),
+      &:first-child:nth-last-child(6) ~ td {
+         min-width: 120px;
+      }
+      &:first-child:nth-last-child(7),
+      &:first-child:nth-last-child(7) ~ td {
+         min-width: 105px;
+      }
+      &:first-child:nth-last-child(8),
+      &:first-child:nth-last-child(8) ~ td {
+         min-width: 90px;
+      }
+
+
+   }
+
+   th {
+      vertical-align: bottom;
+      text-align: left;
+      padding-left: 8px;
+   }
+
+   .field {
+      input[type], select, textarea {
+         margin-top: 0;
+         margin-bottom: 2px;
+      }
+   }
+
+   // make the read-only fields less obtrusive in the grid
+   input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
+      background-color: transparent;
+   }
+
+   // adjust the close delete button on the collection items
+   .close {
+      padding-top: 4px;
+   }
+
+   // adjust the drop down toggle on the select
+   .field .toggle {
+      bottom: 1px;
+   }
+
+   // hide the field hints except for the first one; move that one up in the header
+   .field>span.hint {
+      display: none;
+   }
+
+   tbody>tr:first-child .field>span.hint {
+      display: inline;
+      top: -17px
+   }
+}
+
+.collection-panel {
+   position: relative;
+
+   section {
+      position: relative;
+
+      + section {
+         margin-top: @baseLineHeight;
+         border-top: 1px solid @tableBorder;
+         padding-top: @baseLineHeight;
+      }
+      // position the section delete button
+      > .close {
+         position: absolute;
+         right: 0;
+         width: 16px;
+         z-index: 1;
+      }
+   }
+
+   .wrap {
+      overflow-x: auto;
+      margin-bottom: @baseLineHeight / 2;
+   }
+}

@@ -1,0 +1,327 @@
+﻿@line-color: #ddd;
+
+// local mixin to set bottom border color for links
+.border-bottom-color(@color, @alpha) {
+   border-bottom-color: rgba(red(@color), green(@color), blue(@color), @alpha);
+}
+
+
+.table-pivot {
+   border-collapse: separate; // for FF
+
+   // when the table is too wide, don't freeze the group by columns
+   &.wide {
+      .frozen {
+         position: inherit;
+      }
+      .behind {
+         display: none;
+      }
+   }
+
+   tr.head {
+      background-color: whitesmoke;
+
+      th:first-child {
+         z-index: 2;
+      }
+      
+      .frozen {
+         background-color: whitesmoke;
+         border-top-color: transparent;
+      }
+   }
+
+   tr.last-row, tr.total {
+      th, td {
+         padding-top: 8px !important;
+         padding-bottom: 7px !important;
+      }
+   }
+
+   // make sure the first frozen heading is positioned at 1px
+   // there is a difference between the browsers calculating the offsets
+   th.frozen:first-child {
+      left: 1px!important;
+   }
+
+   // all cells in normal font and sizable padding
+   td, th {
+      padding: 4px 6px;
+      font-weight: normal;
+      cursor: auto;
+   }
+
+   td {
+      text-align: right;
+   }
+   // the header and footer of the table in bold
+   thead .head, tr.total {
+      td, th, th span {
+         font-weight: bold;
+      }
+   }
+   // frozen columns
+   tbody tr, tr.total, thead tr {
+      th.head.pivot-row {
+         &.duplicate-row {
+            border-top-color: transparent;
+         }
+      }
+   }
+
+   .behind {
+      color: transparent;
+   }
+
+   .frozen {
+      position: absolute;
+      background-color: white;
+      overflow-x: hidden;
+      z-index: 1;
+
+      &:hover {
+         overflow-x: visible;
+      }
+   }
+
+   .hover {
+      background-color: lighten(@brandingSelection, 7%);
+   }
+
+   // all rows have top borders except when marked to clear
+   tbody {
+      // set the separator lines
+      td, th {
+         border-top: 1px solid @line-color;
+
+         &.behind {
+            border-top: 1px solid transparent;
+         }
+      }
+
+      // override default link presentation with dashed bottom border
+      td {
+         > a,
+         > .dropdown > a {
+            color: @textColor;
+            border-bottom-width: 1px;
+            border-bottom-style: dashed;
+            .border-bottom-color(@textColor, 0.3);
+            .transition(border-color .3s linear);
+
+            &:hover {
+               text-decoration: none;
+               border-bottom-style: solid;
+               .border-bottom-color(@textColor, 0.6);
+            }
+         }
+
+         // when negative, use the negative color for the border as well
+         &.negative {
+            color: @negative;
+
+            > a,
+            > .dropdown > a {
+               color: @negative;
+               .border-bottom-color(@negative, 0.3);
+
+               &:hover {
+                  .border-bottom-color(@negative, 0.6);
+               }
+            }
+         }
+      }
+
+      .amp {
+         font-weight: bold;
+      }
+
+      .clear-row {
+         border-top-color: transparent;
+         td {
+            border-top-color: transparent;
+         }
+      }
+
+      td span.visualisation {
+         margin-left: 12px;
+
+         canvas {
+            margin-top: 1px;
+         }
+      }
+
+      a.expand {
+         i {
+            opacity: 0.3;
+            .scale(0.5);
+            margin-top: -1px;
+         }
+         &:hover i {
+            opacity: 0.8;
+         }
+      }
+   }
+
+   // all cells have right borders except when marked to clear
+   thead th, th.last-group-row {
+      border-right: 1px solid @line-color;
+
+      &.clear, &:last-child {
+         border-right-color: transparent;
+      }
+   }
+   // and a border above the footer
+   /*tfoot tr:first-child {
+         tr:not(.total)+tr.total {
+
+      td, th {
+         border-top: 1px solid @line-color;
+      }
+   }*/
+   // header cells
+   .head {
+      vertical-align: top;
+      text-align: right;
+
+      &.col {
+         text-align: center;
+         position: relative;
+
+         &.last {
+            text-align: right;
+         }
+      }
+
+      &.pivot-row {
+         text-align: left;
+         a {
+            padding-right: 8px;
+         }
+      }
+
+      &.name {
+         &.col {
+            text-align: right;
+
+            &.total {
+               vertical-align: bottom;
+               text-align: center;
+            }
+         }
+
+         &.pivot-row {
+            text-align: left;
+         }
+      }
+
+      &.isLast {
+         z-index: 2;
+      }
+
+      &.gap:before {
+         content: "...";
+         width: 7px;
+         height: 7px;
+         background-color: #fff;
+         .opacity(80);
+         position: absolute;
+         bottom: 6px;
+         left: -5px;
+         border: 1px solid darken(@tableBorder, 25%);
+         border-radius: 5px;
+         font-size: 6px;
+         line-height: 4px;
+         color: darken(@tableBorder, 30%);
+      }
+   }
+
+   thead tr.head th.head {
+      vertical-align: bottom;
+   }
+
+   tr th.lighten {
+      color: #DFDFDF;
+      a, span {
+         color: #DFDFDF;
+      }
+   }
+}
+
+table.pivot-configuration {
+   thead th {
+      white-space: nowrap;
+      &:not(:last-child) {
+         min-width: 40px;
+      }
+   }
+}
+
+.pivot-container {
+   // different font sizes for the pivot table
+   &.font-large .grid {
+      font-size: 13px;
+   }
+
+   &.font-medium .grid {
+      font-size: 12px;
+
+      td, th {
+         padding: 2px 4px;
+      }
+   }
+
+   &.font-small .grid {
+      font-size: 10px;
+
+      td, th {       
+         padding: 0px 3px;
+      }
+   }
+
+   .end-total {
+      display: none;
+   }
+
+   &.show-end-totals {
+      td, th {
+         &.end-total {
+            display: table-cell;
+         }
+      }
+      tr.end-total {
+         display: table-row;
+      }
+   }
+}
+
+
+// make profile preview look like a pivot header
+.profile-preview {
+   padding-left: 1px;
+
+   li {
+      display: inline-block;
+      width: 12em;
+      list-style: none;
+      text-align: center;
+      border: 1px solid @tableBorder;
+      font-weight: bold;
+      padding: 2px 4px;
+      margin: 0 0 10px -1px;
+      float: left;
+      position: relative;
+
+      &.start:before {
+         width: 5px;
+         height: 22px;
+         left: -1px;
+         top: -1px;
+         position: absolute;
+         display: table;
+         content: "";
+         background-color: @category-warm-gray;
+      }
+   }
+}

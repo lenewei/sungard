@@ -1,0 +1,41 @@
+﻿//
+// Parameter definitions - parameter summary for reporting and other
+//                         read-only presentations of fields
+//
+
+// parameter panel
+// ---------------
+.parameter-summary {
+	margin: @baseLineHeight 0 0 0;
+
+   + .parameter-summary {
+      margin-top: 0;
+      margin-bottom: 0;
+   }
+
+   > li {
+      float: left;
+      margin-right: @baseLineHeight;
+      margin-bottom: @baseLineHeight;
+      cursor: pointer;
+   }
+}
+
+// label and value for parameter
+.parameter-label {
+	text-transform: uppercase;
+	color: #999;
+	font-size: 10px;
+	line-height: @baseLineHeight * 7/8;
+}
+
+.parameter-value {
+   display: -webkit-box;
+   font-size: 18px;
+   line-height: @baseLineHeight * 3/2;
+   max-height: @baseLineHeight * 3/2 * 2;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}

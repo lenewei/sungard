@@ -1,0 +1,360 @@
+﻿//
+// Multi-select lookup control
+//
+
+//@import "common-imports.less";
+
+
+// Multi select (after the chosen control)
+// ---------------------------------------
+
+// chosen items
+@choiceWidth: (1/3) * 100%;
+
+// needs rework
+ul.collection {
+   height: auto!important;
+   display: inline-block;
+   height: @baseLineHeight;
+   min-height: @inputHeight;
+   margin-left: 0;
+   // padding: @fieldPadding 20px @fieldPadding @fieldPadding;
+   padding: 0;
+   color: @gray;
+   background-color: @inputBackground;
+   .transition(~"border linear .2s, box-shadow linear .2s");
+   width: 100%;
+   .box-sizing(border-box);
+   position: relative;
+   border: 1px solid @fieldBorderColor;
+   .border-radius(@fieldBorderRadius);
+   .box-shadow(none);
+
+   // Focus state
+   &:focus {
+      border-color: rgba(82,168,236,.8);
+      outline: 0;
+      outline: thin dotted \9; /* IE6-9 */
+      .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6)");
+   }
+
+   // reduce the width of the last choice so that you can click on the dropdown
+   .search-choice:last-child {
+      max-width: ~"calc(100% - 17px)";
+      margin-right: 17px;
+   }
+}
+
+.field ul.collection {
+   margin-bottom: @fieldMarginBottom - 4px;
+   margin-top: @labelHeight;
+}
+
+.typeahead-container {
+   > ul {
+      margin-left: 0;
+      margin-bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+   }
+}
+      
+.search-choice {
+   float: left;
+   list-style: none;
+   max-width: 100%;
+   position: relative;
+   z-index: 1;
+   .transition(width linear .2s);
+   .box-sizing(border-box);
+   display: inline-block;
+
+   // selected state is the same as hover (from bootstrap)
+   &.selected .dropdown-toggle {
+      color: @grayDark;
+      text-decoration: none;
+      background-color: @brandingSelection;
+      background-position: 0 -25px;
+
+      // transition is only when going to hover, otherwise the background
+      // behind the gradient (there for IE<=9 fallback) gets mismatched
+      .transition(background-position .1s linear);
+   }
+
+   .dropdown-toggle {
+      padding: 0px 15px 0px 4px;
+      margin: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      text-align: left;
+      text-overflow: ellipsis;
+      background-image: none;
+      border-radius: 2px;
+      border-color: rgba(0, 0, 0, 0.1);
+   }
+
+   > a {
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      .opacity(10);
+   }
+   &:hover > a {
+      .opacity(70);
+   }
+
+   &.sort-field {
+      > i {
+         cursor: pointer;
+         position: absolute;
+         right: 20px;
+         top: 1px;
+         .opacity(70);
+      }
+   }
+}
+
+.multiselect.field {
+   > ul.collection {
+      padding: 0;
+      max-height: 4 * @fieldHeight - @fieldMarginBottom - @labelHeight - @fieldPadding + 3px;
+      overflow-y: auto;
+      overflow-x: hidden;
+   }
+
+   // list version of multiselect that presents items like a grid list
+   &.list {
+      > ul.collection {
+         max-height: 5 * @fieldHeight - @fieldMarginBottom - @labelHeight - @fieldPadding + 3px;
+      }
+
+      > .toggle {
+         top: -2px;
+      }
+
+      .search-choice {
+         width: 100%;
+
+         .dropdown-toggle {
+            background-color: transparent;
+            border-color: transparent;
+
+            &:active {
+               .box-shadow(none);
+               border-color: @tableBorder;
+            }
+         }
+      }
+
+      ul.collection .search-choice:last-child {
+         max-width: inherit;
+         margin-right: inherit;
+      }
+   }
+}
+
+.collection.fluid {
+   .search-choice {
+
+      &.sort-field span.dropdown-toggle {
+         padding-right: 40px;
+      }
+   }
+
+   .search-field {
+      position: relative;
+      width: auto;
+
+      input {
+         width: auto;
+      }
+   }
+}
+
+// hint text about fetched items
+.dropdown-menu .showing {
+   color: @grayLight;
+   border-bottom: 1px solid @tableBorder;
+   padding: 1px 15px 5px;
+}
+
+// overrides for the explorer component in a modal dialog
+.modal {
+   .colored-shadow();
+   background-color: @panelBackground;
+
+
+   &.explorer {
+      margin-top: -263px;
+      background-color: @containerBackground!important;
+
+      &.multi {
+         margin-top: -310px;
+      }
+
+      .modal-header {
+         background-color: @panelBackground;
+         border-bottom: 1px solid @panelBorderColor;
+         .border-radius(5px 5px 0 0);
+         color: @textColor;
+
+         h3 {
+            margin-top: 5px;
+         }
+      }
+
+      .close {
+         margin-top: 5px;
+         margin-right: -6px;
+         color: @textColor;
+      }
+
+      .processing {
+         position: absolute;
+         right: -8px;
+         top: 0;
+      }
+
+      .search {
+         margin: 0;
+      }
+
+      .modal-toolbar {
+         line-height: 27px;
+         width: 97%;
+         margin-bottom: 8px;
+      }
+
+      .breadcrumb {
+         padding: 0;
+         border: 0;
+         background: transparent;
+      }
+
+      .modal-body {
+         padding-top: 8px;
+         padding-bottom: 5px;
+      }
+
+      .modal-footer {
+         background-color: @containerBackground;
+      }
+
+      .items {
+         min-height: 405px;
+         margin: 0 -15px 15px;
+         overflow-x: auto;
+
+         .table {
+            border: none;
+            border-bottom: 1px solid @fieldBorderColor;
+            font-size: @baseFontSize;
+
+            th.sorted {
+               background-color: transparent;
+            }
+
+            th, td {
+               white-space: nowrap;
+            }
+
+            tbody {
+               tr.selected, tr.selected:hover {
+                  td, th {
+                     background-color: lighten(@brandingSelection, 5%);
+                     border-top-color: @brandingSelection;
+                  }
+                  & + tr {
+                     td, th {
+                        border-top-color: @brandingSelection;
+                     }
+                  }
+               }
+
+               tr {
+                  .parent {
+                     .transition(border-color background-color .15s linear);
+                     padding: 4px 1px 4px 7px;
+                     border: 1px solid transparent;
+                     .border-radius(@fieldBorderRadius);
+                     margin-left: -31px;
+                     margin-right: 1px;
+                  }
+
+                  .icon {
+                     padding-right: 6px;
+                     margin-right: 0;
+                  }
+
+                  // Hide the row icon. It will be overlapped by the folder icon in the link.
+                  .has-children {
+                     visibility: hidden;
+                  }
+               }
+
+               tr:hover {
+                  cursor: pointer;
+
+                  td, th {
+                     background-color: lighten(@brandingSelection, 8%);
+                  }
+
+                  .parent {
+                     &:not(.no-select){
+                        background-color: lighten(@brandingSelection, 2%);
+                        border-color: darken(@brandingSelection, 5%);
+                     }
+
+                     // change the icon to an open folder
+                     &:hover .icon, &.no-select .icon {
+                        background-position: -408px -120px;
+                     }
+                  }
+               }
+            }
+         }
+      }
+
+      th:first-child, td:first-child {
+         padding-left: 15px;
+      }
+
+      &.multi th:first-child {
+         width: 1%;
+         min-width: 13px;
+      }
+
+      .collection {
+         max-height: 3 * ( ( ( (@baseLineHeight + 5) ) ) ); // 3 rows of selected items
+         overflow-y: auto;
+         border: 0;
+         box-shadow: none;
+      }
+
+      &.fade, &.fade.in {
+         .transition(opacity 0.01s linear);
+      }
+   }
+}
+
+// when on a smaller screen show the list more compact
+@media (max-height: 700px) {
+   .modal.explorer {
+      margin-top: -217px;
+
+      &.multi {
+         margin-top: -270px;
+      }
+
+      .table {
+         th, td {
+            padding-top: 4px;
+            padding-bottom: 4px;
+         }
+      }
+      .items {
+         min-height: 305px;
+      }
+   }
+}

@@ -1,0 +1,280 @@
+// Variables.less
+// Variables to customize the look and feel of Bootstrap
+// -----------------------------------------------------
+
+
+
+// GLOBAL VALUES
+// --------------------------------------------------
+
+
+// Grays
+// -------------------------
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
+
+
+// Accent colors
+// -------------------------
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+@negative:              #9c0006;
+
+
+// Category colors
+// ---------------
+@category-orange:            #e89719; // Pantone 7412
+@category-yellow:            #f6c615; // between Pantone 7407 & 7406
+@category-red:               #b0232b; // SunGard red - Pantone 1805 C is close
+@category-green:             #94a545; // Pantone 7495
+@category-purple:            #532e63; // Pantone 525
+@category-blue:              #006595; // Pantone 7469
+@category-teal:              #00535e; // Pantone 3165
+@category-warm-gray-dark:    #9a8b7d; // Pantone Warm Gray 9
+@category-warm-gray-medium:  #bfb6ad; // Pantone Warm Gray 5
+@category-warm-gray-light:   #e9e3dc; // Pantone Warm Gray 2
+@category-warm-gray:         @category-warm-gray-dark;
+@category-cool-gray:         #949ca1; // Pantone 430
+@category-default:           @category-warm-gray;
+
+
+// Scaffolding
+// -------------------------
+@bodyBackground:        @white;
+@textColor:             @grayDarker;
+
+
+// Branding
+// --------
+@brandingPrimary:            #00535e; // lightness = 18% - darker teal
+@brandingPrimaryText:        #fff;
+@brandingSecondary:          #938f87; // lightness = 18% - darker teal
+@brandingSecondaryText:      #fff;
+@brandingSecondaryLight:     lighten(@brandingSecondary, 36%);
+@brandingSecondaryLightText: @brandingSecondary;
+
+@brandingAccentColor:        #00aec5; // Pantone 7467
+@brandingMainPanelBackground:#938f87; // From Camino
+@brandingMainPanelText:      #fff;
+
+@brandingSelection:          mix(@brandingAccentColor, #fff, 14%);
+@brandingBannerBackground:   #333;
+
+@focusColor:                 mix(@brandingAccentColor, #fff, 70%); //#90C2E9;
+
+@pageBackground:             @category-warm-gray-light; // #e5e5e5;
+@mainBorderColor:            #d8d8d8;
+@categoryBorderWidth:        5px;
+@tabHeaderBackground:        @brandingSecondaryLight;
+
+@containerPadding:           20px;
+@containerBackground:        #fff;
+@containerBorderColor:       darken(@mainBorderColor, 15%);
+@containerBorder:            1px solid @containerBorderColor;
+
+@headerBackground:           #fff;
+@headerBorder:               @containerBorder;
+@headerText:                 @textColor;
+
+@panelBackground:            #f4f3f2; // light gray slightly towards Camino header bg
+@panelBorderColor:           @mainBorderColor;
+@panelHeaderBackground:      @brandingMainPanelBackground;
+
+
+// Links
+// -------------------------
+@linkColor:                     darken(@brandingAccentColor, 18%);
+@linkColorHover:                darken(@brandingAccentColor, 10%);
+@btnPrimaryBackground:          @brandingAccentColor;
+@btnPrimaryBackgroundHighlight: lighten(@btnPrimaryBackground, 5%);
+@dropdownLinkBackgroundHover:   @brandingSelection;
+@dropdownLinkColorHover:        @grayDark;
+
+
+// Typography
+// -------------------------
+@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
+@serifFontFamily:       Georgia, "Times New Roman", Times, serif;
+@monoFontFamily:        Menlo, Monaco, Consolas, "Courier New", monospace;
+
+@baseFontSize:          12px;
+@baseFontFamily:        @sansFontFamily;
+@baseLineHeight:        16px;
+@altFontFamily:         @serifFontFamily;
+
+@headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
+@headingsFontWeight:    bold;    // instead of browser default, bold
+@headingsColor:         inherit; // empty to use BS default, @textColor
+
+
+// Tables
+// -------------------------
+@tableBackground:                   transparent; // overall background-color
+@tableBackgroundAccent:             #f9f9f9; // for striping
+@tableBackgroundHover:              #f5f5f5; // for hover
+@tableBorder:                       #ddd; // table and cell border
+@tableBorderRadius:                 2px;
+
+
+// Buttons
+// -------------------------
+@btnBackground:                     @white;
+@btnBackgroundHighlight:            darken(@white, 10%);
+@btnBorder:                         #ccc;
+
+@btnInfoBackground:                 #5bc0de;
+@btnInfoBackgroundHighlight:        #2f96b4;
+
+@btnSuccessBackground:              #62c462;
+@btnSuccessBackgroundHighlight:     #51a351;
+
+@btnWarningBackground:              lighten(@orange, 15%);
+@btnWarningBackgroundHighlight:     @orange;
+
+@btnDangerBackground:               #ee5f5b;
+@btnDangerBackgroundHighlight:      #bd362f;
+
+@btnInverseBackground:              @gray;
+@btnInverseBackgroundHighlight:     @grayDarker;
+
+
+// Forms
+// -------------------------
+@inputBackground:               @white;
+@inputBorder:                   #ccc;
+@inputBorderRadius:             2px;
+@inputDisabledBackground:       transparent;
+@formActionsBackground:         #f5f5f5;
+
+
+// Fields
+// -------------------------
+@fieldPadding:                  3px;
+@fieldMarginBottom:             10px;
+@fieldBorderColor:              @mainBorderColor;
+@fieldBorder:                   1px solid @fieldBorderColor;
+@fieldBorderRadius:             2px;
+@fieldHeight:                   50px;
+@labelHeight:                   19px;
+@inputHeight:                   21px;
+@toggleWidth:                   @baseLineHeight;
+
+// Dropdowns
+// -------------------------
+@dropdownBackground:            @white;
+@dropdownBorder:                rgba(0,0,0,.2);
+@dropdownLinkColor:             @grayDark;
+@dropdownLinkColorHover:        @white;
+@dropdownLinkColorDisabled:     @grayLight;
+@dropdownLinkBackgroundHover:   @linkColor;
+@dropdownDividerTop:            #e5e5e5;
+@dropdownDividerBottom:         @white;
+
+
+
+// COMPONENT VARIABLES
+// --------------------------------------------------
+
+// Z-index master list
+// -------------------------
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+@zindexDropdown:          1000;
+@zindexTooltip:           1010;
+@zindexFixedNavbar:       1020;
+@zindexPopover:           1030;
+@zindexModalBackdrop:     1040;
+@zindexModal:             1050;
+
+
+// Sprite icons path
+// -------------------------
+@iconSpritePath:          "img/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "img/glyphicons-halflings-white.png";
+
+
+// Input placeholder text color
+// -------------------------
+@placeholderText:         @grayLight;
+
+
+// Hr border color
+// -------------------------
+@hrBorder:                @grayLighter;
+
+
+// Navbar
+// -------------------------
+@navbarHeight:                    40px;
+@navbarBackground:                @brandingBannerBackground;
+@navbarBackgroundHighlight:       @gray;
+
+@navbarText:                      @grayLight;
+@navbarLinkColor:                 @white;
+@navbarLinkColorActive:           @white;
+@navbarLinkBackgroundActive:      @navbarBackground;
+
+@navbarSearchBackground:          lighten(@navbarBackground, 25%);
+@navbarSearchBackgroundFocus:     @white;
+@navbarSearchBorder:              darken(@navbarSearchBackground, 30%);
+@navbarSearchPlaceholderColor:    #ccc;
+@navbarBrandColor:                @navbarLinkColor;
+
+
+// Hero unit
+// -------------------------
+@heroUnitBackground:              @grayLighter;
+@heroUnitHeadingColor:            inherit;
+@heroUnitLeadColor:               inherit;
+
+
+// Form states and alerts
+// -------------------------
+@warningText:             #c09853;
+@warningBackground:       #fcf8e3;
+@warningBorder:           darken(spin(@warningBackground, -10), 3%);
+
+@errorText:               #b94a48;
+@errorBackground:         #f2dede;
+@errorBorder:             @errorText;
+
+@successText:             #468847;
+@successBackground:       #dff0d8;
+@successBorder:           darken(spin(@successBackground, -10), 5%);
+
+@infoText:                #3a87ad;
+@infoBackground:          #d9edf7;
+@infoBorder:              darken(spin(@infoBackground, -10), 7%);
+
+
+// Form states and alerts
+// -------------------------
+@popoverBorderColor:      #aaa;
+@popoverArrowColor:       darken(@popoverBorderColor, 20%);
+
+
+// GRID
+// --------------------------------------------------
+
+// Default 940px grid
+// -------------------------
+@gridColumns:             12;
+@gridColumnWidth:         60px;
+@gridGutterWidth:         20px;
+@gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+
+// Fluid grid
+// -------------------------
+@fluidGridColumnWidth:    6.382978723%;
+@fluidGridGutterWidth:    2.127659574%;

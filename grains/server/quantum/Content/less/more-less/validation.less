@@ -1,0 +1,49 @@
+﻿//
+// Validation
+//
+
+//@import "common-imports.less";
+
+.field-validation-error {
+    margin-left: @fieldPadding + 1px;
+    font-size: @baseFontSize - 1px;
+    color: @errorText;
+    display: block;
+}
+
+.field-validation-valid {
+    display: none;
+}
+// made selector more specific to avoid conflict with bootstrap
+input, select, ul.collection, textarea {
+   &.input-validation-error {
+      border: 1px solid @errorText!important;
+      background-color: @errorBackground;
+
+      &:focus {
+         border-color: @errorBorder!important;
+         .box-shadow(0 0 6px #d59392);
+      }
+   }
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: @errorText;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+// tooltip
+.tooltip.error {
+  .tooltip-inner {
+    background: @errorText;
+  }
+  &.top {
+	.tooltip-arrow {
+	  border-top-color: @errorText;
+	}
+  }
+}

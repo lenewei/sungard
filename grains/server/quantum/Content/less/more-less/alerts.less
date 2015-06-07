@@ -1,0 +1,71 @@
+﻿//
+// Alerts
+//
+
+//@import "common-imports.less";
+
+#notOriginalItemAlert {
+   margin-top: 18px;	
+}
+
+// Alert panel
+.alerts {
+   left: 30%;
+   top: 20px;
+   margin: 0 auto;
+   position: fixed;
+   width: 40%;
+   z-index: 1200;
+
+   // lift alerts that show in the alerts panel
+   .alert {
+      .box-shadow(0 2px 4px rgba(0,0,0,0.2));
+   }
+}
+
+// bootstrap override
+.alert {
+   margin-bottom: 12px;
+   .box-sizing(border-box);
+   .border-radius(2px);
+   
+   a {
+      font-weight: bold;
+   }
+
+   &.loading {
+      .box-shadow(0 2px 4px rgba(0,0,0,0.2));
+      position: absolute; 
+      width: 140px; 
+      margin: 12px auto 0px -70px; 
+      text-align: center; 
+      left: 50%;
+
+      span {
+          padding-left: 26px;
+      }
+   }
+}
+
+.alert-success {
+   border-color: darken(spin(@successBackground, 10), 10%);
+   
+   a {
+      color: @successText;
+   }
+}
+.alert-danger,
+.alert-error {
+   border-color: darken(spin(@errorBackground, 10), 10%);
+
+   a {
+      color: @errorText;
+   }
+}
+.alert-info {
+   border-color: darken(spin(@infoBackground, 10), 10%);
+
+   a {
+      color: @infoText;
+   }
+}

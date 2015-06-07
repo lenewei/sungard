@@ -1,0 +1,49 @@
+﻿@using SunGard.AvantGard.Quantum.Client.Core
+@using SunGard.AvantGard.Quantum.External.Data
+<div class="tabbable panelgroup">
+   <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" data-bind="attr: { href: layoutHref, id: layoutTabId }">@DisplayNames.Layout.ToLocalizedDisplayName()</a></li>
+      <!-- ko if: hasFilters -->
+         <li><a data-toggle="tab" data-bind="attr: { href: filtersHref, id: filtersTabId }">@DisplayNames.Filters.ToLocalizedDisplayName()</a></li>
+      <!-- /ko-->
+      <li><a data-toggle="tab" data-bind="attr: { href: propertiesHref, id: propertiesTabId }">@DisplayNames.Properties.ToLocalizedDisplayName()</a></li>
+   </ul>
+   <div class="tab-content container-panel">
+      <div class="tab-pane panel active" data-bind="attr: { id: layoutId }" data-title="Layout">
+         <div class="size4 panel full">
+            @ListHelper.ColumnsMultiselect()
+         </div>
+         <div class="size2 panel full">
+            @ListHelper.ConfigureViewLayoutSorter("", includeDataBind: false)
+         </div>
+      </div>
+      <!-- ko if: hasFilters -->
+         <div class="tab-pane panel" data-bind="attr: { id: filtersId }" data-title="Filters">
+            <div class="panel">
+               @FilterHelper.Filters("View", filtersOnViewModel: true)
+            </div>
+         </div>
+      <!-- /ko-->
+      <div class="tab-pane panel" data-bind="attr: { id: propertiesId }" data-title="Properties">
+         <div class="panel">
+            <div class="editor field size3">
+               <label for="ViewName">@DisplayNames.Name.ToLocalizedDisplayName()</label>
+               <input class="text-box single-line" data-bind="disable: views.selected().isSystem(), value: views.selected().name" id="ViewName" name="ViewName" type="text" value="" />
+            </div>
+            <div class="editor field size3">
+               <label for="AccessPermissions">@DisplayNames.AccessPermission.ToLocalizedDisplayName()</label>
+               <div class="radiogroup">
+                  <label>
+                     <input type="radio" value="0" data-bind="attr: { name: accessPermissionsName }, checked: views.selected().isPersonal, checkedValue: false" />
+                     <strong>@DisplayNames.Public.ToLocalizedDisplayName()</strong>&thinsp;&mdash;&thinsp;@DisplayNames.AnyOneCanUseThisView.ToLocalizedDisplayName()
+                  </label>
+                  <label>
+                     <input type="radio" value="1" data-bind="attr: { name: accessPermissionsName }, checked: views.selected().isPersonal, checkedValue: true" />
+                     <strong>@DisplayNames.Private.ToLocalizedDisplayName()</strong>&thinsp;&mdash;&thinsp;@DisplayNames.ICanAccessThisView.ToLocalizedDisplayName()
+                  </label>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,42 @@
+﻿//
+// The main styles file which imports from several individual less files
+//
+// Principles followed:
+//  - create a less file per module
+//  - add global variables to variables.less
+//  - add local variables to appropriate scope (selector or module)
+//  - add bootstrap overrides in context of module to module less file
+//  - add global overrides to third party frameworks to override-*.less
+//
+
+@import "common-imports.less";
+
+// Structure
+@import "panels.less";
+@import "fields.less";
+@import "sizing.less";
+
+// Components
+@import "parameters.less";
+@import "list.less";
+@import "pivot.less";
+@import "grid.less";
+@import "document.less";
+@import "header.less";
+@import "menus.less";
+@import "notifications.less";
+@import "collection.less";
+@import "area.less";
+@import "site-menu.less";
+
+// Controls
+@import "validation.less";
+@import "multi-select.less";
+@import "alerts.less";
+@import "expression.less";
+
+// Anything else
+@import "rest.less";
+
+// Branding definitions & overrides
+@import "branding.less";

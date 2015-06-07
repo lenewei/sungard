@@ -1,0 +1,6 @@
+﻿@using SunGard.AvantGard.Quantum.Client.Core
+@using SunGard.AvantGard.Quantum.External.Data
+<div class="search" data-bind="visible: !$parent.views.selectedIsCrystalOrChart(), css: { 'empty': isEmpty }" style="height:30px">
+   <input data-bind="timedUpdate: text, value: text" type="search" name="search" value="" autocomplete="off" placeholder="@DisplayNames.Search.ToLocalizedDisplayName()" />
+   <i class="icon-remove" data-bind="click: clear"></i>
+</div>

@@ -1,0 +1,686 @@
+﻿//
+// Field definitions - different kind of fields and contexts they can be in
+//
+
+// shared field definitions
+// ------------------------
+.field {
+   float: left;
+   position: relative;
+   .box-sizing(border-box);
+   padding: 0 2px;
+   zoom: 1;
+
+   &:hover {
+      overflow-x: visible;
+   }
+
+   > input,
+   > button,
+   > select,
+   > ul {
+      .box-sizing(border-box);
+      height: @inputHeight;
+      width: 100%;
+   }
+
+   > select {
+      padding: 0;
+
+      // hide button when disabled
+      &[disabled] {
+         line-height: @baseLineHeight + 2px;
+
+         .appearance(none);
+
+         // fix for hiding arrow for FF
+         text-indent: 0.01px;
+         text-overflow: '';
+
+         // fix for hiding arrow for IE
+         &::-ms-expand {
+            display: none;
+         }
+
+         &:hover {
+            width: auto;
+            min-width: 100%;
+         }
+      }
+   }
+
+   > label {
+      width: 100%;
+      .box-sizing(border-box);
+      margin-left: @fieldPadding + 1px;
+      font-size: @baseFontSize - 1px;
+      line-height: @baseLineHeight - 2px;
+      margin-top: 5px;
+      margin-bottom: 1px;
+      color: lighten(@textColor, 35%);
+      .text-overflow();
+      position: absolute;
+      padding-right: @fieldPadding + 1px;
+      background-color: transparent;
+   }
+
+   > span {
+      width: 100%;
+
+      // Hint at top right only for now. Will need bottom version as well.
+      &.hint {
+         position: absolute;
+         top: 5px;
+         right: 0;
+         color: @grayLight;
+         font-size: 10px;
+         padding-right: 3px;
+         display: inline;
+         width: auto;
+      }
+   }
+
+   > a.add {
+      position: absolute;
+      right: 3px;
+   }
+
+   > .toggle {
+      position: absolute;
+      right: 0;
+      bottom: @fieldMarginBottom - 2px;
+      height: @baseLineHeight;
+      width: @toggleWidth;
+      padding: 5px 2px 5px 3px;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      z-index: 2;
+      .opacity(40);
+      .transition(opacity 0.2s 0.2s ease);
+   }
+
+   &:hover .toggle {
+      .opacity(100)!important;
+   }
+
+   input {
+      &[disabled] + .toggle {
+         display: none;
+      }
+
+      &:focus + .toggle {
+         .opacity(100);
+      }
+   }
+
+   // smaller fonts for decimals
+   .normal-font {
+      font-size: @baseFontSize;
+   }
+
+   .medium-font {
+      font-size: @baseFontSize - 2;
+      padding-top: 3px;
+   }
+
+   .small-font {
+      font-size: @baseFontSize - 3;
+      padding-top: 5px;
+   }
+}
+
+
+// key field
+// ---------
+.key.field {
+   label {
+      font-style: italic;
+   }
+}
+
+
+// checbox & radio button field
+// ----------------------------
+.checkbox.field,
+.radio.field {
+   padding-left: 0;
+   min-height: @fieldHeight;
+
+   label {
+      cursor: pointer;
+      padding-left: @baseLineHeight + 2;
+      position: absolute;
+      bottom: @fieldMarginBottom;
+      line-height: @baseLineHeight + 2;
+      font-size: @baseFontSize;
+      color: @textColor;
+
+      // make the label completely visible on hover
+      // field container is also not clipping the contents
+      &:hover {
+         overflow: visible;
+         background-color: @panelBackground;
+         z-index: 1000;
+         width: auto;
+         padding-right: 3 * @fieldPadding;
+         border-radius: 0 10px 10px 0;
+      }
+   }
+
+   input {
+      padding-right: 0;
+   }
+}
+
+
+// lookup & calendar field
+// ----------------------------
+.lookup.field,
+.calendar.field {
+   // add padding for button when not disabled
+   > input:not([disabled]) {
+      padding-right: @toggleWidth + 1px;
+   }
+}
+
+
+// button field
+// ------------
+.button.field {
+   padding-top: 11px;
+   padding-bottom: 13px;
+}
+
+
+// text area field
+// ---------------
+.field > textarea {
+   .box-sizing(border-box);
+   resize: vertical; // only allow vertical resize
+   min-height: 2* @fieldHeight - @fieldMarginBottom - @labelHeight - @fieldPadding + 3px;
+   max-height: 3 * @fieldHeight - @fieldMarginBottom - @labelHeight - @fieldPadding + 3px;
+   margin-bottom: @fieldMarginBottom;
+   width: 100%;
+   margin-top: @labelHeight;
+   font-size: @baseFontSize;
+   line-height: @baseLineHeight + 1px;
+   color: @textColor;
+   padding: 1px (@fieldPadding + 1);
+}
+
+// in dialogs make full width textareas default to bigger sizes
+.modal {
+   // full width dialog
+   &.container {
+      .field.size6 > textarea {
+         min-height: 600px;
+      }
+   }
+
+   .field.size6 > textarea {
+      min-height: 400px;
+      max-height: none;
+   }
+}
+
+
+// radio button group field
+// ------------------------
+.field > .radiogroup {
+   padding-left: 2 * @fieldPadding;
+
+   &:not(.compact) {
+      min-height: 2* @fieldHeight - @fieldMarginBottom - @labelHeight;
+      margin-bottom: @fieldMarginBottom;
+      margin-top: @labelHeight;
+
+      label {
+         color: @textColor;
+         .text-overflow();
+         padding-top: 1px;
+         box-sizing: border-box;
+         margin: 0;
+         height: @fieldHeight / 2;
+      }
+
+      input {
+         padding: 0; // make sure IE doesn't leave any padding in
+      }
+   }
+}
+
+
+// compact radio button group field
+// --------------------------------
+.field > .radiogroup.compact {
+   height: @fieldHeight - 6px;
+   padding-top: 6px;
+
+   label {
+      margin-bottom: 0;
+      display: inline-block;
+      float: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      font-size: @baseFontSize - 1;
+
+      input {
+         margin-top: 2px;
+         margin-bottom: 4px;
+         padding: 0; // make sure IE doesn't show padding
+      }
+
+      // note: the very first child (value=0) will always be hidden,
+      //       therefore the child count is one higher
+
+      // set width of buttons to 50% when 3 or 4 buttons
+      &:first-child:nth-last-child(4),
+      &:first-child:nth-last-child(4) ~ label,
+      &:first-child:nth-last-child(5),
+      &:first-child:nth-last-child(5) ~ label {
+         width: 50%;
+      }
+
+      // set width of buttons to 33% when 5 or 6 buttons
+      &:first-child:nth-last-child(6),
+      &:first-child:nth-last-child(6) ~ label,
+      &:first-child:nth-last-child(7),
+      &:first-child:nth-last-child(7) ~ label {
+         width: 100%/3;
+      }
+
+      // set width of buttons to 25% when 7 or 8 buttons
+      &:first-child:nth-last-child(8),
+      &:first-child:nth-last-child(8) ~ label,
+      &:first-child:nth-last-child(9),
+      &:first-child:nth-last-child(9) ~ label {
+         width: 25%;
+      }
+
+      // set width of buttons to 20% when 9 or 10 buttons
+      &:first-child:nth-last-child(10),
+      &:first-child:nth-last-child(10) ~ label,
+      &:first-child:nth-last-child(11),
+      &:first-child:nth-last-child(11) ~ label {
+         width: 20%;
+      }
+   }
+}
+
+
+// combined fields
+// ---------------
+.combined.field {
+   // combined fields will bring in the padding
+   padding-left: 0;
+   padding-right: 0;
+
+   > label {
+      margin-left: 6px;
+   }
+   // when a field has multiple values:
+   // by default size them equally
+   // and assume they only have one label
+   .value1 {
+      width: 50%;
+      float: left;
+   }
+
+   .value2 {
+      width: 50%;
+      float: right;
+   }
+
+   // when the fields are not separate, glue them together
+   &:not(.separate) {
+      // by default remove the toggle space
+      .lookup input {
+         padding-right: @fieldPadding;
+      }
+      
+      // hide the toggle
+      .value1, .value2 {
+         .toggle {
+            .opacity(0);
+         }
+      }
+      
+      // merge the corners if both values are showing
+      &:not(.value2hidden) .value1 {
+         padding-right: 0;
+
+         input {
+            border-right-color: transparent;
+            border-radius: @inputBorderRadius 0 0 @inputBorderRadius;
+         }
+      }
+
+      &:not(.value1hidden) .value2 {
+         padding-left: 0;
+
+         input {
+            border-radius: 0 @inputBorderRadius @inputBorderRadius 0;
+         }
+      }
+   }
+
+   // create a gap in the input where the toggle goes
+   &:hover .lookup input {
+      padding-right: @toggleWidth + 1px;
+   }
+
+   // when they still have two labels, separate
+   &.separate {
+      .value1, .value2 {
+         width: 48%;
+
+         label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+         }
+      }
+   }
+
+   // ratio of 1:2
+   &.onetwo {
+      .value1 {
+         width: 100%/3;
+      }
+
+      .value2 {
+         width: 200%/3;
+      }
+
+      &.separate {
+         .value1 {
+            width: 32%;
+         }
+
+         .value2 {
+            width: 64%;
+         }
+      }
+   }
+
+   // ratio of 2:1
+   &.twoone {
+      .value1 {
+         width: 200%/3;
+      }
+
+      .value2 {
+         width: 100%/3;
+      }
+
+      &.separate {
+         .value1 {
+            width: 64%;
+         }
+
+         .value2 {
+            width: 32%;
+         }
+      }
+   }
+
+   // hide individual values and set other value to 100%
+   &.value2hidden {
+      .value1 {
+         width: 100% !important;
+      }
+      .value2 {
+         display: none;
+      }
+   }
+
+   &.value1hidden {
+      .value1 {
+         display: none;
+      }
+      .value2 {
+         width: 100% !important;
+      }
+   }
+
+   &.value1hidden.value2hidden {
+      display: none;
+   }
+}
+
+
+// stacked field
+// -------------
+// display the second value below the first in small font
+.stacked.field {
+   // stacked fields will bring in the padding
+   padding-left: 0;
+   padding-right: 0;
+
+   .value1 {
+      width: 100%;
+   }
+
+   .value2 {
+      width: 100%;
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+
+      input {
+         margin: 0;
+         border: none;
+         background-color: transparent;
+         font-size: 9px;
+         color: @grayLight;
+         pointer-events: none;
+         padding: 1px 0 0 4px;
+      }
+   }
+}
+
+
+// summary field
+// -------------
+.summary.field {
+   margin-bottom: 12px;
+}
+
+// make sure summary fields don't get a fixed width when they are inside a flow panel
+.container-panel .flow.panel[class*="size"] > .summary.field,
+.container-panel .flow.panel > .summary.field {
+   width: auto;
+   margin-right: @panelGutterWidth;
+}
+
+
+// multi select field
+// ------------
+.multiselect.field {
+   min-height: @fieldHeight;
+}
+
+
+// a paragraph as a field
+// ------------
+p.field {
+   padding-left: 2 * @fieldPadding;
+}
+
+
+// filter field
+// ------------
+@operatorWidth: 35%;
+@rangeFieldWidth: 48%;
+
+.filter.field {
+   .box-sizing(border-box);
+   min-height: @fieldHeight;
+
+   &.add {
+      padding-top: ceil(@inputHeight / 2);
+      padding-left: @fieldPadding;
+   }
+
+   &.selected {
+      background-color: @brandingSelection;
+   }
+
+   .name {
+      float: left;
+      display: inline;
+      margin-top: 5px;
+
+      &:not(.no-operator) {
+         max-width: 100% - @operatorWidth;
+      }
+
+      label {
+         margin-left: @fieldPadding + 1px;
+         margin-bottom: 8px;
+         font-size: @baseFontSize - 1px;
+         line-height: @baseLineHeight - 2px;
+         color: lighten(@textColor, 35%);
+         .text-overflow();
+
+         .caret {
+            margin-top: 6px;
+            margin-left: 0;
+         }
+      }
+   }
+
+   .operator {
+      float: right;
+      display: inline;
+      color: @grayLight;
+      max-width: @operatorWidth;
+      min-width: @operatorWidth * 0.5;
+      text-align: right;
+      margin-top: 4px;
+
+      span {
+         font-size: 10px;
+         line-height: 10px;
+      }
+
+      .caret {
+         border-width: 3px 3px 0 3px;
+         margin-top: 8px;
+         margin-left: 0;
+      }
+   }
+
+   .name, .operator {
+      label {
+         white-space: nowrap;
+         text-overflow: ellipsis;
+         overflow: hidden;
+         width: 100%;
+         cursor: pointer;
+      }
+
+      .dropdown-menu {
+         margin-top: -1px;
+      }
+   }
+
+   .value {
+      width: 100%;
+      clear: left;
+      float: left;
+      margin-top: -8px;
+      .box-sizing(border-box);
+   }
+
+   .value1 {
+      width: @rangeFieldWidth;
+      clear: left;
+      float: left;
+      .box-sizing(border-box);
+
+      // for date ranges make sure the toggle button sits with the first field
+      + .toggle {
+         right: 51%;
+         padding-right: 3px;
+      }
+   }
+
+   .value2 {
+      width: @rangeFieldWidth;
+      float: right;
+      .box-sizing(border-box);
+   }
+
+   &.decimal, &.integer, &.datetime {
+      .value1, .value2, .separator {
+         margin-top: -8px;
+      }
+   }
+
+   .separator {
+      float: left;
+      width: 100% - 2 * @rangeFieldWidth;
+      text-align: center;
+      .box-sizing(border-box);
+      padding-left: 1px;
+      font-size: 130%;
+      line-height: 130%;
+      color: @grayLight;
+      margin-top: @labelHeight;
+
+      &:before {
+         content: "-";
+      }
+   }
+
+   .collection {
+      position: relative; // stop the multiselect input field taking over
+   }
+
+   > input {
+      .box-sizing(border-box);
+      height: @inputHeight;
+      width: 100%;
+   }
+}
+
+
+// boolean filter field
+// --------------------
+.boolean.filter.field {
+   .dropdown {
+      position: absolute;
+      bottom: @baseLineHeight / 2;
+   }
+
+   label {
+      line-height: @baseLineHeight + 1; // get better alignment on IE and FF
+      padding-left: @baseLineHeight;
+      cursor: pointer;
+   }
+
+   .value {
+      width: inherit;
+      height: inherit;
+      margin-top: 2px;
+   }
+}
+
+
+// field progress indicator
+// ------------------------
+// make the in-progress animation appear for editors when processing
+.in-progress {
+   display: none;
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: auto;
+}
+
+.processing .in-progress {
+   display: inline;
+}

@@ -1,0 +1,172 @@
+﻿//
+// List used for browse and inquiry results
+//
+
+// @import "common-imports.less";
+
+
+// List wrapper
+// ------------
+// TODO: EW - does this need to be an id? Better as a class?
+#list, .grid-container {
+   // Required because the contained grid and view configuration will slide down over the content below
+   // so need to be positioned absolutely within a relative container.
+   position: relative;
+
+   .list-commands {
+      > a {
+         margin-right: 12px;
+      }
+
+      #viewSelection {
+         width: 120px;
+         margin-bottom: 0;
+      }
+
+      #showing {
+         vertical-align: top;
+         margin-top: 8px;
+
+         > span {
+	         color: #777; 
+	         font-size: 11px;
+         }
+      }
+   }
+
+   .results-sidebar-group {
+      &.collapse {
+         position: absolute;
+         z-index: 100;
+         width: 100%;
+         background-color: @bodyBackground;
+         overflow: visible !important;
+
+         &.in {
+            .border-radius(6px);
+            .box-shadow(0 3px 7px rgba(0,0,0,0.3));
+         }
+
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        -ms-transition: none !important;
+        transition: none !important;
+      }
+
+      // reposition to get onto the same line as the view header
+      .btn-toolbar {
+         position: absolute;
+         top: @baseLineHeight;
+         right: 0;
+      }
+   }
+}
+
+
+// Grid containing actual data
+// ---------------------------
+.gridtablecontainer {
+   overflow-x: auto;
+   min-height: 0%; // Fix for IE9 hover bug: http://blog.brianrichards.net/post/6721471926/ie9-hover-bug-workaround
+   background-color: @white;
+   float: left;
+   width: 100%;
+   margin-bottom: @fieldMarginBottom;
+   border: 1px solid @tableBorder;
+   .border-radius(@tableBorderRadius);
+   .box-sizing(border-box);
+
+   // make context menu go outside of overflow hidden parent grid
+   .context-menu {
+      position: static;
+
+      .dropdown-menu {
+         top: auto;
+      }
+   }
+}
+
+.grid {
+   margin-bottom: 0;
+   font-size: @baseFontSize - 1px;
+   background-color: @containerBackground;
+
+   th {
+      text-transform: capitalize;
+   }
+
+   th, th > i {
+	   cursor: pointer;
+   }
+
+   th > i {
+      display: none;
+   }
+
+   th.column-number, td.column-number {
+      text-align: right;
+   }
+
+   th.border-right, td.border-right {
+      border-right: 1px solid @tableBorder;
+   }
+
+   th.border-left, td.border-left {
+      border-left: 1px solid @tableBorder;
+   }
+
+   td.wrap {
+      white-space: normal;
+   }
+
+   th.sorted {
+      background-color: @brandingSelection;
+
+      > i {
+         display: inline-block;
+         float: right;
+         margin-left: 6px;
+      }
+   }
+
+   th.x-small {
+      width: 1%;	// Size to content
+   }
+
+   th.small {
+      width: 30px;	
+   }
+
+   th.medium {
+      width: 50px;	
+   }
+
+   th.large {
+      width: 100px;	
+   }
+
+   th.x-large {
+      width: 150px;	
+   }
+
+   .paging a {
+      margin-left: 8px;
+   }
+
+   .table {
+	   margin-bottom: 6px;
+   }
+
+   // prevent row content to wrap
+   // still allow headers to wrap
+   tbody {
+      th, td {
+         white-space: nowrap;
+      }
+
+      td {
+         .user-select(text);
+      }
+   }
+}

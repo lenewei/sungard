@@ -1,0 +1,348 @@
+﻿//
+// The main styles file which imports from several individual less files
+//
+
+//@import "common-imports.less";
+
+// Variables
+// ---------------
+@panelColumns: 12;
+@panelColumnWidth: (100/@panelColumns) * 0.85%;
+@panelGutterWidth: (100/@panelColumns) * 0.15%;
+
+
+// Mixins
+// ---------------
+// mixins for option panels for checkboxes
+.full-field-height() {
+   min-height: @fieldHeight;
+
+   label {
+      bottom: @fieldMarginBottom;
+   }
+}
+
+.half-field-height() {
+   height: @fieldHeight / 2;
+   min-height: 0;
+
+   label {
+      top: 0;
+      bottom: 0;
+   }
+}
+
+// ---------------
+
+
+// container for panels
+// --------------------
+.container-panel {
+   .clearfix();
+   // compensate for the margin on left editor fields
+   width: 100% + 2 * @panelGutterWidth;
+   margin-left: -@panelGutterWidth;
+   .box-sizing(border-box);
+
+   // compensate margin for tabs inside the container panel
+   .tabs, .panel.tab-header {
+      width: 100% - @panelGutterWidth;
+      margin-left: @panelGutterWidth;
+   }
+
+   .nav-tabs {
+      float: left;
+      width: 100% - @panelGutterWidth;
+      padding-left: @containerPadding;
+      padding-right: @containerPadding;
+      margin-left: -@containerPadding;
+   }
+
+   form .tabs .nav-tabs {
+      margin-top: @fieldHeight - 34px;
+   }
+
+   // view config needs this (slightly differently nested markup)
+   .tabbable .nav-tabs {
+      width: 100%;
+      margin-top: -1px;
+   }
+
+   .tab-content {
+      width: 100% + @panelGutterWidth;
+      padding-right: @panelGutterWidth;
+      margin-left: -@panelGutterWidth;
+   }
+
+   // in a dialog, make the container panel full width
+   &.modal-body {
+      //padding-right: 0;
+      margin-left: 0;
+      width: 100%;
+
+      > .panel, .tab-pane > .panel {
+         width: 100%!important;
+      }
+
+      .tabs {
+         width: 100%;
+         margin-left: 0;
+
+         .nav-tabs {
+            margin-left: -15px;
+            width: 100%;
+            padding: 0 10px 0 20px;
+         }
+      }
+
+      .tab-content {
+         width: 100%;
+         margin-left: 0;
+         margin-right: 0;
+      }
+   }
+}
+
+
+// container for row of elements
+// -----------------------------
+// all children on one row
+.container-row {
+   display: table;
+   table-layout: fixed;
+   margin: 0 auto;
+   width: 100%;
+}
+
+.container-row > * {
+   display: table-cell;
+   vertical-align: top;
+   .clearfix();
+}
+
+// sidebar quarter of width and hidden by default
+.sidebar {
+   width: 25%;
+   display: none;
+   padding: 10px;
+}
+
+.container-row > .sidebar.show {
+   display: table-cell;
+}
+
+// toggle this class on a display:table element to trigger a rerender in IE
+.rerender {
+   *zoom:1;
+}
+
+
+// panel heading
+// -------------
+.heading {
+   padding-left: @fieldPadding + 1px;
+   position: relative;
+   height: @fieldHeight - 11px;
+   .box-sizing(border-box);
+
+   h2 {
+      position: absolute;
+      bottom: 5px;
+      color: mix(@grayDark, @brandingSecondary);
+   }
+}
+
+
+// standard panel
+// --------------
+.panel {
+   padding: 0;
+   margin: 0;
+   display: inline-block;
+   .clearfix();
+   float: left;
+   width: 100%;
+   .box-sizing(border-box);
+
+   > * {
+      float: left;
+      width: 100% - @panelGutterWidth;
+      margin-left: @panelGutterWidth / 2;
+      margin-right: @panelGutterWidth / 2;
+   }
+
+   // make heading the same height as fields
+   > .heading {
+      margin-top: 8px;
+      margin-bottom: 3px;
+   }
+
+   // don't indent for additional panels
+   > .panel {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+   }
+
+   // use image as panel border to not upset the layout
+   &.border.left {
+      background-image: url("img/border.png");
+      background-position: 0 0;
+      background-repeat: repeat-y;
+   }
+
+   &.border.bottom {
+      background-image: url("img/border.png");
+      background-position: 0 100%;
+      background-repeat: repeat-x;
+
+      // for empty panels make sure the border is visible
+      // empty panels are used to create a border above a panel
+      &:empty {
+         min-height: 1px;
+         margin-top: -1px;
+      }
+   }
+
+   &.noborder{
+      background-image: none;
+   }
+
+   // option panel to display checkboxes in
+   &.option {
+      // highlight fields that are not checkboxes or headings
+      .field:not(.checkbox) {
+         .unsupported();
+      }
+
+      .checkbox {
+         // by default all checkboxes are displayed half height
+         .half-field-height();
+
+         // when there is only one field, position as normal
+         &:only-child {
+            .full-field-height();
+         }
+
+         // when there are an odd number of checkboxes, display the last one at full height
+         &:last-child:nth-child(3),
+         &:last-child:nth-child(5),
+         &:last-child:nth-child(7),
+         &:last-child:nth-child(9),
+         &:last-child:nth-child(11),
+         &:last-child:nth-child(13),
+         &:last-child:nth-child(15) {
+            .full-field-height();
+         }
+
+         // make sure the hover state doesn't overlap with the bottom border of an empty panel below
+         label {
+            margin-top: 5px;
+            margin-bottom: 2px;
+         }
+      }
+   }
+}
+
+
+// flow panel
+// ----------
+// ignore the width of the editors and just flow them
+.flow.panel {
+   margin-bottom: 3px;
+
+   > * {
+      width: auto!important;
+   }
+
+   > .heading {
+      width: 100%!important;
+   }
+
+   // make sure checkbox labels flow right
+   > .field > label {
+      position: inherit;
+      width: auto;
+
+      &:hover {
+         padding-right: @fieldPadding + 1px;
+      }
+   }
+}
+
+
+// filter panel
+// ------------
+// holds Analytics tree
+.filter.panel {
+   border-right: 1px solid @tableBorder;
+   .box-sizing(border-box);
+
+   ul {
+      list-style: none;
+
+      ul {
+         margin-left: 0;
+      }
+
+      .item {
+         padding-left: 24px;
+         margin-bottom: 5px;
+         cursor: pointer;
+         word-wrap: break-word;
+
+         .selected, label.selected {
+            background-color: @brandingSelection;
+         }
+
+         i {
+            margin-left: -18px;
+         }
+      }
+   }
+}
+
+
+// bordered panel
+// --------------
+.bordered {
+   margin: 0 -@containerPadding @baseLineHeight -@containerPadding;
+   padding: @baseLineHeight 0;
+   overflow: visible;
+   width: auto;
+   background-color: @panelBackground;
+   border-bottom: 1px solid @panelBorderColor;
+
+   &.internal {
+      padding: 0;
+      border: 1px solid @panelBorderColor;
+      float: left;
+      margin-left: 1.25%;
+      position: absolute;
+      left: -@containerPadding;
+      right: @containerPadding - 5px;
+      .box-shadow(0 3px 7px rgba(0,0,0,0.3));
+      z-index: 1;
+   }
+
+   &.padded {
+      padding: 0 0 10px 0;
+
+      > .header {
+         background-color: @brandingMainPanelBackground;
+         color: @brandingMainPanelText;
+         text-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+         margin-bottom: @baseLineHeight / 2;
+         margin-left: 0;
+         padding-top: 1px;
+         padding-right: 0;
+         padding-left: @panelGutterWidth;
+         width: 100%;
+         .box-sizing(border-box);
+      }
+
+      > * {
+         padding: 0 @baseLineHeight 0 0;
+      }
+   }
+}

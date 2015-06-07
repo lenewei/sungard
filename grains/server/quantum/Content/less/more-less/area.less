@@ -1,0 +1,151 @@
+﻿//
+// area is used for spreadsheet type displays of data (e.g. analyse)
+//
+
+// @import "common-imports.less";
+
+@CellPadding1: 4px;
+@CellPadding2: 1em;
+
+.area-panel {
+   width: 100%;
+   .box-sizing(border-box);
+   border-collapse: collapse;
+   overflow-x: auto;
+   margin-top: ceil(@fieldMarginBottom / 2);
+   margin-bottom: ceil(@fieldMarginBottom / 2);
+
+   &.area-text {
+      td, th {
+         text-align: left;
+      }
+   }
+
+   .grid {
+      background-color: transparent;
+      width: 100%;
+   }
+
+   .spreadsheet td {
+      border-color: #eee;
+   }
+
+   th {
+      text-align: right;
+      font-weight: normal;
+      padding: 0 @CellPadding2;
+      border: 1px solid transparent;
+   }
+
+   // make first column left aligned (whole table is right aligned)
+   // less padding on the outsides of the grid
+   tr td, tr th {
+      &:first-child {
+         text-align: left;
+         padding-left: @CellPadding1;
+      }
+
+      &:last-child {
+         padding-right: @CellPadding1;
+      }
+   }
+
+   td {
+      text-align: right;
+      padding: @CellPadding1 @CellPadding2;
+      border: 1px solid transparent;
+      font-size: @baseFontSize;
+      color: @textColor;
+      background-color: white;
+
+      // the outsides get a border
+      &:first-child {
+         border-left-color: @fieldBorderColor;
+      }
+
+      &:last-child {
+         border-right-color: @fieldBorderColor;
+      }
+
+      // total and grand total on the cell
+      &.area-grand, &.area-total {
+         border-top-color: @grayDark;
+         border-top-width: 2px;
+      }
+
+      &.area-grand {
+         font-weight: bold;
+      }
+
+      // title on the cell
+      &.area-title {
+         font-weight: bold;
+         text-align: left;
+         border: none;
+
+         .area-limit {
+         }
+      }
+
+      // caption on the cell
+      &.area-caption {
+         font-style: italic;
+         vertical-align: bottom;
+      }
+
+      // heading on the cell
+      &.area-heading {
+         font-weight: bold;
+      }
+   }
+
+   // hover effect
+   tr:hover td {
+      background-color: transparent;
+   }
+
+   // heading on the row
+   .area-heading {
+      td, th {
+         background-color: transparent;
+         border-color: transparent;
+         border-bottom-color: @fieldBorderColor;
+         font-size: @baseFontSize - 1px;
+         color: lighten(@textColor, 35%);
+         line-height: @baseLineHeight - 3px;
+         padding-top: 0;
+         padding-bottom: 0;
+      }
+   }
+
+   // group heading
+   .area-group {
+      &:first-child td {
+         padding-top: inherit;
+      }
+
+      td {
+         background-color: transparent;
+         border-color: transparent;
+         font-weight: bold;
+         padding-top: @baseLineHeight;
+         padding-bottom: 2 * @CellPadding1;
+      }
+   } 
+
+   // title on the row
+   .area-title td {
+      font-weight: bold;
+      text-align: left;
+      border: none;
+   }
+
+   // put field border color on last row of a group
+   .area-group-last-row td {
+      border-bottom-color: @fieldBorderColor;
+   }
+}
+
+.area-data {}
+.area-currency {}
+.area-float {}

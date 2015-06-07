@@ -1,0 +1,44 @@
+﻿//
+// expression builder and expression link
+//
+
+//@import "common-imports.less";
+
+textarea.expression {
+   min-height: 3 * @fieldHeight + @inputHeight;
+   max-height: 5 * @fieldHeight + @inputHeight;
+
+   font-family: @monoFontFamily;
+}
+
+// link expression
+.field.expression {
+   min-height: @fieldHeight;
+
+   a {
+      display: inline-block;
+      white-space: pre-wrap;
+      word-break: break-all;
+      font-family: @monoFontFamily;
+      margin-top: 17px;
+      margin-left: 3px;
+      margin-bottom: 17px;
+
+      &:hover {
+         text-decoration: none;
+      }
+   }
+}
+
+// within a collection editor there won't be a label so adjust margins
+.collection {
+   .field.expression {
+      min-height: inherit;
+
+      a {
+         margin-top: 3px;
+         margin-bottom: 3px;
+         margin-left: 5px;
+      }
+   }
+}

@@ -1,0 +1,206 @@
+﻿@BorderColor: mix(darken(@brandingSelection, 10%), @tableBorder, 50%);
+
+table.grid {
+   tbody {
+      tr.selected, tr.selected:hover {
+         cursor: default;
+
+         td, th {
+            background-color: lighten(@brandingSelection, 3%);
+            border-top-color: @BorderColor;
+         }
+
+         & + tr {
+            td, th {
+               border-top-color: @BorderColor;
+            }
+         }
+      }
+
+      tr {
+         td:first-child {
+            div.icon-folder-close {
+               margin-right: 3px;
+               margin-top: -2px;
+            }
+         }
+      }
+
+      tr.not-available {
+         text-decoration: line-through;
+      }
+
+      tr.important {
+         font-weight: bold;
+      }
+
+      tr.error {
+         color: red;
+      }
+
+      tr.pending {
+         font-style: italic;
+         color: #bbb;
+      }
+
+      div.indent-div {
+         width: 6px;
+         height: 10px;
+         border-left: 1px dotted @textColor;
+         border-bottom: 1px dotted @textColor;
+         margin-left: -10px;
+         margin-top: -2px;
+         position: absolute;
+      }
+      // definition of one indent level
+      .indent(@level) {
+         @indentSize: 17px;
+
+         td:first-child {
+            padding-left: @indentSize * @level + 3px;
+         }
+      }
+      // recursively call .indent with different level values
+      .indentX(@level) when (@level > 0) {
+         (~"tr.indent@{level}") {
+            .indent(@level);
+         }
+
+         .indentX(@level - 1);
+      }
+
+      .indentX(0) {
+      }
+      // generate 10 levels
+      .indentX(10);
+
+      tr:hover {
+         cursor: pointer;
+
+         td, th {
+            background-color: lighten(@brandingSelection, 6%) !important;
+            border-top-color: @BorderColor !important;
+         }
+
+         & + tr {
+            td, th {
+               border-top-color: @BorderColor !important;
+            }
+         }
+      }
+
+      tr.hover {
+         cursor: pointer;
+
+         td, th {
+            background-color: lighten(@brandingSelection, 6%) !important;
+            border-top-color: @BorderColor !important;
+         }
+
+         & + tr {
+            td, th {
+               border-top-color: @BorderColor !important;
+            }
+         }
+      }
+   }
+}
+
+// Hierarchical Members Grid
+#rootMembersGridContainer {
+   table tbody tr td:last-child button {
+      display: none;
+   }
+
+   div.btn-group a[data-bind*='addActionUrl()'] {
+      display: none;
+   }
+}
+
+// CashExplorer Pivot Grid
+div.sticky-wrap {
+   position: absolute;
+   min-height: 20px;
+   overflow: hidden;
+}
+
+div.sticky-wrap .sticky-wrap-inner {
+   position: relative;
+   overflow: hidden;
+   width: auto;
+   display: inline-block;
+}
+
+.drop-shadow {
+   -webkit-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+   -moz-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+   box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+}
+
+table.clone-table {
+   position: absolute;
+   width: auto;
+}
+
+table.br {
+   border-right: 1px solid #ddd;
+}
+
+// table of contents for grid pager
+.page-targets {
+   margin-right: -36px;
+
+   .table {
+      th {
+         font-size: 11px;
+         font-weight: bold;
+         line-height: @baseLineHeight;
+         color: @grayLight;
+         text-transform: uppercase;
+         white-space: nowrap;
+         padding: 5px 10px;
+
+         &:hover {
+            cursor: default;
+         }
+      }
+
+      td {
+         border-top-color: transparent;
+         padding: 5px 10px;
+
+         &:first-child {
+            text-align: center;
+            color: @grayLight;
+         }
+      }
+   }
+
+   // build a divider line in the empty grid cells
+   .divider td {
+      padding: 0;
+      background-color: #fff;
+
+      &::after {
+         height: 1px;
+         background-color: #e5e5e5;
+         width: 100%;
+         display: block;
+         margin: 9px 0;
+         content: '';
+      }
+   }
+
+   // disable the hover effect on a divider
+   table.grid tbody tr.divider:hover {
+      td {
+         background-color: #fff!important;
+         border-top-color: transparent!important;
+         cursor: default;
+      }
+
+      &+tr td {
+         border-top-color: transparent!important;
+      }
+   }
+}
