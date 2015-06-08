@@ -34,6 +34,8 @@ var ag;
 
         InterestRateOptionDealingViewModel.prototype.showUnderlyingSwapDeal = function () {
             var _this = this;
+            var underlyingSwapDealWindow = new ag.WindowManager({ name: "underlyingSwapDeal" });
+
             this.net.postJson("getUnderlyingSwapDeal", function () {
                 return ko.mapping.toJS(_this.editingItem);
             }).done(function (result) {
@@ -45,8 +47,9 @@ var ag;
                 if (_this.underlyingSwapDeal.dealNumber)
                     url += "&dealNumber=" + encodeURIComponent(_this.underlyingSwapDeal.dealNumber);
 
-                new ag.WindowManager({ url: url, name: "underlyingSwapDeal" });
+                underlyingSwapDealWindow.navigate(url);
             }).fail(function (result) {
+                underlyingSwapDealWindow.close();
                 ag.utils.showErrorsFromResult(result);
             });
         };

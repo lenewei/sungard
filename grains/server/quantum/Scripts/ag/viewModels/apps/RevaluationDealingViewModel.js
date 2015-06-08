@@ -12,43 +12,38 @@ var ag;
         function RevaluationDealingViewModel() {
             _super.apply(this, arguments);
         }
-        RevaluationDealingViewModel.prototype.link = function (me, domElement) {
+        RevaluationDealingViewModel.prototype.link = function (element) {
             var _this = this;
-            var element = $(domElement);
-            var linkTo = element.attr("data-link-to");
+            var $element = $(element), linkTo = $element.attr("data-link-to");
 
-            if (linkTo == "SubDealAnalysis") {
-                me.actions.subDealAnalysis.createCustomPayload = function (data) {
-                    return _this.createCustomPayload(data, element);
+            if (linkTo == "DealRevaluationAtDate") {
+                this.actions.openAnalyse.createCustomPayload = function (data) {
+                    return _this.createApplicationCustomPayload(data, $element);
                 };
-                me.actions.subDealAnalysis.show(me);
-            } else if (linkTo == "DealRevaluationAtDate") {
-                me.actions.openAnalyse.createCustomPayload = function (data) {
-                    return _this.createApplicationCustomPayload(data, element);
-                };
-                me.actions.openAnalyse.invoke(me);
-            } else if (linkTo == "RateDetailIo") {
-                me.actions.ioRateDialog.createCustomPayload = function (data) {
-                    return _this.createCustomPayload(data, element);
-                };
-                me.actions.ioRateDialog.show(me);
-            } else if (linkTo == "ZeroCurveDetail") {
-                me.actions.zeroCurveDetail.createCustomPayload = function (data) {
-                    return _this.createCustomPayload(data, element);
-                };
-                me.actions.zeroCurveDetail.show(me);
-            } else if (linkTo == "ExchangeRateDetail") {
-                me.actions.exchangeRateDetail.createCustomPayload = function (data) {
-                    return _this.createCustomPayload(data, element);
-                };
-                me.actions.exchangeRateDetail.show(me);
-            } else {
-                me.actions.dialogLink.createCustomPayload = function (data) {
-                    return _this.createCustomPayload(data, element);
-                };
-                me.actions.dialogLink.show(me);
+                this.actions.openAnalyse.invoke(this);
+                return;
             }
-            //alert("A link " + element.attr("data-link-to") + element.attr("data-link-id"));
+
+            var action = this.getAction(linkTo);
+            action.createCustomPayload = function (data) {
+                return _this.createCustomPayload(data, $element);
+            };
+            action.show(this);
+        };
+
+        RevaluationDealingViewModel.prototype.getAction = function (linkTo) {
+            switch (linkTo) {
+                case 'SubDealAnalysis':
+                    return this.actions.subDealAnalysis;
+                case 'RateDetailIo':
+                    return this.actions.ioRateDialog;
+                case 'ZeroCurveDetail':
+                    return this.actions.zeroCurveDetail;
+                case 'ExchangeRateDetail':
+                    return this.actions.exchangeRateDetail;
+                default:
+                    return this.actions.dialogLink;
+            }
         };
 
         RevaluationDealingViewModel.prototype.init = function (itemModel) {
@@ -59,21 +54,9 @@ var ag;
                 return false;
             });
 
-            var me = this;
-            $("#Retrospective").on("click", ".rvLink", function () {
-                me.link(me, this);
-            });
-            $("#Prospective").on("click", ".rvLink", function () {
-                me.link(me, this);
-            });
-            $("#dialogLink").on("click", ".rvLink", function () {
-                me.link(me, this);
-            });
-            $("#Summary").on("click", ".rvLink", function () {
-                me.link(me, this);
-            });
-            $("#DealAnalysis").on("click", ".rvLink", function () {
-                me.link(me, this);
+            $(document).on('click', '.rvLink', function (e) {
+                _this.link(e.currentTarget);
+                return false;
             });
 
             // Subscribe to changes on this

@@ -101,6 +101,13 @@
       if (label !== undefined && label !== null)
       {
          (<any>$("label[for='" + ($element.prop("id") || "") + "']").first().contents().last()[0]).data = label;
+
+         // combined fields
+         var $elementParent = $element.parent();
+         if ($elementParent.hasClass('value1') || $elementParent.hasClass('value2'))
+         {
+            $elementParent.siblings('label').text(label);
+         }
       }
    }
 

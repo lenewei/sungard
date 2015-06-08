@@ -6,6 +6,7 @@ var ag;
             var _this = this;
             this.selectedView = selectedView;
             this.visible = ko.observable(false);
+            this.isLoaded = ko.observable(false);
             this.categories = ko.observableArray();
             this.chartTitle = ko.observable('title');
             this.values = ko.observableArray();
@@ -49,6 +50,11 @@ var ag;
                     field: 'name',
                     categories: this.categories
                 }
+            });
+
+            this.visible.subscribe(function (newValue) {
+                if (newValue)
+                    _this.isLoaded(true);
             });
 
             this.config = {

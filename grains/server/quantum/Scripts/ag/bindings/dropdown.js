@@ -25,10 +25,7 @@
 
             ko.computed(function () {
                 var value = ko.unwrap(options.show);
-                _.delay(function () {
-                    // delayed so that the dropdown opens when observable was changed via click event
-                    $element.dropdown("toggle", value);
-                });
+                $element.dropdown("toggle", value);
             }, null, { disposeWhenNodeIsRemoved: element });
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {

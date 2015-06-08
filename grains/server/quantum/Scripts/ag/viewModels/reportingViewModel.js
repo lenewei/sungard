@@ -41,6 +41,7 @@ var ag;
             this.showConfirmProcessingDialog = ko.observable(false);
             this.showConfiguration = ko.observable(false).extend({ notify: "always" });
             this.isConfigurationLoaded = ko.observable(false);
+            this.isQuerySelectorLoaded = ko.observable(false);
             this.expiryCountDefaults = [1, 3, 0];
             // An alert message will be displayed & save Query/View will be disabled if Security By User Writable is false
             this.hasWritePermission = ko.observable(true);

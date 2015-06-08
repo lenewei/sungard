@@ -40,6 +40,11 @@
       registerEventListeners($element);
    }
 
+   export function destroy($element: JQuery)
+   {
+      $element.typeahead("destroy");
+   }
+
    var sorter = (target, optionsTitle, optionsText, compareKey, _items) =>
    {
       // Sorts items if required, but in our case it's an opportunity to marshall the results for output.

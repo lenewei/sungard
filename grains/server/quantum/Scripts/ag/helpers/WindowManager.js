@@ -18,30 +18,37 @@ var ag;
         function WindowManager(options) {
             this.maxWindowReadyTries = 600;
             this.tryTimeoutMilliseconds = 250;
-            this.url = "";
             this.name = "";
             this.deferred = $.Deferred();
             this.handle = null;
-            this.url = options.url;
             this.name = options.name || "_blank";
             this.promise = this.deferred.promise();
             this.initialiseWindowParameters(options);
+            this.initialiseHandle();
 
-            if (!options.navigate)
-                this.open();
-            else
-                navigate(this.url);
+            if (options.url)
+                this.navigate(options.url);
         }
-        WindowManager.prototype.open = function () {
-            var _this = this;
+        WindowManager.prototype.initialiseHandle = function () {
             // Open the window
-            this.handle = window.open(this.url, this.name, this.windowParametersToString(this.windowParameters));
-            if (!this.handle.opener) {
-                this.handle.opener = window;
-            }
+            this.handle = window.open("", this.name, this.windowParametersToString(this.windowParameters));
 
-            // Set focus
-            this.handle.focus();
+            // Add loading indicator
+            this.handle.window.document.write('<!DOCTYPE html><title></title><img style="float: right" src="{0}//{1}{2}content/img/ajax-loader.gif" />'.format(location.protocol, location.host, ag.siteRoot));
+
+            // Tell the child window it's opener/parent so that the child can call it's opener
+            if (!this.handle.opener)
+                this.handle.opener = window;
+
+            // Add to the windows collection for later automatic closing
+            ag.windows = ag.windows || [];
+            ag.windows.push(this.handle);
+        };
+
+        WindowManager.prototype.navigate = function (url) {
+            var _this = this;
+            // Navigate to the URL
+            this.handle.location.href = url;
 
             // Subscribe to the document ready of the new window
             $(this.handle).ready(function () {
@@ -50,9 +57,12 @@ var ag;
                 }, _this.tryTimeoutMilliseconds);
             });
 
-            // Add to the windows collection for later automatic closing
-            ag.windows = ag.windows || [];
-            ag.windows.push(this.handle);
+            // Set focus
+            this.handle.focus();
+        };
+
+        WindowManager.prototype.close = function () {
+            this.handle.close();
         };
 
         WindowManager.prototype.initialiseWindowParameters = function (options) {

@@ -81,4 +81,12 @@
         RoundType[RoundType["down"] = 10210004] = "down";
     })(ag.RoundType || (ag.RoundType = {}));
     var RoundType = ag.RoundType;
+
+    (function (AnaCodeDataTypeEnum) {
+        AnaCodeDataTypeEnum[AnaCodeDataTypeEnum["eacdtText"] = 11670001] = "eacdtText";
+        AnaCodeDataTypeEnum[AnaCodeDataTypeEnum["eacdtNumber"] = 11670002] = "eacdtNumber";
+        AnaCodeDataTypeEnum[AnaCodeDataTypeEnum["eacdtAmount"] = 11670003] = "eacdtAmount";
+        AnaCodeDataTypeEnum[AnaCodeDataTypeEnum["eacdtDate"] = 11670004] = "eacdtDate";
+    })(ag.AnaCodeDataTypeEnum || (ag.AnaCodeDataTypeEnum = {}));
+    var AnaCodeDataTypeEnum = ag.AnaCodeDataTypeEnum;
 })(ag || (ag = {}));

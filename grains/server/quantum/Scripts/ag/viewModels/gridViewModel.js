@@ -48,6 +48,7 @@ var ag;
     // serviceUrl      - base Url of the Service to call when retrieving, editing, and listing grid views
     // searchText      - user input search text on view
     // searchTerms     - search terms (an array) populate from "searchText"
+    // topics          - subscribe certain topic to enable RTU
     var GridViewModel = (function () {
         function GridViewModel(options) {
             var _this = this;
@@ -115,7 +116,10 @@ var ag;
 
             // It's possible that there are no views for this grid, i.e., grid metadata will
             // be provided with the data.
-            this.views = new ag.ViewsViewModel((options.listMetaData && options.listMetaData.views) || [], (options.listMetaData && options.listMetaData.viewTables) || [], options.typeName);
+            this.views = new ag.ViewsViewModel((options.listMetaData && options.listMetaData.views) || [], (options.listMetaData && options.listMetaData.viewTables) || [], options.typeName, this.isLoading);
+
+            if (options.listMetaData.topics)
+                this.topics = options.listMetaData.topics.split(',');
 
             this.selected = new ag.SelectedViewModel(options.selectionMode, options.itemKey);
 
@@ -566,7 +570,7 @@ var ag;
             var fields = this.views.selected().appliedFields();
 
             if (this.search.hasText()) {
-                params.searchText = encodeURIComponent(this.search.text());
+                params.searchText = this.search.text();
             }
 
             return params;
@@ -574,14 +578,6 @@ var ag;
 
         GridViewModel.prototype.getGridViewOptionsQueryString = function () {
             return this.buildQuery(this.getGridViewOptions());
-        };
-
-        GridViewModel.prototype.selectView = function (view) {
-            var _this = this;
-            this.isLoading(true);
-            this.views.setSelected(view).always(function () {
-                _this.isLoading(false);
-            });
         };
 
         GridViewModel.prototype.selectRow = function (row) {
@@ -607,11 +603,11 @@ var ag;
                 if ($.isArray(optionValue))
                     optionValue = optionValue.join(" ");
 
-                query += "{0}{1}={2}".format(!isFirst ? "&" : "", key.toLowerCase(), optionValue);
+                query += "{0}{1}={2}".format(!isFirst ? "&" : "", encodeURIComponent(key.toLowerCase()), _.isUndefined(optionValue) ? optionValue : encodeURIComponent(optionValue));
                 isFirst = false;
             }
 
-            return encodeURI((query.length > 1) ? query : "");
+            return query;
         };
 
         GridViewModel.prototype.loadGridData = function (gridViewDataResponse, reset) {

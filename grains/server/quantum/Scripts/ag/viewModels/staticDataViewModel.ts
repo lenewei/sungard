@@ -3,7 +3,13 @@ module ag
    export class StaticDataViewModel extends AppViewModel implements IStaticDataViewModel
    {
       editParamDelegator = () => ko.mapping.toJS(this.editingItem);
-      editWithRenameParamDelegator = () => [ko.mapping.toJS(this.editingItem), this.originalKeyStore];
+      editWithRenameParamDelegator = () =>
+      {
+         var newData = ko.mapping.toJS(this.editingItem),
+            oldData = $.extend({}, newData, this.originalKeyStore);
+
+         return [newData, oldData];
+      };
 
       canRenameKeyfields: boolean = false;
       hasRootEditor: boolean = true;

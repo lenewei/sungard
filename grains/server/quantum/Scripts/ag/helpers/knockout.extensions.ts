@@ -223,60 +223,6 @@ module ag
 
    //#endregion
 
-   //#region filterToggle binding handler
-   // Toggle the visibility of the multicolumn dialog for a filter binding
-   ko.bindingHandlers["filterToggle"] =
-   {
-      init: (element, valueAccessor) =>
-      {
-         var target = $(element),
-            observable = valueAccessor();
-
-         ko.utils.registerEventHandler(target, "click", e =>
-         {
-            // Find the input in the current editor field
-            var $target = $(e.target),
-               input = $target.closest('.field').find('input'),
-               lookupDisplayName = input.data("lookup-display-name");
-
-            // Find the closest parent that is our toggle element
-            var toggle = $target.closest('.toggle');
-
-            // If the toggle is disabled, do nothing.
-            if (toggle.data("enabled") === false)
-               return;
-
-            if (!input)
-               return;
-
-            // Get the explorer and typeahead
-            var explorer = input.data("explorer");
-            if (!explorer)
-               return;
-
-            var typeahead = input.data("typeahead");
-            if (!typeahead)
-               return;
-
-            // Get the explorer options from the explorer instance
-            var explorerOptions = explorer.options;
-
-            // Put the displayname in if supplied
-            explorerOptions.lookupDisplayName = (lookupDisplayName) ? "Select " + lookupDisplayName : "Browse";
-
-            // Suspend the observable to prevent subscriptions from being fired when the explorer is opened and the input
-            // is blurred (triggering an update on the observable before we've finished selecting a valid value).
-            observable.isSuspended && observable.isSuspended(true);
-            explorer.toggle($.extend({ searchQuery: typeahead.shown ? input.val() : '' }, explorerOptions));
-            typeahead.hide(false);
-
-            e.stopImmediatePropagation();
-            e.preventDefault();
-         });
-      }
-   };
-   //#endregion
-
    //#region labelFor binding handler
 
    // Given a key (Id of an input) retrieve the associated 

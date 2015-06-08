@@ -183,7 +183,7 @@ module ag.format
 
       var raw = format.unformatNumber(value, invariant);
 
-      if (value == null)
+      if (raw == null)
          return "";
 
       var scale = Math.max(minimumScale, mathEx.fractionDigits(raw));

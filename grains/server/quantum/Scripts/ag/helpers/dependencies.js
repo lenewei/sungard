@@ -327,6 +327,8 @@ var ag;
                 if (callee) {
                     callee.subscribe(function () {
                         var updatingModel = ko.unwrap(_this.updatingModel);
+                        if (_this.ignoreCallee === callee)
+                            return;
                         if (ignoreIfAlreadyUpdating && updatingModel)
                             return;
                         if (ignoreIfSuspended && ko.unwrap(callee.isSuspended))
@@ -407,7 +409,7 @@ var ag;
                         _this.setLookups(result.lookups || (result.actionData && result.actionData.lookups), path);
                     }
 
-                    _this.setFields(updateAllFields, id, viewModel, fieldsToUpdate, result.data || result.actionData || result, path, sourceName);
+                    _this.setFields(updateAllFields, id, viewModel, fieldsToUpdate, result.data || result.actionData || result, path, source);
                     _this.setProcessing(fieldsToObserve, false);
                     _this.setSuspended(suspensions, false);
 
@@ -633,19 +635,23 @@ var ag;
 
             /// setFields
             /// Either update selected fields or all associated fields in model
-            DependencyBase.prototype.setFields = function (updateAllFields, id, viewModel, fields, model, path, sourceName) {
+            DependencyBase.prototype.setFields = function (updateAllFields, id, viewModel, fields, model, path, source) {
                 var _this = this;
                 if (updateAllFields) {
                     try  {
+                        /// Don't execute dependencies for the callee/source again even if the value changes
+                        this.ignoreCallee = source;
+
                         /// If all fields are going to be updated then only apply the dependencies that are required during a start up.
                         /// Normally this would only be so set visible and available fields - not field values.
                         /// if rqeuired this could be made more granular by adding new attributes.
                         this.updatingModel(true);
 
-                        ko.mapping.fromJS(model, null, viewModel);
+                        ko.mapping.fromJS(model, viewModel);
 
-                        ag.utils.resetValidationIfEmpty(viewModel, sourceName);
+                        ag.utils.resetValidationIfEmpty(viewModel, [source]);
                     } finally {
+                        this.ignoreCallee = null;
                         this.updatingModel(false);
                     }
                 } else {

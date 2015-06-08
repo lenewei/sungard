@@ -21,6 +21,9 @@
             register('search-box', function (params) {
                 return params.viewModel;
             });
+            register('view-selector', function (params) {
+                return params.viewModel;
+            });
         }
         components.registerAll = registerAll;
     })(ag.components || (ag.components = {}));

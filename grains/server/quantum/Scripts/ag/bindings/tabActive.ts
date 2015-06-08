@@ -4,6 +4,18 @@ module ag
 {
    "use strict";
 
+   ko.bindingHandlers["tabLoad"] =
+   {
+      init: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) =>
+      {
+         var isLoaded = valueAccessor();
+         $(element).on('show', () =>
+         {
+            isLoaded(true);
+         });
+      }
+   };
+
    ko.bindingHandlers["tabActive"] =
    {
       after: ["visible"],

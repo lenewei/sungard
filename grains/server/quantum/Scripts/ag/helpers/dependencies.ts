@@ -350,6 +350,7 @@ module ag.dependencies
    {
       app: any;
       updatingModel: KnockoutComputed<boolean>;
+      ignoreCallee: any;
 
       private updatingViewModel: KnockoutObservable<boolean>;
       private loadingViewModel: KnockoutComputed<boolean>;
@@ -473,6 +474,7 @@ module ag.dependencies
             callee.subscribe(() =>
             {
                var updatingModel: boolean = ko.unwrap(this.updatingModel);
+               if (this.ignoreCallee === callee) return;
                if (ignoreIfAlreadyUpdating && updatingModel) return;
                if (ignoreIfSuspended && ko.unwrap(callee.isSuspended)) return;
                applyTask.call(context, updatingModel);
@@ -588,7 +590,7 @@ module ag.dependencies
                this.setLookups(result.lookups || (result.actionData && result.actionData.lookups), path);
             }
 
-            this.setFields(updateAllFields, id, viewModel, fieldsToUpdate, result.data || result.actionData || result, path, sourceName);
+            this.setFields(updateAllFields, id, viewModel, fieldsToUpdate, result.data || result.actionData || result, path, source);
             this.setProcessing(fieldsToObserve, false);
             this.setSuspended(suspensions, false);
 
@@ -842,23 +844,27 @@ module ag.dependencies
 
       /// setFields
       /// Either update selected fields or all associated fields in model
-      private setFields(updateAllFields, id, viewModel, fields, model, path, sourceName)
+      private setFields(updateAllFields, id, viewModel, fields, model, path, source: IMetaObservable)
       {
          if (updateAllFields)
          {
             try
             {
+               /// Don't execute dependencies for the callee/source again even if the value changes
+               this.ignoreCallee = source;
+
                /// If all fields are going to be updated then only apply the dependencies that are required during a start up.
                /// Normally this would only be so set visible and available fields - not field values.
                /// if rqeuired this could be made more granular by adding new attributes.
                this.updatingModel(true);
 
-               ko.mapping.fromJS(model, null, viewModel);
+               ko.mapping.fromJS(model, viewModel);
 
-               utils.resetValidationIfEmpty(viewModel, sourceName);
+               utils.resetValidationIfEmpty(viewModel, [source]);
             }
             finally
             {
+               this.ignoreCallee = null;
                this.updatingModel(false);
             }
          }
@@ -878,6 +884,7 @@ module ag.dependencies
                      ko.mapping.fromJS(this.getValueFromPath(model, path, field), {}, dest);
                      utils.resetValidationIfEmpty(dest);
                   }
+
                });
             }
          }

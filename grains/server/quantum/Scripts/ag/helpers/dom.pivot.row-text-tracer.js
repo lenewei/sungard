@@ -31,6 +31,7 @@
                         });
                         _this.modifiedCells = [];
                     }, 150);
+                    // When I wrote this, only God and I understood what I was doing. Now, God only knows.
                     this.calculate = _.debounce(function () {
                         var target = $(_this.$cloneLeft.find('tbody tr')[_this.axisY - 1]), axisX = target.children().length;
 

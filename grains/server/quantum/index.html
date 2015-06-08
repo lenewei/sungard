@@ -60,7 +60,7 @@
          <li class="menu search"><input type="text" id="siteMenuSearch" placeholder="Search" /></li>
          <li class="menu-panel">
                <div id="menuContentdealing" class="category-dealing color color-green hide" data-area="Dealing">
-                  <div class="column"><ul class="unstyled"><li class="nav-header">Foreign Exchange</li><li  class="item"><a href="/dealing/fx" data-module="FXDEAL">FX</a></li><li  class="item"><a href="/dealing/fx-back-to-back" data-module="FXDEAL">FX Back-to-Back</a></li><li  class="item"><a href="/dealing/fx-swap" data-module="FXDEAL">FX Swap</a></li><li  class="item"><a href="/dealing/currency-option" data-module="CODEALS">Currency Option</a></li></ul><ul class="unstyled"><li class="nav-header">Money Market & Securities</li><li  class="item"><a href="/dealing/money-market" data-module="MMDEALS">Money Market</a></li><li  class="item"><a href="/dealing/repo" data-module="RADEALS">Repo</a></li><li  class="item"><a href="/dealing/security" data-module="SECDEALS">Securities</a></li></ul><ul class="unstyled"><li class="nav-header">Interest Rate Options</li><li  class="item"><a href="/dealing/interest-rate-option" data-module="IODEALS">Interest Rate Option</a></li></ul></div>
+                  <div class="column"><ul class="unstyled"><li class="nav-header">Foreign Exchange</li><li  class="item"><a href="/dealing/fx.html" data-module="FXDEAL">FX</a></li><li  class="item"><a href="/dealing/fx-back-to-back" data-module="FXDEAL">FX Back-to-Back</a></li><li  class="item"><a href="/dealing/fx-swap" data-module="FXDEAL">FX Swap</a></li><li  class="item"><a href="/dealing/currency-option" data-module="CODEALS">Currency Option</a></li></ul><ul class="unstyled"><li class="nav-header">Money Market & Securities</li><li  class="item"><a href="/dealing/money-market" data-module="MMDEALS">Money Market</a></li><li  class="item"><a href="/dealing/repo" data-module="RADEALS">Repo</a></li><li  class="item"><a href="/dealing/security" data-module="SECDEALS">Securities</a></li></ul><ul class="unstyled"><li class="nav-header">Interest Rate Options</li><li  class="item"><a href="/dealing/interest-rate-option" data-module="IODEALS">Interest Rate Option</a></li></ul></div>
                   <div class="column"><ul class="unstyled"><li class="nav-header">Swaps</li><li  class="item"><a href="/dealing/cross-currency-swap" data-module="SWAPCCY">Cross Currency Swap</a></li><li  class="item"><a href="/dealing/interest-rate-swap" data-module="SWAPINT">Interest Rate Swap</a></li></ul><ul class="unstyled"><li class="nav-header">Forwards & Futures</li><li  class="item"><a href="/dealing/fra" data-module="FRADEALS">FRA</a></li><li  class="item"><a href="/dealing/futures" data-module="FUDEALS">Futures and ETOs</a></li><li  class="item"><a href="/dealing/initial-margin" data-module="IMDEALS">Initial Margin</a></li></ul><ul class="unstyled"><li class="nav-header">Equities</li><li  class="item"><a href="/dealing/unit" data-module="UNDEAL">Unit</a></li><li  class="item"><a href="/dealing/unit-holding" data-module="UNHDEAL">Unit Holding</a></li></ul></div>
                   <div class="column"><ul class="unstyled"><li class="nav-header">Other</li><li  class="item"><a href="/dealing/linked-deals" data-module="DEALSET">Deal Set</a></li><li  class="item"><a href="/fees/fee-schedule" data-module="FEESCHED">Fees</a></li><li  class="item"><a href="/dealing/fx-request" data-module="HDGREQS">FX Requests</a></li><li  class="item"><a href="/dealing/internal-swap" data-module="INTSWAP">Internal Swap</a></li><li  class="item"><a href="/dealing/letter-of-credit" data-module="LCDEALS">Letter of Credit</a></li><li  class="item"><a href="/dealing/quote" data-module="QUOTES">Quotes</a></li></ul></div>
                </div>
@@ -708,7 +708,10 @@
 </script>
 
    <script src="/Scripts/ag/strings.js"></script>
-<script src="/Scripts/ag/config.js"></script>
+<script>
+
+    (function(ag) { (function(config) {  })(ag.config || (ag.config = {})); })(ag || (ag = {}));
+</script>
 
 <script src="/Scripts/ag/ag.js"></script>
 <script src="/Scripts/ag/utils/network.js"></script>

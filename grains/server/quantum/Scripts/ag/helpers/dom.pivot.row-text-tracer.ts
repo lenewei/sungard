@@ -35,6 +35,7 @@
          this.modifiedCells = [];
       }, 150);
 
+      // When I wrote this, only God and I understood what I was doing. Now, God only knows.
       calculate = _.debounce(() =>
       {
          var target = $(this.$cloneLeft.find('tbody tr')[this.axisY - 1]),

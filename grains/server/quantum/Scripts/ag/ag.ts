@@ -92,9 +92,14 @@ String.prototype["toCamelCase"] = function ()
 {
    var camelCase = (s) =>
    {
+      var isNumeric = (c: string) =>
+      {
+         return /^\d+$/.test(c);
+      }
+
       var isUpper = (c: string) =>
       {
-         return c.toUpperCase() === c;
+         return c.toUpperCase() === c && !isNumeric(c);
       };
 
       if (s === null || s === undefined || s.length == 0)
@@ -161,7 +166,7 @@ String.prototype["shrinkFromMiddle"] = function (value: number)
          diff = this.length - value,
          firstPartLength = halfLength - diff / 2,
          secondPartLength = halfLength + diff / 2;
-      
+
       return "{0}...{1}".format(this.substr(0, firstPartLength).trim(), this.substring(secondPartLength).trim());
    }
    return this;
@@ -171,7 +176,7 @@ String.prototype["shrinkFromMiddle"] = function (value: number)
 
 //#region Window Extensions
 
-window["log"] = () => 
+window["log"] = function()
 {
    var log: any = {};
    log.history = log.history || []; // store logs to an array for reference
@@ -194,9 +199,9 @@ module ag
 
    // Private Properties
    var consts =
-   {
-      viewModelContainerAttribute: "data-ag-viewmodel-container"
-   };
+      {
+         viewModelContainerAttribute: "data-ag-viewmodel-container"
+      };
 
    function closeWindows()
    {
@@ -251,7 +256,7 @@ module ag
                   closeWindows();
 
                   // Keep the body classes for the colour of the page
-                  var body = $("body"), 
+                  var body = $("body"),
                      bodyClass = body.attr("class");
 
                   // Cleanup
@@ -337,15 +342,15 @@ module ag
    //#region Publish/subscribe topics
 
    export var topics =
-   {
-      ApplyBindingDone: "KO_APPLY_BINDING_DONE",
-      UpdatingViewModel: "UPDATING_VIEW_MODEL",
-      Logon: "LOGON",
-      ActivityCompleted: "ACTIVITY_COMPLETED",
-      UpdateUIHtml: "UPDATE_UI_HTML",
-      ApplyWatcherValue: "ApplyWatcherValue",
-      WatcherValueChanged: "WatcherValueChanged",
-   }
+      {
+         ApplyBindingDone: "KO_APPLY_BINDING_DONE",
+         UpdatingViewModel: "UPDATING_VIEW_MODEL",
+         Logon: "LOGON",
+         ActivityCompleted: "ACTIVITY_COMPLETED",
+         UpdateUIHtml: "UPDATE_UI_HTML",
+         ApplyWatcherValue: "ApplyWatcherValue",
+         WatcherValueChanged: "WatcherValueChanged",
+      }
 
    //#endregion
 
@@ -409,7 +414,7 @@ module ag
 
          // Avoid performing redirect from page that has
          // been used to logon - server will perform this action
-         $("#logonButton").on("click", () =>
+         $("#logonButton").on("click",() =>
          {
             window.clearInterval(authRevive);
          });
@@ -458,16 +463,16 @@ module ag
    export module momentExtensions
    {
       export var Format =
-      {
-         ISO: "YYYY-MM-DD",
-         Display: "D MMM YYYY",
-         ISOFull: "YYYY-MM-DDTHH:mm:ssZ",
-         FullDisplay: "D MMM YYYY HH:mm:ss",
-         MonthYearDateTimeDisplay: "MMM YYYY",
-      }
+         {
+            ISO: "YYYY-MM-DD",
+            Display: "D MMM YYYY",
+            ISOFull: "YYYY-MM-DDTHH:mm:ssZ",
+            FullDisplay: "D MMM YYYY HH:mm:ss",
+            MonthYearDateTimeDisplay: "MMM YYYY",
+         }
 
       // Utility functions - added to moment prototype
-      function fromISO(value: string, useFullTime?:boolean): Moment
+      function fromISO(value: string, useFullTime?: boolean): Moment
       {
          // Expecting ISO formatted date string: "2014-05-22T13:00:00+12:00"
          // but we will only parse the first 10 characters (don't want time)
@@ -650,7 +655,7 @@ module ag
 
       export function addOptionalClasses(element: JQuery, ...args: string[])
       {
-         $.each(args, (index, item) =>
+         $.each(args,(index, item) =>
          {
             if (!isNullOrUndefined(item))
                element.addClass(item);
@@ -767,15 +772,15 @@ module ag
 
       // equivalent to ko.validation.group.showAllMessages(true)
       // but doesn't make all observables validatable which saves us memory
-      export function validate(obj:any): string[]
+      export function validate(obj: any): string[]
       {
          var errors = [];
-         traverseValidatables(obj, (prop) =>
+         traverseValidatables(obj,(prop) =>
          {
             prop.isModified(true);
 
             var error = prop.error();
-            if(error)
+            if (error)
                errors.push(error);
          });
          return errors;
@@ -783,21 +788,21 @@ module ag
       
       // equivalent to ko.validation.group.showAllMessages(false)
       // but doesn't make all observables validatable which saves us memory
-      export function resetValidation(obj:any)
+      export function resetValidation(obj: any)
       {
-         traverseValidatables(obj, (prop) =>
+         traverseValidatables(obj,(prop) =>
          {
             prop.isModified(false);
          });
       }
       
       //hide the message of all observables where it's value is undefined, null, empty string or empty array
-      export function resetValidationIfEmpty(obj:any, ignore?: string[])
+      export function resetValidationIfEmpty(obj: any, ignore?: any[])
       {
-         traverseValidatables(obj, (prop, path) =>
+         traverseValidatables(obj, (prop) =>
          {
             var value;
-            if (!_.contains(ignore, path))
+            if (!_.contains(ignore, prop))
             {
                value = prop();
                if (isNullUndefinedOrEmpty(value) || (_.isArray(value) && _.isEmpty(value)))
@@ -806,28 +811,28 @@ module ag
          });
       }
 
-      function traverseValidatables(obj: any, callback: (any, string) => void, parentPath?: string)
+      function traverseValidatables(obj: any, callback: (any) => void)
       {
-         if(ko.isObservable(obj) && isValidatable(obj))
-            callback(obj, parentPath || "");
+         if (ko.isObservable(obj) && isValidatable(obj))
+            callback(obj);
 
          var value = ko.unwrap(obj);
          if (_.isPlainObject(value) || _.isArray(value))
          {
-            _.each(value, (memberValue, propNameOrIndex) =>
+            _.each(value,(memberValue) =>
             {
-               traverseValidatables(memberValue, callback, (parentPath ? parentPath + "." + propNameOrIndex : propNameOrIndex)); //the path generated here is same as Knockout Mapping
+               traverseValidatables(memberValue, callback);
             });
          }
       }
 
       // add an anonymous rule to the observable which is automatically removed when the element is disposed
       // addDisposeCallback is for unit testing
-      export function registerBindingRule<T>(element: Element, observable: KnockoutObservable<T>, rule: KnockoutValidationRule, addDisposeCallback: (element: Element, callback: Function)=>void = ko.utils.domNodeDisposal.addDisposeCallback): void
+      export function registerBindingRule<T>(element: Element, observable: KnockoutObservable<T>, rule: KnockoutValidationRule, addDisposeCallback: (element: Element, callback: Function) => void = ko.utils.domNodeDisposal.addDisposeCallback): void
       {
          if (!_.isObject(rule)) throw Error("invalid rule");
          if (rule.rule) throw Error("rule must be anonymous"); // Knockout Validation doesn't allow duplicate named
-                                                               // rules so this method only accept anonymous rules
+         // rules so this method only accept anonymous rules
 
          var condition = createEditableCondition(observable, rule.condition);
 
@@ -836,7 +841,7 @@ module ag
 
          ko.validation.addRule(observable, rule);
 
-         addDisposeCallback(element, () =>
+         addDisposeCallback(element,() =>
          {
             observable.rules.remove((i) => i == rule);
          });
@@ -853,20 +858,20 @@ module ag
       // CAUTION: only one warning rule can be registered per observable
       // A better implementation is to extend Knockout Validation to support warnings
       // https://github.com/Knockout-Contrib/Knockout-Validation/issues/136
-      export function registerBindingWarningRule<T>(element: Element, observable: KnockoutObservable<T>, rule: (resultCallback: (message:string)=>void )=>void, addDisposeCallback: (element: Element, callback: Function)=>void = ko.utils.domNodeDisposal.addDisposeCallback): void
+      export function registerBindingWarningRule<T>(element: Element, observable: KnockoutObservable<T>, rule: (resultCallback: (message: string) => void) => void, addDisposeCallback: (element: Element, callback: Function) => void = ko.utils.domNodeDisposal.addDisposeCallback): void
       {
          if (!_.isFunction(rule)) throw Error("invalid rule");
 
          addWarning(observable);
 
          var ruleRunner = createWarningRuleRunner(observable, rule, createEditableCondition(observable));
-         addDisposeCallback(element, () =>
+         addDisposeCallback(element,() =>
          {
             ruleRunner.dispose();
          });
       }
 
-      export function createWarningRuleRunner<T>(observable: KnockoutObservable<T>, rule: (resultCallback: (message:string)=>void )=>void, condition: ()=>boolean)
+      export function createWarningRuleRunner<T>(observable: KnockoutObservable<T>, rule: (resultCallback: (message: string) => void) => void, condition: () => boolean)
       {
          var latestRunId = 0;
 
@@ -888,14 +893,14 @@ module ag
          });
       }
 
-      export function createEditableCondition<T>(observable: KnockoutObservable<T>, originalCondition?: ()=>boolean): ()=>boolean
+      export function createEditableCondition<T>(observable: KnockoutObservable<T>, originalCondition?: () => boolean): () => boolean
       {
          if (!isMetaObservable(observable))
             return originalCondition;
-         
+
          if (_.isFunction(originalCondition))
             return () => isEditable(<dependencies.IMetaObservable>observable) && originalCondition();
-         
+
          return () => isEditable(<dependencies.IMetaObservable>observable);
       }
 
@@ -922,7 +927,7 @@ module ag
       export function getParentTabHeaders($source: JQuery): JQuery
       {
          var tabHeaders = [];
-         _.each($source.parents("div.tab-pane"), (tabPane) =>
+         _.each($source.parents("div.tab-pane"),(tabPane) =>
          {
             pushApply(tabHeaders, $("#" + $(tabPane).attr("id") + "TabHeader"));
          });
@@ -1133,7 +1138,7 @@ module ag
 
       export function getKeyFieldKey(fields): string
       {
-         var keyField = ko.utils.arrayFirst(fields, (field: any) => field.isKey);
+         var keyField = ko.utils.arrayFirst(fields,(field: any) => field.isKey);
          return keyField && keyField.key;
       }
 
@@ -1177,7 +1182,7 @@ module ag
 
       export function transformLookup(lookup)
       {
-         if (!lookup.data) 
+         if (!lookup.data)
             return lookup; // Nothing to do
 
          // Flesh out probably sparse lookup data with defaults from a client-side representation of LookupData
@@ -1213,7 +1218,7 @@ module ag
          // Transform any named lookup references and lookup data mapping
          var lookupReferences = $.extend({}, references);
 
-         $.each(lookupReferences, (lookupRef, lookupDataRef) =>
+         $.each(lookupReferences,(lookupRef, lookupDataRef) =>
          {
             if (typeof lookupDataRef !== "string")
                return; // has already been transformed
@@ -1230,10 +1235,10 @@ module ag
       {
          if (!lookupDatas) return;
 
-         _.each(lookupDatas, (value: any) =>
+         _.each(lookupDatas,(value: any) =>
          {
             var findDefault = false;
-            _.each(value.data, (obj: any) =>
+            _.each(value.data,(obj: any) =>
             {
                if (obj.value == 0)
                   findDefault = true;
@@ -1261,10 +1266,10 @@ module ag
             else
             {
                var mappingOptions =
-               {
-                  fields: { create: options => options.data },
-                  data: { create: options => options.data }
-               }
+                  {
+                     fields: { create: options => options.data },
+                     data: { create: options => options.data }
+                  }
 
                // If the value already exists at this path, check whether it's an observable or mapped
                if (current[next] && (ko.isObservable(current[next]) || ko.mapping.isMapped(current[next])))
@@ -1378,7 +1383,7 @@ module ag
       export function getFirstObservableProperty(item)
       {
          var val = null;
-         _.forEach(item, (value: any) =>
+         _.forEach(item,(value: any) =>
          {
             if (ko.isObservable(value))
             {
@@ -1407,7 +1412,7 @@ module ag
       {
          var additionalFieldsData = {},
             // Strip off the "*." prefix from all additional fields
-            fieldNames = $.map(splitAndTrim(additionalFields), (item) =>
+            fieldNames = $.map(splitAndTrim(additionalFields),(item) =>
             {
                return appendModelPrefix(item, "");
             }),
@@ -1415,7 +1420,7 @@ module ag
 
          // Set the filter value to the value of the Knockout observable bound to the additional field.
          // If the additional field is a dotted path, find the relevant path from the current level.
-         $.each(fieldNames, (index, item) =>
+         $.each(fieldNames,(index, item) =>
          {
             var pathValue = getObjectFromPath(unwrappedViewModel, item);
             if (typeof pathValue === "undefined")
@@ -1434,7 +1439,7 @@ module ag
             }
 
             createValueAtPath(additionalFieldsData, item, ko.mapping.toJS(pathValue));
-            
+
          });
 
          return ko.mapping.toJS(additionalFieldsData);
@@ -1465,8 +1470,8 @@ module ag
                throw new Error("No root model available");
 
             appModel = prefix.length > 0 ?
-            getProperty(rootModel, prefix) || getProperty(containingModel, prefix) :
-            (rootModel && rootModel.getModel && rootModel.getModel());
+               getProperty(rootModel, prefix) || getProperty(containingModel, prefix) :
+               (rootModel && rootModel.getModel && rootModel.getModel());
 
             if (!appModel)
                appModel = getAppViewModel(target);
@@ -1522,7 +1527,7 @@ module ag
          if (postOnlyProperties)
             clearProperties(postOnlyProperties, vm);
 
-         return walkObject(vm, (obj, property) =>
+         return walkObject(vm,(obj, property) =>
          {
             var value = obj[property];
             if (value === null || _.isFunction(value))
@@ -1627,7 +1632,7 @@ module ag
          return false;
       }
 
-      export function openApplicationWindow(path: string, data?, responseOnlyProperties?: string[], postOnlyProperties?: string[], navigate: boolean = false): WindowManager
+      export function openApplicationWindow(path: string, data?, responseOnlyProperties?: string[], postOnlyProperties?: string[], navigate: boolean = false): JQueryPromise<any>
       {
          if (data)
          {
@@ -1635,12 +1640,22 @@ module ag
             path += $.param(cleanJSForRequest(data, responseOnlyProperties, postOnlyProperties));
          }
 
-         return new WindowManager({ url: path, navigate: navigate });
+         if (navigate)
+         {
+            // Use current window
+            ag.navigate(path);
+            return $.Deferred().promise();
+         }
+         else
+         {
+            // Popup a window
+            return (new WindowManager({ url: path })).promise;
+         }
       }
 
       export function openApplicationWindowPromise(path: string, data?, navigate?, responseOnly?): JQueryPromise<any>
       {
-         return openApplicationWindow(path, data, responseOnly, null, navigate).promise;
+         return openApplicationWindow(path, data, responseOnly, null, navigate);
       }
 
       export function documentTitle(title: string, keyValue: any, extraKeyValue: any): string;
@@ -1696,7 +1711,7 @@ module ag
          result = result || {};
 
          prefix = prefix ? prefix + "." : "";
-         $.each(collection, (propertyName, item) =>
+         $.each(collection,(propertyName, item) =>
          {
             var name = prefix + propertyName;
             if (fnCondition && fnCondition(item))
@@ -1723,7 +1738,7 @@ module ag
       }
 
       export function exportCrystalReport(serviceUrl, reportName, selectedItemKeyValue, pageIdToken)
-      {       
+      {
          utils.openApplicationWindow("/{0}/exportcrystalreport/?reportName={1}&keyValue={2}&__PageIdToken={3}".format(serviceUrl, reportName, selectedItemKeyValue, pageIdToken), null, null, null, false);
       }
 
@@ -1842,14 +1857,14 @@ module ag
       export function isValidURL(url: string): boolean
       {
          var temp = url.match(/((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/ig);
-         return temp ?  temp.length > 0 : false;
+         return temp ? temp.length > 0 : false;
       }
 
       export function inflateCurrencies(currencies: Array<any>)
       {
          var result = {};
 
-         $.each(currencies, (index, item) =>
+         $.each(currencies,(index, item) =>
          {
             result[item[0]] = { amountDp: item[1], fxDp: item[2], intDp: item[3], roundType: item[4] }
          });
@@ -1857,15 +1872,51 @@ module ag
          return result;
       }
 
+      export function createTabLoaders(config: any)
+      {
+         var tabLoaders = ag.tabLoaders = {};
+         _.each(config,(value, key) =>
+         {
+            var tabs: any = tabLoaders[key] = {};
+            _.each(value,(tab: string) =>
+            {
+               tabs[tab] =
+               {
+                  isLoaded: ko.observable(false)
+               };
+            });
+         });
+      }
+
       export function escapeRegexChars(str: string): string
       {
          return str.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
       }
 
-      //custom observable equalityComparer
+      // Custom observable equalityComparer
       export function strictEqualityComparer(a: any, b: any): boolean
       {
          return a === b;
+      }
+
+      // Make the observable validatable to the Filter binding.
+      //
+      // Filter binding only validates if value.valueIsUnvalidated is true 
+      // to prevent unnesseccary validation.
+      // For example when loading a deal, filter validation will not trigger
+      export function addUnvalidatedFlag(value: any)
+      {
+         value.valueIsUnvalidated = false;
+
+         return ko.computed(
+         {
+            read: value,
+            write: (v) =>
+            {
+               value.valueIsUnvalidated = true;
+               value(v);
+            }
+         });
       }
    }
    //#endregion
@@ -1900,7 +1951,7 @@ module ag
             return Math[type](value);
     
          // Shift
-         var ret:any = value.toExponential().split('e');
+         var ret: any = value.toExponential().split('e');
          ret = Math[type](Number(ret[0] + 'e' + (Number(ret[1]) - exp)));
 
          // Shift back

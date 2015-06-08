@@ -23,11 +23,12 @@ module ag
 
    var businessDaysService;
 
+   // ToDo: We should place all options inside the data-bind instead of our own data attributes or a CSS class
    ko.bindingHandlers["date"] =
    {
-      init: (element, valueAccessor, allBindingsAccessor) =>
+      init: (element, valueAccessor, allBindingsAccessor, viewModel) =>
       {
-         initDatepicker(element, valueAccessor, allBindingsAccessor);
+         initDatepicker(element, valueAccessor, allBindingsAccessor, viewModel);
       },
       update: (element, valueAccessor) =>
       {
@@ -71,7 +72,7 @@ module ag
       }, 0);
    }
 
-   function initDatepicker(element, valueAccessor, allBindingsAccessor)
+   function initDatepicker(element, valueAccessor, allBindingsAccessor, viewModel)
    {
       // Initialize datepicker with some optional options
       var options = allBindingsAccessor().datepickerOptions || {},
@@ -98,11 +99,14 @@ module ag
          : dates.relativeDateLabels);
 
       // Initialize non business days
-      businessDaysOptions = tryGetBusinessDaysOptions($element);
+      businessDaysOptions = tryGetBusinessDaysOptions($element, viewModel);
 
       // Initialize the date picker control
       // ReSharper disable once UsageOfPossiblyUnassignedValue
       initDatepickerControl($element, options.dateFormat, businessDaysOptions);
+      
+      // Add toggle button to show and hide calendar
+      addToggleButton($element);
 
       // Handle the field changing
       ko.utils.registerEventHandler(element, "change", () =>
@@ -120,11 +124,13 @@ module ag
       if (businessDaysOptions)
          ag.utils.registerBindingWarningRule(element, valueAccessor(), createBusinessDaysWarningRule(valueAccessor(), businessDaysOptions));
 
+
       // Dispose
       ko.utils.domNodeDisposal.addDisposeCallback(element, () =>
       {
-         $element.typeahead("destroy");
-         $element.closest("div input").data("datepicker").remove();
+         filter.helper.typeahead.destroy($element);
+         removeDatepickerControl($element);
+         removeToggleButton($element);
       });
    }
 
@@ -221,8 +227,7 @@ module ag
             return { tooltip: " ", enabled: true, classes: "" };
          }
       });
-
-      // Add click event listener to the next div to show and hide calendar
+      
       var datepicker = inputElement.data("datepicker"),
          $datepickerElement = $(datepicker.element);
 
@@ -230,15 +235,12 @@ module ag
       ko.utils.registerEventHandler($datepickerElement, "show", onShow);
       ko.utils.registerEventHandler($datepickerElement, "hide", onHide);
 
-      ko.utils.registerEventHandler(inputElement.next("div"), "click", () =>
-      {
-         if (!datepicker.picker.is(":visible"))
-            datepicker.show();
-         else
-            datepicker.hide();
-      });
-
       isInitializing = false;
+   }
+
+   function removeDatepickerControl($element: JQuery): void
+   {
+      $element.closest("div input").data("datepicker").remove();
    }
 
    function tryFillDatepicker($inputElement)
@@ -388,7 +390,7 @@ module ag
       return false;
    }
 
-   function tryGetBusinessDaysOptions($element): BusinessDaysOptions
+   function tryGetBusinessDaysOptions($element: JQuery, viewModel: any): BusinessDaysOptions
    {
       if (!$element.data("businessday"))
          return null;
@@ -396,12 +398,12 @@ module ag
       return {
          message: $element.data("businessday"),
          url: $element.data("businessday-geturl"),
-         currencies: getCommaSeparatedProperties<KnockoutObservable<string>>($element.data("businessday-basepath"), $element.data("businessday-currencies")),
-         locations: getCommaSeparatedProperties<KnockoutObservable<string[]>>($element.data("businessday-basepath"), $element.data("businessday-locations"))
+         currencies: getCommaSeparatedProperties<KnockoutObservable<string>>(viewModel, $element.data("businessday-basepath"), $element.data("businessday-currencies")),
+         locations: getCommaSeparatedProperties<KnockoutObservable<string[]>>(viewModel, $element.data("businessday-basepath"), $element.data("businessday-locations"))
       };
    }
 
-   function getCommaSeparatedProperties<T>(basePath: string, commaSeparatedPropertyPaths: string): T[]
+   function getCommaSeparatedProperties<T>(viewModel: any, basePath: string, commaSeparatedPropertyPaths: string): T[]
    {
       var pathPrefix = basePath ? basePath + "." : "";
 
@@ -410,7 +412,7 @@ module ag
          .map((i) =>
          {
             var propertyPath = pathPrefix + i.toCamelCase(),
-               property = ag.getProperty(ag.viewModel, propertyPath);
+               property = ag.getProperty(viewModel, propertyPath);
 
             if (!property)
                throw Error("Property '{0}' not found".format(propertyPath));
@@ -443,6 +445,27 @@ module ag
           businessDaysService = new BusinessDaysService();
 
       return businessDaysService;
+   }
+
+   function addToggleButton($element: JQuery): void
+   {
+      var $toggle = $('<div class="toggle"><i class="icon-calendar"></i></div>');
+
+      $toggle.on('click', () =>
+      {
+         var datepicker = $element.data("datepicker");
+         if (!datepicker.picker.is(":visible"))
+            datepicker.show();
+         else
+            datepicker.hide();
+      });
+
+      $element.after($toggle);
+   }
+
+   function removeToggleButton($element: JQuery): void
+   {
+      $element.next(".toggle").first().off().remove();
    }
 
    class BusinessDaysService

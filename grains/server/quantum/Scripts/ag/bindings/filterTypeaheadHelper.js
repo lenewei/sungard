@@ -48,6 +48,11 @@
                 }
                 _typeahead.initForLocalDatasource = initForLocalDatasource;
 
+                function destroy($element) {
+                    $element.typeahead("destroy");
+                }
+                _typeahead.destroy = destroy;
+
                 var sorter = function (target, optionsTitle, optionsText, compareKey, _items) {
                     // Sorts items if required, but in our case it's an opportunity to marshall the results for output.
                     // The assumption is that the typeahead source needs to be an array of either strings or objects

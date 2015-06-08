@@ -80,4 +80,12 @@
       up = 10210003,
       down = 10210004
    }
+   
+   export enum AnaCodeDataTypeEnum
+   {
+      eacdtText = 11670001,
+      eacdtNumber = 11670002,
+      eacdtAmount = 11670003,
+      eacdtDate = 11670004,
+   }
 }

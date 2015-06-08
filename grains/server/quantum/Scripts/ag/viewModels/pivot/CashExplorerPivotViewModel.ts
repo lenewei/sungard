@@ -110,7 +110,7 @@ module ag
                additionalInfo: additionalInfo,
                data: ko.mapping.toJS(rootViewModel.applicationOptions),
                reportId: rootViewModel.activeReport().key(),
-               viewKey: rootViewModel.views.selected().key()
+               viewKey: rootViewModel.currentViewKey()
             };
 
          return this.net.postJson(action, payload);

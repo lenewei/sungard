@@ -44,7 +44,7 @@
                var parent = $aTag.parent();
                var contextMenu = $('<div class="dropdown context-menu\"></div>');
                contextMenu.append($aTag);
-               parent.append(contextMenu);
+               parent.prepend(contextMenu);
             });
          });
       }, 0);

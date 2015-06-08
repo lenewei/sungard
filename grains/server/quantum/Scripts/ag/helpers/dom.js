@@ -309,15 +309,19 @@ var ag;
                 // Create a Tab Header <ul> section content
                 // Set the first panel as the active/selected panel
                 // Add data-title attributes for helpmode
-                var tabs = $(containerItem), headers = "";
+                var tabs = $(containerItem), tabsId = tabs.data("bind-tabsid"), headers = "";
 
                 _.each(tabs.children(".tab-content:first").children(".panel"), function (item) {
-                    var tab = $(item), tabReference = tab.data("bind-active"), otherBindings = tab.data("bind") || "";
+                    var tab = $(item), tabReference = tab.data("bind-active"), tabId = tab.data("bind-tabid"), otherBindings = tab.data("bind") || "";
 
                     if (otherBindings)
                         otherBindings += ", ";
 
-                    headers += "<li id=\"{0}TabHeader\"><a data-toggle=\"tab\" href=\"#{0}\" tabindex=\"-1\" data-bind=\"{1}tabActive:'{2}'\">{3}</a></li>".format(tab.attr("id"), otherBindings, tabReference, tab.data("title"));
+                    var tabLoad = '';
+                    if (tabsId && tabId)
+                        tabLoad = ', tabLoad: ag.tabLoaders.{0}.{1}.isLoaded'.format(tabsId, tabId);
+
+                    headers += "<li id=\"{0}TabHeader\"><a data-toggle=\"tab\" href=\"#{0}\" tabindex=\"-1\" data-bind=\"{1}tabActive:'{2}'{4}\">{3}</a></li>".format(tab.attr("id"), otherBindings, tabReference, tab.data("title"), tabLoad);
                 });
 
                 tabs.children("ul.nav:first").html(headers);
@@ -490,10 +494,6 @@ var ag;
                     tabMove(event, first, last);
             });
 
-            if (!isPageInit) {
-                initHtmlParts(viewModel, container);
-            }
-
             fileUploadInit(container);
 
             filtersInit();
@@ -590,33 +590,35 @@ var ag;
 
         //#endregion
         //#region HtmlParts
-        function initHtmlParts(viewModel, container) {
-            var template = "uihtml";
-            dom.htmlParts = [];
+        function initHtmlParts(viewModel) {
+            if (!ag.uiHtmls)
+                return;
 
-            _.each($('div', container).find("[data-{0}]".format(template)), function (element) {
-                var property = $(element).data(template), item = ag.getProperty(viewModel, property.bindingPath);
+            var htmlParts = [];
 
-                if (property.executeAtStartUp) {
-                    updateHtmlPart(element, property, null, viewModel, item);
+            _.each(ag.uiHtmls, function (uiHtml) {
+                var config = uiHtml.config, item = ag.getProperty(viewModel, config.bindingPath);
+
+                if (config.executeAtStartUp) {
+                    updateHtmlPart(config, null, viewModel, item);
                     return true;
                 }
 
                 if (!ag.isNullOrUndefined(item)) {
                     item.refresh = function (changedProperty) {
-                        return updateHtmlPart(element, property, changedProperty, viewModel, item);
+                        return updateHtmlPart(uiHtml, changedProperty, viewModel, item);
                     };
                     item.clear = function () {
-                        return $(element).html(null);
+                        return uiHtml.html(null);
                     };
 
-                    if (property.refreshWhenKeyFieldChange) {
+                    if (config.refreshWhenKeyFieldChange) {
                         item.extend({ rateLimit: 100 });
-                        dom.htmlParts.push(item);
+                        htmlParts.push(item);
                     }
 
                     PubSub.subscribe(ag.topics.UpdateUIHtml, function () {
-                        _.each(dom.htmlParts, function (targetValue) {
+                        _.each(htmlParts, function (targetValue) {
                             targetValue(0); // reset back to 0;
                         });
                     });
@@ -627,10 +629,10 @@ var ag;
 
         dom.htmlParts = [];
 
-        function updateHtmlPart(element, data, changedProperty, viewModel, item) {
+        function updateHtmlPart(uiHtml, changedProperty, viewModel, item) {
             var map = function (x) {
                 return x ? x : undefined;
-            };
+            }, config = uiHtml.config;
 
             var setProcessing = function (obj, value) {
                 if (obj && obj.isProcessing) {
@@ -639,13 +641,13 @@ var ag;
             };
 
             var action = {
-                action: map(data.action),
-                area: map(data.area),
-                controller: map(data.controller),
-                url: map(data.url)
+                action: map(config.action),
+                area: map(config.area),
+                controller: map(config.controller),
+                url: map(config.url)
             };
 
-            var params = data.additionalFields ? ag.utils.getAdditionalFieldsFromModel(data.additionalFields, viewModel.getModel()) : data.includeCompleteModel ? ko.mapping.toJS(viewModel.getModel() || {}) : {};
+            var params = config.additionalFields ? ag.utils.getAdditionalFieldsFromModel(config.additionalFields, viewModel.getModel()) : config.includeCompleteModel ? ko.mapping.toJS(viewModel.getModel() || {}) : {};
 
             params.changedProperty = changedProperty;
 
@@ -653,9 +655,8 @@ var ag;
 
             // Get the Html
             ag.utils.getJson(action, params, true).done(function (result) {
-                if (result.data) {
-                    $(element).html(result.data);
-                }
+                if (result.data)
+                    uiHtml.html(result.data);
             }).always(function () {
                 return setProcessing(item, false);
             });
@@ -999,7 +1000,7 @@ var ag;
 (function (ag) {
     (function (dom) {
         (function (automation) {
-            function invokeSynchronousLookup(url) {
+            function invokeSynchronousLookup(url, params, replaceData) {
                 $.ajaxSetup({ async: false });
 
                 if (!ag.viewModel)
@@ -1007,7 +1008,9 @@ var ag;
 
                 var promise, resultText = "", data = ag.viewModel.editingItem || {};
 
-                promise = ag.viewModel.net.postJson({ url: url }, { data: ko.mapping.toJS(data) }).always(function (result) {
+                var combined = $.extend(ko.mapping.toJS(data), params ? JSON.parse(params) : null);
+
+                promise = ag.viewModel.net.postJson({ url: url }, !replaceData ? { data: combined } : combined).always(function (result) {
                     if (!$.isArray(result)) {
                         resultText = "200 OK";
                     } else {

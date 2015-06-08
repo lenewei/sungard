@@ -192,8 +192,8 @@
             formHeaders(headerFunctionsPerRequest, headers);
             $.extend(headers, getHeadersForRequest(method));
 
-            var request = function () {
-                return $.ajax({
+            var ajaxOptions = function () {
+                return {
                     cache: cache,
                     global: global,
                     dataType: dataType,
@@ -202,10 +202,10 @@
                     data: getPayloadForRequest(method, data),
                     contentType: method !== "POST" ? "application/x-www-form-urlencoded" : "application/json; charset=utf-8",
                     url: createUrlForRequest(action),
-                    success: function (data, textStatus, jqXHR) {
+                    success: function (successData, textStatus, jqXHR) {
                         // Check for redirection
-                        if (!ag.isNullOrUndefined(data) && data.redirect)
-                            ag.navigate(data.redirect, false);
+                        if (!ag.isNullOrUndefined(successData) && successData.redirect)
+                            ag.navigate(successData.redirect, false);
 
                         // Get the current "today" value for the location the
                         // user is assigned to (if supplied)
@@ -213,19 +213,16 @@
                         if (today && today.length)
                             ag.userLocationToday = moment.fromISO(today);
                     }
-                }).fail(function (jqxhr) {
-                    if (jqxhr.status == 401)
-                        $("#authenticationErrorDialog").modal({ backdrop: "static", keyboard: false, show: true });
-                });
+                };
             };
 
-            // If a POST has data expressed as a function this indicates it should be deferred
-            // (and the data function invoked when the request is performed)
-            if (method === "POST" && typeof data === "function")
-                return deferRequest(request);
+            // For POST we will queue requests to allow dependencies to complete
+            var promise = (method === "POST") ? $.ajaxQueue(ajaxOptions) : $.ajax(ajaxOptions());
 
-            // Invoke request immediately
-            return request();
+            return promise.fail(function (jqxhr) {
+                if (jqxhr.status == 401)
+                    $("#authenticationErrorDialog").modal({ backdrop: "static", keyboard: false, show: true });
+            });
         }
 
         function createUrlForRequest(action) {
@@ -301,28 +298,6 @@
                 callback(headers);
             });
         }
-
-        function deferRequest(request, timeoutMilliseconds) {
-            if (typeof timeoutMilliseconds === "undefined") { timeoutMilliseconds = 5000; }
-            // Defer the request to allow dependencies to complete before continuing.
-            // Timeout available to ensure we don't hang around indefinitely.
-            var deferred = $.Deferred(), intervalTimeout = 20, maxAttempts = Math.round(timeoutMilliseconds / intervalTimeout), interval = window.setInterval(function () {
-                // Check if there are any pending operations,
-                // if so return and wait another interval
-                if ($.active && maxAttempts-- > 0)
-                    return;
-
-                // Clear the timer
-                window.clearInterval(interval);
-
-                // Perform the request and resolve our promise
-                request().done(deferred.resolve).fail(deferred.reject);
-            }, intervalTimeout);
-
-            // Return our promise to be resolved when activity subsides
-            return deferred.promise();
-        }
-        utils.deferRequest = deferRequest;
 
         function clearProperties(properties, data) {
             if (!properties || properties.length === 0)

@@ -14,10 +14,9 @@ interface IWindowParameters
 
 interface IWindowManagerOptions
 {
-   url: string;
+   url?: string;
    name?: string;
    windowParameters?: IWindowParameters;
-   navigate?: boolean; // Navigate within window or open a new window
 }
 
 module ag
@@ -41,7 +40,6 @@ module ag
       private maxWindowReadyTries = 600;
       private tryTimeoutMilliseconds = 250;
 
-      url = "";
       name = "";
       deferred = $.Deferred();
       handle: Window = null;
@@ -51,38 +49,50 @@ module ag
 
       constructor(options: IWindowManagerOptions)
       {
-         this.url = options.url;
          this.name = options.name || "_blank";
          this.promise = this.deferred.promise();
          this.initialiseWindowParameters(options);
+         this.initialiseHandle();
 
-         if (!options.navigate)
-            this.open();
-         else
-            navigate(this.url);
+         if (options.url)
+            this.navigate(options.url);
       }
 
-      private open()
+      private initialiseHandle()
       {
          // Open the window
-         this.handle = window.open(this.url, this.name, this.windowParametersToString(this.windowParameters));
+         this.handle = window.open("", this.name, this.windowParametersToString(this.windowParameters));
+
+         // Add loading indicator
+         this.handle.window.document.write('<!DOCTYPE html><title></title><img style="float: right" src="{0}//{1}{2}content/img/ajax-loader.gif" />'.format(location.protocol, location.host, ag.siteRoot));
+
+         // Tell the child window it's opener/parent so that the child can call it's opener
          if (!this.handle.opener)
-         {
             this.handle.opener = window;
-         }
 
-         // Set focus
-         this.handle.focus();
+         // Add to the windows collection for later automatic closing
+         ag.windows = ag.windows || [];
+         ag.windows.push(this.handle);
+      }
 
+      public navigate(url: string)
+      {
+         // Navigate to the URL
+         this.handle.location.href = url;
+         
          // Subscribe to the document ready of the new window
          $(this.handle).ready(() =>
          {
             window.setTimeout(() => { this.checkWindowReady(); }, this.tryTimeoutMilliseconds);
          });
 
-         // Add to the windows collection for later automatic closing
-         ag.windows = ag.windows || [];
-         ag.windows.push(this.handle);
+         // Set focus
+         this.handle.focus();
+      }
+
+      public close()
+      {
+         this.handle.close();
       }
 
       private initialiseWindowParameters(options: IWindowManagerOptions)

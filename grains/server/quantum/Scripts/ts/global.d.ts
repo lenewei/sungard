@@ -41,6 +41,7 @@ interface JQueryStatic
    cookie(...args: any[]);
    ui: any;
    browser: any;
+   ajaxQueue(options: Function): JQueryPromise<any>
 }
 
 interface ICaret extends JQuery
@@ -163,6 +164,8 @@ declare module ag
    var leaveBodyIntact: boolean;
    var pageClosing: boolean;
    var config: any;
+   var tabLoaders: any;
+   var uiHtmls: any;
 
    // Very basic behaviour changes can be based off 
    // this if required, definitely no real security

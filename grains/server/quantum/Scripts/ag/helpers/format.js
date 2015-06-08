@@ -157,7 +157,7 @@ var ag;
 
             var raw = format.unformatNumber(value, invariant);
 
-            if (value == null)
+            if (raw == null)
                 return "";
 
             var scale = Math.max(minimumScale, ag.mathEx.fractionDigits(raw));

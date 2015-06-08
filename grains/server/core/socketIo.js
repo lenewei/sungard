@@ -39,20 +39,14 @@ server.get(/\./, function indexHTML(req, res, next) {
     });
 });
 
-/*
-server.get("/b", function(req, res, next) {
-
-        res.json({
-            type: true,
-            data: {"name":"baseline"}
-        });
-    var controllers = {},
-    }
-})
-*/
-
 server.post("/account/login", controllers.user.login)
 server.post("/account/createUser", controllers.user.createUser)
+
+server.get("/dealing/fx/edit", controllers.deal.edit)
+server.get("/dealing/fx/list", controllers.deal.list)
+server.get("/dealing/fx/GetNonBusinessDays", controllers.deal.getNonBusinessDays)
+
+
 //server.put("/account/user/:id", controllers.user.updateUser)
 //server.del("/account/:id", controllers.user.deleteUser)
 //server.get("/account/user/:id", controllers.user.viewUser)

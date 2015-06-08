@@ -3,6 +3,15 @@ var ag;
 (function (ag) {
     "use strict";
 
+    ko.bindingHandlers["tabLoad"] = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var isLoaded = valueAccessor();
+            $(element).on('show', function () {
+                isLoaded(true);
+            });
+        }
+    };
+
     ko.bindingHandlers["tabActive"] = {
         after: ["visible"],
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {

@@ -142,6 +142,7 @@ module ag
       showConfirmProcessingDialog = ko.observable(false);
       showConfiguration = ko.observable(false).extend({ notify: "always" });
       isConfigurationLoaded = ko.observable(false);
+      isQuerySelectorLoaded = ko.observable(false);
       expiryCountDefaults = [1, 3, 0];
 
       // An alert message will be displayed & save Query/View will be disabled if Security By User Writable is false

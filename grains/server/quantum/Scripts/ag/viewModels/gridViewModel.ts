@@ -2,10 +2,10 @@ module ag
 {
    export module ProcessingHelper
    {
-      export function create(initialValue: boolean = false): KnockoutComputed<any>
+      export function create(initialValue: boolean = false): KnockoutComputed<boolean>
       {
          var processingCount = ko.observable(!initialValue ? 0 : 1);
-         return ko.computed(
+         return ko.computed<boolean>(
             {
                read: () =>
                {
@@ -55,6 +55,7 @@ module ag
    // serviceUrl      - base Url of the Service to call when retrieving, editing, and listing grid views
    // searchText      - user input search text on view
    // searchTerms     - search terms (an array) populate from "searchText" 
+   // topics          - subscribe certain topic to enable RTU
 
    export class GridViewModel 
    {
@@ -113,6 +114,7 @@ module ag
       columnDisplayNames = ko.observable();
       noItems: KnockoutComputed<boolean>;
       styleDictionary = ko.observableArray<IStyleItem>();
+      topics: string[];
       disableLinksTo = false;
       
       constructor(public options: any)
@@ -167,7 +169,11 @@ module ag
          this.views = new ViewsViewModel(
             (options.listMetaData && options.listMetaData.views) || [],
             (options.listMetaData && options.listMetaData.viewTables) || [],
-            options.typeName);
+            options.typeName,
+            this.isLoading);
+
+         if (options.listMetaData.topics)
+            this.topics = options.listMetaData.topics.split(',');
 
          this.selected = new SelectedViewModel(options.selectionMode, options.itemKey);
 
@@ -689,7 +695,7 @@ module ag
 
          if (this.search.hasText())
          {
-            params.searchText = encodeURIComponent(this.search.text());
+            params.searchText = this.search.text();
          }
 
          return params;
@@ -700,14 +706,7 @@ module ag
          return this.buildQuery(this.getGridViewOptions());
       }
 
-      selectView(view)
-      {
-         this.isLoading(true);
-         this.views.setSelected(view).always(() =>
-         {
-            this.isLoading(false);
-         });
-      }
+
 
       selectRow(row)
       {
@@ -731,11 +730,11 @@ module ag
             var optionValue = viewOptions[key];
             if ($.isArray(optionValue)) optionValue = optionValue.join(" ");
 
-            query += "{0}{1}={2}".format(!isFirst ? "&" : "", key.toLowerCase(), optionValue);
+            query += "{0}{1}={2}".format(!isFirst ? "&" : "", encodeURIComponent(key.toLowerCase()), _.isUndefined(optionValue) ? optionValue : encodeURIComponent(optionValue));
             isFirst = false;
          }
 
-         return encodeURI((query.length > 1) ? query : "");
+         return query;
       }
 
       loadGridData(gridViewDataResponse: any, reset?: boolean)

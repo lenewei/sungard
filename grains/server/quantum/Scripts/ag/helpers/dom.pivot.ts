@@ -49,6 +49,11 @@
             });
          };
 
+         if (isScrollerVisible())
+            $container.addClass('wrap-now');
+         else
+            $container.removeClass('wrap-now');
+
          $tableTheadRows.each((i, headRow) =>
          {
             var originalRows = $(headRow).children();
@@ -77,6 +82,8 @@
          $cloneTop.width(tableWidth);
          $cloneTop.css('min-width', tableWidth);
          $cloneLeft.height(tableHeight);
+         $cloneLeft.width($cloneCorner.width());
+         
 
          // we will scroll the whole table if left clone's width is larger than
          // the conatiner's width
@@ -107,13 +114,18 @@
          }
       }
 
+      var isScrollerVisible = () =>
+      {
+         return $container[0].scrollWidth > $container.width();
+      };
+
       // scroller Y reposition
       var repositionYBottom = () =>
       {
          var isTableNotInViewport = !isScrolledIntoView($table, true),
             isBottomDivInViewport = isScrolledIntoView($bottomDiv),
             isScrollbartocuhThead = collision($stickybottom, $tableHead),
-            isNoScroller = $container[0].scrollWidth <= $container.width();
+            isNoScroller = !isScrollerVisible();
 
          // if the bottomDiv is not visible and container has a scroll bar we need to display the fake scroll bar
          if (isNoScroller || isBottomDivInViewport || isTableNotInViewport || isScrollbartocuhThead)

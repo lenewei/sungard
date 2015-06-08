@@ -8,10 +8,10 @@ var ag;
             var _this = this;
             this.options = options;
             this.keepPageTargetsShownFlag = false;
+            this.pageTargets = ko.observableArray();
             this.page = ko.observable(0);
             this.totalPages = ko.observable(0);
             this.totalItems = ko.observable(0);
-            this.pageTargets = ko.observableArray();
             this.pageTargetsCenter = ko.observable(0);
             this.showPageTargets = ko.observable(false);
             this.pageSize = ko.observable(options.pageSize || 20);
@@ -78,13 +78,34 @@ var ag;
                 return !_.isEmpty(_this.pageTargets());
             });
 
-            this.pageTargetColumns = ko.computed(function () {
+            // grids doesn't support columns in nested properties (ex: row.child.cell) so flatten the data.
+            //
+            // Adding support for nested properties will force us to change plenty of things such as GridManipulationHelper class,
+            // DataSetExtensions class, gridCell binding and other places
+            this.pageTargetGridItems = ko.computed(function () {
+                return _.map(_this.pageTargets(), function (i) {
+                    var pageTargetGridItem = {
+                        page: i.page,
+                        itemRange: i.itemRange
+                    };
+
+                    _.each(i.firstItem, function (value, key) {
+                        pageTargetGridItem["firstItem_" + key] = value;
+                    });
+
+                    return pageTargetGridItem;
+                });
+            });
+
+            this.pageTargetGridColumns = ko.computed(function () {
                 var columns = [ko.mapping.fromJS(new ag.FieldData({ key: "itemRange", dataType: "string", displayName: "" }))];
 
                 _.each(options.activeSortColumns(), function (i) {
-                    var newColumn = ko.mapping.fromJS(ko.mapping.toJS(i));
-                    newColumn.key("firstItem." + newColumn.key());
-                    columns.push(newColumn);
+                    var fieldDataOptions = ko.mapping.toJS(i);
+                    fieldDataOptions.key = "firstItem_" + fieldDataOptions.key;
+                    delete fieldDataOptions.linksTo;
+
+                    columns.push(ko.mapping.fromJS(fieldDataOptions));
                 });
 
                 return columns;
@@ -99,7 +120,7 @@ var ag;
 
         // Response is either a GridViewDataResponse or LookupDataResponse
         Pager.prototype.updateFromResponse = function (response) {
-            this.pageTargets(response.pageTargets);
+            this.pageTargets(response.pageTargets || []);
 
             this.pageSize(response.gridViewOptions.pageSize);
             this.totalItems(response.gridViewOptions.totalItems);
@@ -132,19 +153,19 @@ var ag;
             return false;
         };
 
-        Pager.prototype.isPageTargetSelected = function (pageTarget) {
-            return pageTarget.page === this.page();
+        Pager.prototype.isPageTargetSelected = function (pageTargetGridItem) {
+            return pageTargetGridItem.page === this.page();
         };
 
-        Pager.prototype.isPageTargetDivider = function (pageTarget) {
-            return pageTarget.page < 1;
+        Pager.prototype.isPageTargetDivider = function (pageTargetGridItem) {
+            return pageTargetGridItem.page < 1;
         };
 
-        Pager.prototype.selectPageTarget = function (pageTarget) {
-            if (pageTarget.page >= 1)
-                this.navigateToPage(pageTarget.page);
+        Pager.prototype.selectPageTarget = function (pageTargetGridItem) {
+            if (pageTargetGridItem.page >= 1)
+                this.navigateToPage(pageTargetGridItem.page);
             else
-                this.keepPageTargetsShown(); // Prevent dropdown from closing when "..." item is clicked
+                this.keepPageTargetsShown(); // Prevent dropdown from closing when divider is clicked
         };
 
         Pager.prototype.snapPageTargetsCenter = function (preferredPageTargetsCenter) {

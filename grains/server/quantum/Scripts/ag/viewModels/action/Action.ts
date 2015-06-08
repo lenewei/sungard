@@ -65,13 +65,11 @@ module ag
 
       constructor(public options: IActionOptions, public isSubAction = false)
       {
-         this.actionDetails = typeof (options.action) === "string" ? { "action": options.action } : options.action;
+         this.actionDetails = _.isObject(options.action) ? options.action : { "action": options.action };
          this.data = options.data;
 
          // What to do when the Action completes successfully
          this.completedBehaviour = this.actionDetails.completed;
-         if (isSubAction)
-            this.completedBehaviour = options.completed;
 
          // Action to call on completion on this action if
          // completedBehaviour is set to "call" or "updateAndCall"
@@ -133,28 +131,28 @@ module ag
          }
 
          this.invokeCommand = ko.asyncCommand(
+         {
+            execute: (parentViewModel, event: JQueryEventObject, complete) =>
             {
-               execute: (parentViewModel, event: JQueryEventObject, complete) =>
+               if (this.options.beforeInvokeCallbackFunction)
                {
-                  if (this.options.beforeInvokeCallbackFunction)
-                  {
-                     var payload = ko.mapping.toJS(ko.unwrap(this.model) || {});
-                     this.customCallback(this.options.beforeInvokeCallbackFunction, payload, parentViewModel);
-                  }
-
-                  this.invoke(parentViewModel, event, complete);
-               },
-               canExecute: (isExecuting) =>
-               {
-                  // Check if a user supplied canExecute has been supplied
-                  return canExecute ? canExecute(isExecuting) : !isExecuting;
-               },
-               isVisible: () =>
-               {
-                  // Check if a user supplied canVisible has been supplied
-                  return canVisible ? canVisible() : true;
+                  var payload = ko.mapping.toJS(ko.unwrap(this.model) || {});
+                  this.customCallback(this.options.beforeInvokeCallbackFunction, payload, parentViewModel);
                }
-            });
+
+               this.invoke(parentViewModel, event, complete);
+            },
+            canExecute: (isExecuting) =>
+            {
+               // Check if a user supplied canExecute has been supplied
+               return canExecute ? canExecute(isExecuting) : !isExecuting;
+            },
+            isVisible: () =>
+            {
+               // Check if a user supplied canVisible has been supplied
+               return canVisible ? canVisible() : true;
+            }
+         });
       }
 
       public updateActionItem(result): JQueryPromise<any>
@@ -476,20 +474,23 @@ module ag
          // Create any supplied subActions
          if (!this.isSubAction && this.options.subActions && _.isArray(this.options.subActions))
          {
-            _.forEach(this.options.subActions,(subAction) =>
+            _.forEach(this.options.subActions, item =>
             {
-               var subActionOptions: any = $.extend({}, this.options);
+               var subActionOptions: any = $.extend({}, this.options),
+                  subAction: any = {};
+               
+               subAction.action = item.action;
+               subAction.path = item.path;
+               subAction.includeCompleteModel = item.includeCompleteModel;
+               subAction.additionalFields = item.additionalFields;
+               subAction.isOpenAction = item.isOpenAction;
+               subAction.completed = item.completed;
+               subAction.performActionBeforeNavigation = item.performActionBeforeNavigation;
+               subAction.beforeInvokeCallbackFunction = item.beforeInvokeCallbackFunction;
+               subAction.afterInvokeCallbackFunction = item.afterInvokeCallbackFunction;
+               subAction.closeParentDialogWhenComplete = item.closeParentDialogWhenComplete;
 
-               subActionOptions.action = subAction.action;
-               subActionOptions.path = subAction.path;
-               subActionOptions.includeCompleteModel = subAction.includeCompleteModel;
-               subActionOptions.additionalFields = subAction.additionalFields;
-               subActionOptions.isOpenAction = subAction.isOpenAction;
-               subActionOptions.completed = subAction.completed;
-               subActionOptions.performActionBeforeNavigation = subAction.performActionBeforeNavigation;
-               subActionOptions.beforeInvokeCallbackFunction = subAction.beforeInvokeCallbackFunction;
-               subActionOptions.closeParentDialogWhenComplete = subAction.closeParentDialogWhenComplete;
-
+               subActionOptions.action = subAction;
                subActionOptions.parentAction = this;
 
                // Set the parent model (already observable) onto the subActionOptions
@@ -500,7 +501,7 @@ module ag
                subActionOptions.subActions = [];
 
                // Create and attach subAction to main Action
-               this.subActions[subAction.action] = this.createSubAction(subAction, subActionOptions);
+               this.subActions[item.action] = this.createSubAction(item, subActionOptions);
             });
          }
 

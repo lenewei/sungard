@@ -1,7 +1,3 @@
-/// <reference path="../../ts/global.d.ts" />
-/// <reference path="../ag.ts" />
-/// <reference path="format.ts" />
-
 module ag
 {
    export class NumberCalculator
@@ -27,6 +23,37 @@ module ag
          this.shortCutkeyRegExp = new RegExp("[\\d\\{0}]+([hHkKmMbB]{1})".format(decimalSymbol), "g");
          this.valueOperatorSeperationRegExp = new RegExp("^(([\\-]{0,})(\\d*\\{0}*\\d*)?)|([\\+\\-\\*\\/]{1,})|((\\d*)+(\\{0}*\\d*)?)".format(decimalSymbol), "g");
       }
+      
+      // Temp solution here - don't know why Eric want to have this
+      isValidKeyCodeEvent(event:JQueryEventObject): boolean
+      {
+         var keyCode = event.which;
+
+         if (event.ctrlKey && (keyCode == 88 || keyCode == 86 || keyCode == 67))
+         {
+            return true;
+         }
+         else if (event.shiftKey && (keyCode == 48 || keyCode == 49 || keyCode == 50 || keyCode == 51 ||
+            keyCode == 51 || keyCode == 52 || keyCode == 53 || keyCode == 54 ||
+            keyCode == 55 || keyCode == 55 || keyCode == 57 || keyCode == 189 || keyCode == 192 ||
+            keyCode == 188 || keyCode == 190 || keyCode == 191))
+         {
+            return false;
+         }
+         else if (keyCode >= 65 && keyCode <= 90) 
+         {
+            if (keyCode != 66 && keyCode != 72 && keyCode != 75 && keyCode != 77)
+            {
+               return false;
+            }
+         }
+         else if (keyCode == 192 || keyCode == 219 || keyCode == 221 || keyCode == 220 || keyCode == 186 || keyCode == 32 || keyCode == 222)
+         {
+            return false;
+         }
+
+         return true;
+      }
 
       public registerEvents(target: HTMLElement, pasteCallBackFunction: Function)
       {
@@ -35,10 +62,13 @@ module ag
 
          ko.utils.registerEventHandler(target, "keydown", (event: JQueryEventObject) =>
          {
-            var keyCode = event.keyCode,
+            var keyCode = event.which,
                shiftKey = event.shiftKey,
                value = this.removeDigitGroupingSymbols($element.val());
 
+            if (!this.isValidKeyCodeEvent(event))
+               return false;
+            
             // Save a copy if current value is a valid string
             if (this.isValidString(value))
                this.keydownValue = value;
@@ -144,7 +174,7 @@ module ag
             _.forEach(shortCutValues, (shotCutValue: string) =>
             {
                var convertedValue = this.convertValue(shotCutValue.substr(shotCutValue.length - 1, 1),
-                  parseFloat(shotCutValue.substr(0, shotCutValue.length - 1)));
+                  this.tryParseStringIntoFloat(shotCutValue.substr(0, shotCutValue.length - 1)));
 
                elem.val(value.replace(shortCutValues, convertedValue));
             });

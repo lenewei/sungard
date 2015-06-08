@@ -14,7 +14,7 @@ module ag
          var dataType = ko.unwrap(viewModel.dataType),
             viewModelName = ko.unwrap(viewModel.key),
             rowItem = valueAccessor(),
-            cellValue = utils.htmlEncode(viewModelName in rowItem ? ko.unwrap(rowItem[viewModelName]) : ko.unwrap(ag.getProperty(rowItem, viewModelName))), // ag.getProperty may get removed after we come up with the final pager design
+            cellValue = utils.htmlEncode(ko.unwrap(rowItem[viewModelName])),
             rootContext = bindingContext.$root,
             grid = <GridViewModel>bindingContext.$parents[1],
             canEdit = ko.unwrap(grid.canEdit),

@@ -247,7 +247,7 @@
       this.keyupValue = undefined;
       this.keydownValue = undefined;
       this.isLocalDatasource = options.isLocalDatasource;
-      
+
       // If the element is an input, wire up event handling for it immediately.
       if (this.targetIsInput)
       {
@@ -411,7 +411,7 @@
 
             // If we're hiding query UI and there's no items to show,
             // don't bother displaying an empty menu.
-            (that.hideQueryUI || that.input)  && !that.showOnNoItems && that.availableItems.length == 0 ? that.hide() : that.show(cb);
+            (that.hideQueryUI || that.input) && !that.showOnNoItems && that.availableItems.length == 0 ? that.hide() : that.show(cb);
 
             // If there is only one match but it is an exact match to the current text, select it and close the dialog.
             if (items.length == 1)
@@ -428,11 +428,11 @@
          if (_.isFunction(this.source))
          {
             this.source(this.query, this.maxItems)
-               .done(function(result)
+               .done(function (result)
                {
                   lookupHandler.apply(this, [result.lookupData, result.gridViewOptions]);
                })
-               .always(function()
+               .always(function ()
                {
                   that.isProgressing = false;
                });
@@ -467,7 +467,7 @@
          if (searchTerms.length == 0)
             return item;
 
-         var escapedSearchTerms = _.map(searchTerms, function(searchTerm)
+         var escapedSearchTerms = _.map(searchTerms, function (searchTerm)
          {
             return ag.utils.escapeRegexChars(searchTerm);
          });
@@ -478,7 +478,7 @@
             return '<span class="highlight">{0}</span>'.format(match);
          });
       },
-      formatShowingText: function(items, unfilteredLength)
+      formatShowingText: function (items, unfilteredLength)
       {
          if (this.hideQueryUI)
             return null;
@@ -642,7 +642,7 @@
             this.input.on('keydown' + this.eventNamespace, $.proxy(this.keypress, this));
          }
       },
-      inputUnlisten: function()
+      inputUnlisten: function ()
       {
          this.input.off(this.eventNamespace);
       },
@@ -786,7 +786,7 @@
          e.stopImmediatePropagation();
          e.preventDefault();
       },
-      clickOutsideResize: function()
+      clickOutsideResize: function ()
       {
          if (this.shown && !this.lookupPending)
             this.hide();
@@ -1076,7 +1076,7 @@
          $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget);
       });
    }
-   
+
    /* DROPDOWN PLUGIN DEFINITION
     * ========================== */
 
@@ -1106,18 +1106,23 @@
       $('html')
          .off('click.dropdown.data-api')
          .on('click.dropdown.data-api', clearMenus);
+
       $('body')
          .off('click.dropdown')
          .off('click.dropdown.data-api')
-         .on('click.dropdown', '.dropdown form', function(e)
+         .on('click.dropdown', '.dropdown form', function (e)
          {
             e.stopPropagation();
          })
-         .on('click.dropdown.data-api', toggle, function()
+         .on('click.dropdown.data-api', toggle, function ()
          {
             Dropdown.prototype.toggle.call(this);
             return false;
          });
+
+      $('html')
+         .off('mouseenter.dropdown.data-api', 'iframe')
+         .on('mouseenter.dropdown.data-api', 'iframe', clearMenus);
    });
 
 }(window.jQuery);

@@ -104,6 +104,8 @@ var ag;
                 return _this.canMaintainViews();
             }, this, { deferEvaluation: true });
 
+            this.grid.views.viewSelector.displayViewTypeBadge(false);
+
             this.usedViewAttributeFilters = ko.computed(function () {
                 return _this.applicationOptions.pivotView.attributeFilters;
             }, this, { deferEvaluation: true });
@@ -578,6 +580,11 @@ var ag;
 
         CashExplorerViewModel.prototype.getViewAttributeFieldLookupSource = function () {
             return "/{0}/{1}".format(this.options.serviceUrl, "GetAttributeFilterFields");
+        };
+
+        CashExplorerViewModel.prototype.currentViewKey = function () {
+            var key = this.views.selected().key();
+            return !key ? this.applicationOptions.pivotView.key() : key;
         };
 
         CashExplorerViewModel.prototype.applyViewRequest = function () {

@@ -25,13 +25,11 @@ var ag;
 
                 this.actions[this.completedAction]();
             };
-            this.actionDetails = typeof (options.action) === "string" ? { "action": options.action } : options.action;
+            this.actionDetails = _.isObject(options.action) ? options.action : { "action": options.action };
             this.data = options.data;
 
             // What to do when the Action completes successfully
             this.completedBehaviour = this.actionDetails.completed;
-            if (isSubAction)
-                this.completedBehaviour = options.completed;
 
             // Action to call on completion on this action if
             // completedBehaviour is set to "call" or "updateAndCall"
@@ -382,19 +380,21 @@ var ag;
 
             // Create any supplied subActions
             if (!this.isSubAction && this.options.subActions && _.isArray(this.options.subActions)) {
-                _.forEach(this.options.subActions, function (subAction) {
-                    var subActionOptions = $.extend({}, _this.options);
+                _.forEach(this.options.subActions, function (item) {
+                    var subActionOptions = $.extend({}, _this.options), subAction = {};
 
-                    subActionOptions.action = subAction.action;
-                    subActionOptions.path = subAction.path;
-                    subActionOptions.includeCompleteModel = subAction.includeCompleteModel;
-                    subActionOptions.additionalFields = subAction.additionalFields;
-                    subActionOptions.isOpenAction = subAction.isOpenAction;
-                    subActionOptions.completed = subAction.completed;
-                    subActionOptions.performActionBeforeNavigation = subAction.performActionBeforeNavigation;
-                    subActionOptions.beforeInvokeCallbackFunction = subAction.beforeInvokeCallbackFunction;
-                    subActionOptions.closeParentDialogWhenComplete = subAction.closeParentDialogWhenComplete;
+                    subAction.action = item.action;
+                    subAction.path = item.path;
+                    subAction.includeCompleteModel = item.includeCompleteModel;
+                    subAction.additionalFields = item.additionalFields;
+                    subAction.isOpenAction = item.isOpenAction;
+                    subAction.completed = item.completed;
+                    subAction.performActionBeforeNavigation = item.performActionBeforeNavigation;
+                    subAction.beforeInvokeCallbackFunction = item.beforeInvokeCallbackFunction;
+                    subAction.afterInvokeCallbackFunction = item.afterInvokeCallbackFunction;
+                    subAction.closeParentDialogWhenComplete = item.closeParentDialogWhenComplete;
 
+                    subActionOptions.action = subAction;
                     subActionOptions.parentAction = _this;
 
                     // Set the parent model (already observable) onto the subActionOptions
@@ -405,7 +405,7 @@ var ag;
                     subActionOptions.subActions = [];
 
                     // Create and attach subAction to main Action
-                    _this.subActions[subAction.action] = _this.createSubAction(subAction, subActionOptions);
+                    _this.subActions[item.action] = _this.createSubAction(item, subActionOptions);
                 });
             }
 

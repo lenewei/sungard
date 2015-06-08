@@ -1,0 +1,39 @@
+﻿@using SunGard.AvantGard.Quantum.External.Data
+@using SunGard.AvantGard.Quantum.Client.Core
+<!-- ko if: isLoaded -->
+<ul class="scrolling dropdown-menu" id="viewSelector">
+   <!-- ko if: hasMultipleViewTables -->
+   <!-- ko foreach: viewTables -->
+   <li class="group">
+      <a class="clearfix">
+         <span data-bind="text: name"></span>
+      </a>
+   </li>
+   <!-- ko foreach: $component.findByViewTable(key) -->@MenuItem()<!-- /ko-->
+   <!-- /ko-->
+   <!-- /ko-->
+   <!-- ko ifnot: hasMultipleViewTables --><!-- ko foreach: views -->@MenuItem()<!-- /ko--><!-- /ko-->
+</ul>
+<!-- /ko-->
+
+@helper MenuItem()
+{
+   <li class="item">
+      <a href="#" data-bind="click: $component.selectView" class="clearfix">
+         <span data-bind="text: name"></span>
+         <i class="icon-lock" data-bind="visible: isPersonal" title="@DisplayNames.PrivateView.ToLocalizedDisplayName()"></i>
+         <!-- ko if: $component.displayViewTypeBadge -->
+            <!-- ko if: viewType() === 1 -->
+            <span class="label">@DisplayNames.Crystal.ToLocalizedDisplayName()</span>
+            <!-- /ko-->
+            <!-- ko if: viewType() === 2 -->
+            <span class="label label-info">@DisplayNames.Pivot.ToLocalizedDisplayName()</span>
+            <!-- /ko-->
+            <!-- ko if: viewType() === 3 -->
+            <span class="label label-success">@DisplayNames.Chart.ToLocalizedDisplayName()</span>
+            <!-- /ko-->
+         <!-- /ko-->
+         <span data-bind="visible: key() == null" class="label label-warning">@DisplayNames.Pending.ToLocalizedDisplayName()</span>
+      </a>
+   </li>
+}

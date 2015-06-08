@@ -22,9 +22,7 @@
          return viewModel;
       });
 
-      register('search-box', params =>
-      {
-         return params.viewModel;
-      });
+      register('search-box', params => params.viewModel);
+      register('view-selector', params => params.viewModel);
    }
 }

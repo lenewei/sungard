@@ -370,22 +370,29 @@ module ag.dom
          // Set the first panel as the active/selected panel
          // Add data-title attributes for helpmode
          var tabs = $(containerItem),
+            tabsId = tabs.data("bind-tabsid"),
             headers = "";
 
          _.each(tabs.children(".tab-content:first").children(".panel"),(item: any) =>
          {
             var tab = $(item),
                tabReference = tab.data("bind-active"),
+               tabId = tab.data("bind-tabid"),
                otherBindings = tab.data("bind") || "";
 
             if (otherBindings)
                otherBindings += ", ";
 
-            headers += "<li id=\"{0}TabHeader\"><a data-toggle=\"tab\" href=\"#{0}\" tabindex=\"-1\" data-bind=\"{1}tabActive:'{2}'\">{3}</a></li>".format(
+            var tabLoad = '';
+            if (tabsId && tabId)
+               tabLoad = ', tabLoad: ag.tabLoaders.{0}.{1}.isLoaded'.format(tabsId, tabId);
+
+            headers += "<li id=\"{0}TabHeader\"><a data-toggle=\"tab\" href=\"#{0}\" tabindex=\"-1\" data-bind=\"{1}tabActive:'{2}'{4}\">{3}</a></li>".format(
                tab.attr("id"),
                otherBindings,
                tabReference,
-               tab.data("title"));
+               tab.data("title"),
+               tabLoad);
          });
 
          tabs.children("ul.nav:first").html(headers);
@@ -605,11 +612,6 @@ module ag.dom
             tabMove(event, first, last);
       });
 
-      if (!isPageInit)
-      {
-         initHtmlParts(viewModel, container);
-      }
-
       fileUploadInit(container);
 
       filtersInit();
@@ -723,19 +725,21 @@ module ag.dom
 
    //#region HtmlParts
 
-   export function initHtmlParts(viewModel, container?): void
+   export function initHtmlParts(viewModel): void
    {
-      var template = "uihtml";
-      htmlParts = [];
+      if (!ag.uiHtmls)
+         return;
 
-      _.each($('div', container).find("[data-{0}]".format(template)),(element) =>
+      var htmlParts = [];
+
+      _.each(ag.uiHtmls, (uiHtml: any) =>
       {
-         var property = $(element).data(template),
-            item = getProperty(viewModel, property.bindingPath);
+         var config = uiHtml.config,
+            item = getProperty(viewModel, config.bindingPath);
 
-         if (property.executeAtStartUp)
+         if (config.executeAtStartUp)
          {
-            updateHtmlPart(element, property, null, viewModel, item);
+            updateHtmlPart(config, null, viewModel, item);
             return true;
          }
 
@@ -743,14 +747,14 @@ module ag.dom
          {
             item.refresh = (changedProperty) =>
             {
-               return updateHtmlPart(element, property, changedProperty, viewModel, item);
+               return updateHtmlPart(uiHtml, changedProperty, viewModel, item);
             };
             item.clear = () =>
             {
-               return $(element).html(null);
+               return uiHtml.html(null);
             };
 
-            if (property.refreshWhenKeyFieldChange)
+            if (config.refreshWhenKeyFieldChange)
             {
                item.extend({ rateLimit: 100 });
                htmlParts.push(item);
@@ -769,12 +773,13 @@ module ag.dom
 
    export var htmlParts: Array<KnockoutObservable<any>> = [];
 
-   export function updateHtmlPart(element, data, changedProperty, viewModel, item)
+   export function updateHtmlPart(uiHtml: any, changedProperty, viewModel, item)
    {
-      var map = (x) =>
+      var map = (x) =>  
       {
          return x ? x : undefined;
-      };
+      },
+         config = uiHtml.config;
 
       var setProcessing = (obj: any, value: boolean) =>
       {
@@ -786,14 +791,14 @@ module ag.dom
 
       var action =
          {
-            action: map(data.action),
-            area: map(data.area),
-            controller: map(data.controller),
-            url: map(data.url)
+            action: map(config.action),
+            area: map(config.area),
+            controller: map(config.controller),
+            url: map(config.url)
          };
 
-      var params = data.additionalFields ?
-         utils.getAdditionalFieldsFromModel(data.additionalFields, viewModel.getModel()) : data.includeCompleteModel ? ko.mapping.toJS(viewModel.getModel() || {}) : {};
+      var params = config.additionalFields ?
+         utils.getAdditionalFieldsFromModel(config.additionalFields, viewModel.getModel()) : config.includeCompleteModel ? ko.mapping.toJS(viewModel.getModel() || {}) : {};
 
       params.changedProperty = changedProperty;
 
@@ -803,9 +808,7 @@ module ag.dom
       utils.getJson(action, params, true).done((result) =>
       {
          if (result.data)
-         {
-            $(element).html(result.data);
-         }
+            uiHtml.html(result.data);
       }).always(() => setProcessing(item, false));
 
       return true;
@@ -1139,7 +1142,7 @@ module ag.dom
             document.addEventListener("msvisibilitychange", onchange);
          // IE 9 and lower
          else if ("onfocusin" in document)
-            document.onfocusin = document.onfocusout = onchange;
+            (<any>document).onfocusin = (<any>document).onfocusout = onchange;
          // All others
          else
             window.onpageshow = window.onpagehide = window.onfocus = window.onblur = onchange;
@@ -1204,7 +1207,7 @@ module ag.dom
 
 module ag.dom.automation
 {
-   export function invokeSynchronousLookup(url): string
+   export function invokeSynchronousLookup(url, params: any, replaceData: boolean): string
    {
       $.ajaxSetup({ async: false });
 
@@ -1215,7 +1218,9 @@ module ag.dom.automation
          resultText = "",
          data = viewModel.editingItem || {};
 
-      promise = viewModel.net.postJson({ url: url }, { data: ko.mapping.toJS(data) })
+      var combined = $.extend(ko.mapping.toJS(data), params ? JSON.parse(params) : null);
+
+      promise = viewModel.net.postJson({ url: url }, !replaceData ? { data: combined } : combined)
          .always(result =>
          {
             if (!$.isArray(result))

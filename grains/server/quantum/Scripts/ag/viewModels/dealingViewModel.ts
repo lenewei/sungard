@@ -342,7 +342,7 @@ module ag
 
             _.forEach(codes, (code: any) =>
             {
-               code.value.subscribe(() =>
+               code.valueAsObject.subscribe(() =>
                {
                   obj[property].valueHasMutated();
                });

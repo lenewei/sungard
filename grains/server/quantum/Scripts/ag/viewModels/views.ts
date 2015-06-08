@@ -30,7 +30,6 @@ module ag
       selectedSortedBy: KnockoutComputed<any>;
       showConfigure: KnockoutObservable<any>;
       isConfigureLoaded = ko.observable(false);
-      hasMultipleViewTables: KnockoutComputed<any>;
       selectedViewTableName: KnockoutComputed<any>;
 
       canConfigue: KnockoutComputed<boolean>;
@@ -44,13 +43,14 @@ module ag
       visibleColumns = ko.observableArray();
       selectedFields = ko.observableArray();
       viewKey: any;
+      viewSelector: ViewSelectorViewModel;
 
       private proxy: ViewsProxy;
 
       //#endregion
 
       //#region constructor
-      constructor(views: any, public viewTables: any, public typeName: string)
+      constructor(views: any, public viewTables: any, public typeName: string, public isLoading: KnockoutObservable<boolean>)
       {
          // Create the ViewsProxy (optionally for a given type)
          this.proxy = new ViewsProxy(typeName);
@@ -159,11 +159,6 @@ module ag
                }
             });
 
-         this.hasMultipleViewTables = ko.computed(() =>
-         {
-            return this.viewTables().length > 1;
-         });
-
          this.selectedViewTableName = ko.computed(() =>
          {
             var viewTableKey = ko.unwrap(this.selected()
@@ -203,7 +198,9 @@ module ag
          this.canSave = ko.computed(() =>
          {
             return !this.selectedIsCrystal();
-         });         
+         });       
+         
+         this.viewSelector = new ViewSelectorViewModel(this.sorted, this.viewTables, this.selectView);  
       }
 
       //#endregion
@@ -383,6 +380,15 @@ module ag
 
       //#region public methods
 
+      selectView = (view) =>
+      {
+         this.isLoading(true);
+         this.setSelected(view).always(() =>
+         {
+            this.isLoading(false);
+         });
+      }
+
       setSelected(view: any, forceUpdate: boolean = false): JQueryPromise<any>
       {
          if (!view || $.isEmptyObject(view))
@@ -456,14 +462,6 @@ module ag
       toggleConfigure = () =>
       {
          this.showConfigure(!this.showConfigure());
-      }
-
-      findByViewTable(viewTableKey: any)
-      {
-         return this.sorted().filter((item) =>
-         {
-            return viewTableKey && item.viewTableKey() === viewTableKey();
-         });
       }
 
       findByKey(key: any)

@@ -8,7 +8,7 @@ var ag;
             return { controlsDescendantBindings: true };
         },
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            var dataType = ko.unwrap(viewModel.dataType), viewModelName = ko.unwrap(viewModel.key), rowItem = valueAccessor(), cellValue = ag.utils.htmlEncode(viewModelName in rowItem ? ko.unwrap(rowItem[viewModelName]) : ko.unwrap(ag.getProperty(rowItem, viewModelName))), rootContext = bindingContext.$root, grid = bindingContext.$parents[1], canEdit = ko.unwrap(grid.canEdit), isEditable = ko.unwrap(grid.isEditable) && canEdit && ko.unwrap(grid.isEnabled), canSelect = ko.unwrap(grid.canSelect), canRemove = ko.unwrap(grid.canRemove), gridItemKey = ko.unwrap(grid.itemKey) || 'key', elm = $(element), iconOptions = allBindingsAccessor().gridCellIcon;
+            var dataType = ko.unwrap(viewModel.dataType), viewModelName = ko.unwrap(viewModel.key), rowItem = valueAccessor(), cellValue = ag.utils.htmlEncode(ko.unwrap(rowItem[viewModelName])), rootContext = bindingContext.$root, grid = bindingContext.$parents[1], canEdit = ko.unwrap(grid.canEdit), isEditable = ko.unwrap(grid.isEditable) && canEdit && ko.unwrap(grid.isEnabled), canSelect = ko.unwrap(grid.canSelect), canRemove = ko.unwrap(grid.canRemove), gridItemKey = ko.unwrap(grid.itemKey) || 'key', elm = $(element), iconOptions = allBindingsAccessor().gridCellIcon;
 
             // For grids with 'restriction' use that value to determine whether editable or not.
             if (rowItem.restriction) {

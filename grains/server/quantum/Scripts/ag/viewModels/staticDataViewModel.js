@@ -15,7 +15,9 @@ var ag;
                 return ko.mapping.toJS(_this.editingItem);
             };
             this.editWithRenameParamDelegator = function () {
-                return [ko.mapping.toJS(_this.editingItem), _this.originalKeyStore];
+                var newData = ko.mapping.toJS(_this.editingItem), oldData = $.extend({}, newData, _this.originalKeyStore);
+
+                return [newData, oldData];
             };
             this.canRenameKeyfields = false;
             this.hasRootEditor = true;

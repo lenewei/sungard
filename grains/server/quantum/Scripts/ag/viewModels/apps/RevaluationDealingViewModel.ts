@@ -6,42 +6,38 @@ module ag
    {
       menuCommands: any;
 
-      link(me, domElement)
+      link(element: EventTarget)
       {
-         var element = $(domElement);
-         var linkTo = element.attr("data-link-to");
+         var $element = $(element),
+            linkTo = $element.attr("data-link-to");
 
-         if (linkTo == "SubDealAnalysis")
+         if (linkTo == "DealRevaluationAtDate")
          {
-            me.actions.subDealAnalysis.createCustomPayload = (data) => this.createCustomPayload(data, element);
-            me.actions.subDealAnalysis.show(me);
+            this.actions.openAnalyse.createCustomPayload = (data) => this.createApplicationCustomPayload(data, $element);
+            this.actions.openAnalyse.invoke(this);
+            return;
          }
-         else if (linkTo == "DealRevaluationAtDate")
+
+         var action = this.getAction(linkTo);
+         action.createCustomPayload = (data) => this.createCustomPayload(data, $element);
+         action.show(this);
+      }
+
+      getAction(linkTo: string): Action
+      {
+         switch (linkTo) 
          {
-            me.actions.openAnalyse.createCustomPayload = (data) => this.createApplicationCustomPayload(data, element);
-            me.actions.openAnalyse.invoke(me);
+            case 'SubDealAnalysis':
+               return this.actions.subDealAnalysis;
+            case 'RateDetailIo':
+               return this.actions.ioRateDialog;
+            case 'ZeroCurveDetail':
+               return this.actions.zeroCurveDetail;
+            case 'ExchangeRateDetail':
+               return this.actions.exchangeRateDetail;
+            default:
+               return this.actions.dialogLink;
          }
-         else if (linkTo == "RateDetailIo")
-         {
-            me.actions.ioRateDialog.createCustomPayload = (data) => this.createCustomPayload(data, element);
-            me.actions.ioRateDialog.show(me);
-         }
-         else if (linkTo == "ZeroCurveDetail")
-         {
-            me.actions.zeroCurveDetail.createCustomPayload = (data) => this.createCustomPayload(data, element);
-            me.actions.zeroCurveDetail.show(me);
-         }
-         else if (linkTo == "ExchangeRateDetail")
-         {
-            me.actions.exchangeRateDetail.createCustomPayload = (data) => this.createCustomPayload(data, element);
-            me.actions.exchangeRateDetail.show(me);
-         }
-         else
-         {
-            me.actions.dialogLink.createCustomPayload = (data) => this.createCustomPayload(data, element);
-            me.actions.dialogLink.show(me);
-         }
-         //alert("A link " + element.attr("data-link-to") + element.attr("data-link-id"));
       }
 
       init(itemModel: any)
@@ -53,12 +49,7 @@ module ag
             return false;
          });
 
-         var me = this;
-         $("#Retrospective").on("click", ".rvLink", function () { me.link(me, this); });
-         $("#Prospective").on("click", ".rvLink", function () { me.link(me, this); });
-         $("#dialogLink").on("click", ".rvLink", function () { me.link(me, this); });
-         $("#Summary").on("click", ".rvLink", function () { me.link(me, this); });
-         $("#DealAnalysis").on("click", ".rvLink", function () { me.link(me, this); });
+         $(document).on('click', '.rvLink', (e: JQueryEventObject) => { this.link(e.currentTarget); return false; });
 
          // Subscribe to changes on this
          this.editingItem.payReceive.subscribe((newValue) =>
@@ -71,7 +62,6 @@ module ag
             // Create links and apply binding to new HTML
             this.calculate();
          });
-
 
          // Create our action for the Deal Analyse modal
          this.actions = this.actions || {};
@@ -172,12 +162,12 @@ module ag
          return deffered;
       }
 
-      createCustomPayload(data, element)
+      createCustomPayload(data, element: JQuery)
       {
          return $.extend(ko.mapping.toJS(data || {}), { linkTo: element.attr("data-link-to"), linkId: element.attr("data-link-id"), linkFrom: element.attr("data-link-from")});
       }
 
-      createApplicationCustomPayload(data, element) {
+      createApplicationCustomPayload(data, element: JQuery) {
          var linkId = element.attr("data-link-id");
          var payload = ko.mapping.toJS(data || {});
 

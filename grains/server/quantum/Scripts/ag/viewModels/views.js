@@ -6,13 +6,22 @@ var ag;
     var ViewsViewModel = (function () {
         //#endregion
         //#region constructor
-        function ViewsViewModel(views, viewTables, typeName) {
+        function ViewsViewModel(views, viewTables, typeName, isLoading) {
             var _this = this;
             this.viewTables = viewTables;
             this.typeName = typeName;
+            this.isLoading = isLoading;
             this.isConfigureLoaded = ko.observable(false);
             this.visibleColumns = ko.observableArray();
             this.selectedFields = ko.observableArray();
+            //#endregion
+            //#region public methods
+            this.selectView = function (view) {
+                _this.isLoading(true);
+                _this.setSelected(view).always(function () {
+                    _this.isLoading(false);
+                });
+            };
             this.toggleConfigure = function () {
                 _this.showConfigure(!_this.showConfigure());
             };
@@ -108,10 +117,6 @@ var ag;
                 }
             });
 
-            this.hasMultipleViewTables = ko.computed(function () {
-                return _this.viewTables().length > 1;
-            });
-
             this.selectedViewTableName = ko.computed(function () {
                 var viewTableKey = ko.unwrap(_this.selected() && _this.selected().viewTableKey), viewTableName = "";
 
@@ -143,6 +148,8 @@ var ag;
             this.canSave = ko.computed(function () {
                 return !_this.selectedIsCrystal();
             });
+
+            this.viewSelector = new ag.ViewSelectorViewModel(this.sorted, this.viewTables, this.selectView);
         }
         //#endregion
         ViewsViewModel.prototype.getSelectedViewSummary = function (filersViewModel) {
@@ -296,8 +303,6 @@ var ag;
                 });
         };
 
-        //#endregion
-        //#region public methods
         ViewsViewModel.prototype.setSelected = function (view, forceUpdate) {
             var _this = this;
             if (typeof forceUpdate === "undefined") { forceUpdate = false; }
@@ -358,12 +363,6 @@ var ag;
         ViewsViewModel.prototype.getViewRequest = function (key) {
             return this.proxy.editView(key, undefined, 1 /* GET */).then(function (result) {
                 return result.data;
-            });
-        };
-
-        ViewsViewModel.prototype.findByViewTable = function (viewTableKey) {
-            return this.sorted().filter(function (item) {
-                return viewTableKey && item.viewTableKey() === viewTableKey();
             });
         };
 

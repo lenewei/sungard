@@ -77,12 +77,12 @@ module ag.utils
       {
          return ag.utils.validateAndShowMessages(data)
             .then(() =>
-            {
-               var unmapper = () => ko.mapping.toJS(data);
-               return this.postJson(action, unmapper);
-            });
+         {
+            var unmapper = () => ko.mapping.toJS(data);
+            return this.postJson(action, unmapper);
+         });
       }
-      
+
       postJson(action: string, data: any, existingDeferred?: any): JQueryPromise<any>;
       postJson(action: IAction, data: any, existingDeferred?: any): JQueryPromise<any>;
       postJson(action: any, data: any, existingDeferred?: any): JQueryPromise<any>
@@ -244,8 +244,9 @@ module ag.utils
       formHeaders(headerFunctionsPerRequest, headers);
       $.extend(headers, getHeadersForRequest(method));
 
-      var request = () => $.ajax(
-         {
+      var ajaxOptions = (): JQueryAjaxSettings =>
+      {
+         return {
             cache: cache,
             global: global,
             dataType: dataType,
@@ -254,11 +255,11 @@ module ag.utils
             data: getPayloadForRequest(method, data),
             contentType: method !== "POST" ? "application/x-www-form-urlencoded" : "application/json; charset=utf-8",
             url: createUrlForRequest(action),
-            success: (data, textStatus, jqXHR) =>
+            success: (successData, textStatus, jqXHR) =>
             {
                // Check for redirection
-               if (!isNullOrUndefined(data) && data.redirect)
-                  navigate(data.redirect, false);
+               if (!isNullOrUndefined(successData) && successData.redirect)
+                  navigate(successData.redirect, false);
 
                // Get the current "today" value for the location the 
                // user is assigned to (if supplied)
@@ -266,19 +267,17 @@ module ag.utils
                if (today && today.length)
                   userLocationToday = moment.fromISO(today);
             }
-         }).fail((jqxhr) =>
-         {
-            if (jqxhr.status == 401)
-               $("#authenticationErrorDialog").modal({ backdrop: "static", keyboard: false, show: true });
-         });
+         };
+      };
 
-      // If a POST has data expressed as a function this indicates it should be deferred 
-      // (and the data function invoked when the request is performed)
-      if (method === "POST" && typeof data === "function")
-         return deferRequest(request);
+      // For POST we will queue requests to allow dependencies to complete
+      var promise = (method === "POST") ? $.ajaxQueue(ajaxOptions) : $.ajax(ajaxOptions());
 
-      // Invoke request immediately
-      return request();
+      return promise.fail((jqxhr) =>
+      {
+         if (jqxhr.status == 401)
+            $("#authenticationErrorDialog").modal({ backdrop: "static", keyboard: false, show: true });
+      });
    }
 
    export function createUrlForRequest(action: any)
@@ -368,32 +367,6 @@ module ag.utils
       {
          callback(headers);
       });
-   }
-
-   export function deferRequest(request: () => JQueryPromise<any>, timeoutMilliseconds = 5000): JQueryPromise<any>
-   {
-      // Defer the request to allow dependencies to complete before continuing.
-      // Timeout available to ensure we don't hang around indefinitely.
-      var deferred = $.Deferred(),
-         intervalTimeout = 20,
-         maxAttempts = Math.round(timeoutMilliseconds / intervalTimeout),
-         interval = window.setInterval(() =>
-         {
-            // Check if there are any pending operations, 
-            // if so return and wait another interval
-            if ($.active && maxAttempts-- > 0)
-               return;
-
-            // Clear the timer
-            window.clearInterval(interval);
-
-            // Perform the request and resolve our promise
-            request().done(deferred.resolve).fail(deferred.reject);
-         },
-            intervalTimeout);
-
-      // Return our promise to be resolved when activity subsides
-      return deferred.promise();
    }
 
    export function clearProperties(properties: Array<string>, data: any)

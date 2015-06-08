@@ -4,6 +4,7 @@ module ag
    export class VisualisationViewModel
    {
       visible = ko.observable(false);
+      isLoaded = ko.observable(false);
       data: KnockoutComputed<any>;
       categories = ko.observableArray();
       options: KnockoutObservable<any>;
@@ -59,6 +60,12 @@ module ag
                field: 'name',
                categories: this.categories
             }
+         });
+
+         this.visible.subscribe(newValue =>
+         {
+            if (newValue)
+               this.isLoaded(true);
          });
 
          this.config =

@@ -15,6 +15,7 @@ module ag
    export class Pager
    {
       private keepPageTargetsShownFlag = false;
+      private pageTargets = ko.observableArray<PageTarget>();
 
       page = ko.observable(0);
       totalPages = ko.observable(0);
@@ -24,14 +25,14 @@ module ag
       hasPages: KnockoutComputed<boolean>;
       loadPreviousPageCommand: KoliteCommand;
       loadNextPageCommand: KoliteCommand;
-
-      pageTargets = ko.observableArray<PageTarget>();
+      
       pageTargetsCenter = ko.observable(0);
       showPageTargets = ko.observable(false);
       hasPageTargets: KnockoutComputed<boolean>;
-      pageTargetColumns: KnockoutComputed<any>;
       pageTargetsInnerSize: KnockoutObservable<number>;
       pageTargetsEdgeSize: KnockoutObservable<number>;
+      pageTargetGridItems: KnockoutComputed<any[]>;
+      pageTargetGridColumns: KnockoutComputed<any[]>;
 
       constructor(public options: IPagerOptions)
       {
@@ -109,15 +110,39 @@ module ag
             return !_.isEmpty(this.pageTargets());
          });
 
-         this.pageTargetColumns = ko.computed(() =>
+         // grids doesn't support columns in nested properties (ex: row.child.cell) so flatten the data.
+         //
+         // Adding support for nested properties will force us to change plenty of things such as GridManipulationHelper class,
+         // DataSetExtensions class, gridCell binding and other places
+         this.pageTargetGridItems = ko.computed(() =>
+         {
+            return _.map(this.pageTargets(), (i) =>
+            {
+               var pageTargetGridItem = {
+                  page: i.page,
+                  itemRange: i.itemRange
+               };
+
+               _.each(i.firstItem, (value: any, key: any) =>
+               {
+                  pageTargetGridItem["firstItem_" + key] = value;
+               });
+
+               return pageTargetGridItem;
+            });
+         });
+
+         this.pageTargetGridColumns = ko.computed(() =>
          {
             var columns = [ko.mapping.fromJS(new FieldData({ key: "itemRange", dataType: "string", displayName: "" }))];
 
             _.each(options.activeSortColumns(), (i) =>
             {
-               var newColumn = ko.mapping.fromJS(ko.mapping.toJS(i));
-               newColumn.key("firstItem." + newColumn.key());
-               columns.push(newColumn);
+               var fieldDataOptions = ko.mapping.toJS(i);
+               fieldDataOptions.key = "firstItem_" + fieldDataOptions.key;
+               delete fieldDataOptions.linksTo;
+
+               columns.push(ko.mapping.fromJS(fieldDataOptions));
             });
 
             return columns;
@@ -135,7 +160,7 @@ module ag
       // Response is either a GridViewDataResponse or LookupDataResponse
       updateFromResponse(response)
       {
-         this.pageTargets(response.pageTargets);
+         this.pageTargets(response.pageTargets || []);
 
          this.pageSize(response.gridViewOptions.pageSize);
          this.totalItems(response.gridViewOptions.totalItems);
@@ -172,22 +197,22 @@ module ag
          return false;
       }
 
-      isPageTargetSelected(pageTarget: PageTarget): boolean
+      isPageTargetSelected(pageTargetGridItem: any): boolean
       {
-         return pageTarget.page === this.page();
+         return pageTargetGridItem.page === this.page();
       }
 
-      isPageTargetDivider(pageTarget: PageTarget): boolean
+      isPageTargetDivider(pageTargetGridItem: any): boolean
       {
-         return pageTarget.page < 1;
+         return pageTargetGridItem.page < 1;
       }
 
-      selectPageTarget(pageTarget: PageTarget): void
+      selectPageTarget(pageTargetGridItem: any): void
       {
-         if (pageTarget.page >= 1)
-            this.navigateToPage(pageTarget.page);
+         if (pageTargetGridItem.page >= 1)
+            this.navigateToPage(pageTargetGridItem.page);
          else
-            this.keepPageTargetsShown(); // Prevent dropdown from closing when "..." item is clicked
+            this.keepPageTargetsShown(); // Prevent dropdown from closing when divider is clicked
       }
 
       private snapPageTargetsCenter(preferredPageTargetsCenter: number)

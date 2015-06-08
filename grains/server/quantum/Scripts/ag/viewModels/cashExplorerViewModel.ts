@@ -132,6 +132,8 @@ module ag
             return this.canMaintainViews();
          }, this, { deferEvaluation: true });
 
+         this.grid.views.viewSelector.displayViewTypeBadge(false);
+
          this.usedViewAttributeFilters = ko.computed(() =>
          {
             return this.applicationOptions.pivotView.attributeFilters;
@@ -692,6 +694,11 @@ module ag
          return "/{0}/{1}".format(this.options.serviceUrl, "GetAttributeFilterFields");
       }
 
+      public currentViewKey(): string
+      {
+         var key = this.views.selected().key();
+         return !key ? this.applicationOptions.pivotView.key() : key;
+      }
 
       public applyViewRequest()
       {

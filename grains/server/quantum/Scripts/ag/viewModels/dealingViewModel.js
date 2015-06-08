@@ -28,7 +28,7 @@ var ag;
                         return false;
 
                     _.forEach(codes, function (code) {
-                        code.value.subscribe(function () {
+                        code.valueAsObject.subscribe(function () {
                             obj[property].valueHasMutated();
                         });
                     });

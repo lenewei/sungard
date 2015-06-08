@@ -75,8 +75,12 @@ String.prototype["endsWith"] = function (s) {
 
 String.prototype["toCamelCase"] = function () {
     var camelCase = function (s) {
+        var isNumeric = function (c) {
+            return /^\d+$/.test(c);
+        };
+
         var isUpper = function (c) {
-            return c.toUpperCase() === c;
+            return c.toUpperCase() === c && !isNumeric(c);
         };
 
         if (s === null || s === undefined || s.length == 0)
@@ -691,9 +695,9 @@ var ag;
 
         //hide the message of all observables where it's value is undefined, null, empty string or empty array
         function resetValidationIfEmpty(obj, ignore) {
-            traverseValidatables(obj, function (prop, path) {
+            traverseValidatables(obj, function (prop) {
                 var value;
-                if (!_.contains(ignore, path)) {
+                if (!_.contains(ignore, prop)) {
                     value = prop();
                     if (isNullUndefinedOrEmpty(value) || (_.isArray(value) && _.isEmpty(value)))
                         prop.isModified(false);
@@ -702,14 +706,14 @@ var ag;
         }
         utils.resetValidationIfEmpty = resetValidationIfEmpty;
 
-        function traverseValidatables(obj, callback, parentPath) {
+        function traverseValidatables(obj, callback) {
             if (ko.isObservable(obj) && isValidatable(obj))
-                callback(obj, parentPath || "");
+                callback(obj);
 
             var value = ko.unwrap(obj);
             if (_.isPlainObject(value) || _.isArray(value)) {
-                _.each(value, function (memberValue, propNameOrIndex) {
-                    traverseValidatables(memberValue, callback, (parentPath ? parentPath + "." + propNameOrIndex : propNameOrIndex)); //the path generated here is same as Knockout Mapping
+                _.each(value, function (memberValue) {
+                    traverseValidatables(memberValue, callback);
                 });
             }
         }
@@ -1459,12 +1463,19 @@ var ag;
                 path += $.param(cleanJSForRequest(data, responseOnlyProperties, postOnlyProperties));
             }
 
-            return new ag.WindowManager({ url: path, navigate: navigate });
+            if (navigate) {
+                // Use current window
+                ag.navigate(path);
+                return $.Deferred().promise();
+            } else {
+                // Popup a window
+                return (new ag.WindowManager({ url: path })).promise;
+            }
         }
         utils.openApplicationWindow = openApplicationWindow;
 
         function openApplicationWindowPromise(path, data, navigate, responseOnly) {
-            return openApplicationWindow(path, data, responseOnly, null, navigate).promise;
+            return openApplicationWindow(path, data, responseOnly, null, navigate);
         }
         utils.openApplicationWindowPromise = openApplicationWindowPromise;
 
@@ -1665,16 +1676,47 @@ var ag;
         }
         utils.inflateCurrencies = inflateCurrencies;
 
+        function createTabLoaders(config) {
+            var tabLoaders = ag.tabLoaders = {};
+            _.each(config, function (value, key) {
+                var tabs = tabLoaders[key] = {};
+                _.each(value, function (tab) {
+                    tabs[tab] = {
+                        isLoaded: ko.observable(false)
+                    };
+                });
+            });
+        }
+        utils.createTabLoaders = createTabLoaders;
+
         function escapeRegexChars(str) {
             return str.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
         }
         utils.escapeRegexChars = escapeRegexChars;
 
-        //custom observable equalityComparer
+        // Custom observable equalityComparer
         function strictEqualityComparer(a, b) {
             return a === b;
         }
         utils.strictEqualityComparer = strictEqualityComparer;
+
+        // Make the observable validatable to the Filter binding.
+        //
+        // Filter binding only validates if value.valueIsUnvalidated is true
+        // to prevent unnesseccary validation.
+        // For example when loading a deal, filter validation will not trigger
+        function addUnvalidatedFlag(value) {
+            value.valueIsUnvalidated = false;
+
+            return ko.computed({
+                read: value,
+                write: function (v) {
+                    value.valueIsUnvalidated = true;
+                    value(v);
+                }
+            });
+        }
+        utils.addUnvalidatedFlag = addUnvalidatedFlag;
     })(ag.utils || (ag.utils = {}));
     var utils = ag.utils;
 

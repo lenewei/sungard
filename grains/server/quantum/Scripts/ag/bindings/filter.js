@@ -11,12 +11,12 @@
                 throw new Error("data source needs to be an array or a string");
 
             // The filter binding is dependent on the optionsText and value bindings
-            var allBindings = allBindingsAccessor(), optionsText = allBindings.optionsText, optionsTitle = allBindings.optionsTitle, optionsValue = allBindings.optionsValue, postFilter = allBindings.postFilter, postRequest = allBindings.postRequest, requestDataCallback = allBindings.requestData, initialRequestDataCallback = allBindings.initialRequestDataCallback, selectedKeys = allBindings.selectedKeys, valueCallback = allBindings.valueCallback || allBindings.filterValue || allBindings.key, additionalPayloadData = allBindings.additionalPayloadData;
+            var allBindings = allBindingsAccessor(), optionsText = allBindings.optionsText, optionsTitle = allBindings.optionsTitle, optionsValue = allBindings.optionsValue, postFilter = allBindings.postFilter, postRequest = allBindings.postRequest, requestDataCallback = allBindings.requestData, initialRequestDataCallback = allBindings.initialRequestDataCallback, selectedKeys = allBindings.selectedKeys, valueCallback = allBindings.valueCallback || allBindings.filterValue || allBindings.key, additionalPayloadData = allBindings.additionalPayloadData, restrictToListMessage = allBindings.restrictToList, restrictToList = !!restrictToListMessage;
 
             if (!optionsText || !valueCallback)
                 throw new Error("The filter binding requires the optionsText binding and either a key, filterValue or valueCallback binding");
 
-            var compareKey = $element.data("lookup-compare-key") || "key", hideQueryUI = !!$element.data("lookup-hide-query-ui"), maxItems = parseInt($element.data("lookup-max-items")) || 20, prerequisiteFields = $element.data("lookup-prerequisite-fields"), hintSource = $element.data("lookup-hint-source"), hintTarget = $element.data("lookup-hint-target"), prefix = $element.data("prefix"), restrictToListMessage = $element.data("lookup-restrict-to-list"), restrictToList = !!restrictToListMessage;
+            var compareKey = $element.data("lookup-compare-key") || "key", hideQueryUI = !!$element.data("lookup-hide-query-ui"), maxItems = parseInt($element.data("lookup-max-items")) || 20, prerequisiteFields = $element.data("lookup-prerequisite-fields"), hintSource = $element.data("lookup-hint-source"), hintTarget = $element.data("lookup-hint-target"), prefix = $element.data("prefix");
 
             // Prerequisite Title
             if (prerequisiteFields != undefined) {
@@ -127,9 +127,13 @@
             // Setup all event listeners
             ag.filter.helper.registerEventListeners($element, valueCallback, restrictToList);
 
+            // Add the toggle button
+            addToggleButton($element, valueCallback);
+
             // Dispose
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                $element.typeahead('destroy');
+                ag.filter.helper.typeahead.destroy($element);
+                removeToggleButton($element);
             });
         }
     };
@@ -192,7 +196,7 @@
                 var possibleValues = optionsValue ? _.map(result.lookupData.data, function (i) {
                     return ag.utils.getValueFromAccessor(i, optionsValue);
                 }) : result.lookupData.data, isValueFound = !_.isUndefined(_.find(possibleValues, function (i) {
-                    return _.isString(i) && _.isString(value) ? i.toLowerCase() === value.toLowerCase() : i === value;
+                    return _.isString(i) && _.isString(value) ? i.toLowerCase() === value.toLowerCase() : i == value;
                 }));
 
                 resultCallback(isValueFound);
@@ -202,5 +206,54 @@
         }
 
         valueCallback.valueIsUnvalidated = false;
+    }
+
+    function addToggleButton($element, valueCallback) {
+        var $toggle = $('<div class="toggle"><i class="icon-th"></i></div>');
+
+        $toggle.on("click", function (e) {
+            // Find the input in the current editor field
+            var $target = $(e.target), input = $target.closest('.field').find('input'), lookupDisplayName = input.data("lookup-display-name");
+
+            // Find the closest parent that is our toggle element
+            var toggle = $target.closest('.toggle');
+
+            // If the toggle is disabled, do nothing.
+            if (toggle.data("enabled") === false)
+                return;
+
+            if (!input)
+                return;
+
+            // Get the explorer and typeahead
+            var explorer = input.data("explorer");
+            if (!explorer)
+                return;
+
+            var typeahead = input.data("typeahead");
+            if (!typeahead)
+                return;
+
+            // Get the explorer options from the explorer instance
+            var explorerOptions = explorer.options;
+
+            // Put the displayname in if supplied
+            explorerOptions.lookupDisplayName = (lookupDisplayName) ? "Select " + lookupDisplayName : "Browse";
+
+            // Suspend the observable to prevent subscriptions from being fired when the explorer is opened and the input
+            // is blurred (triggering an update on the observable before we've finished selecting a valid value).
+            valueCallback.isSuspended && valueCallback.isSuspended(true);
+            explorer.toggle($.extend({ searchQuery: typeahead.shown ? input.val() : '' }, explorerOptions));
+            typeahead.hide(false);
+
+            e.stopImmediatePropagation();
+            e.preventDefault();
+        });
+
+        $element.after($toggle);
+    }
+
+    function removeToggleButton($element) {
+        $element.next(".toggle").first().off().remove();
     }
 })(ag || (ag = {}));

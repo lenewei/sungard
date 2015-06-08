@@ -35,6 +35,8 @@ module ag
 
       showUnderlyingSwapDeal()
       {
+         var underlyingSwapDealWindow = new ag.WindowManager({ name: "underlyingSwapDeal" });
+
          this.net.postJson("getUnderlyingSwapDeal", () => ko.mapping.toJS(this.editingItem))
             .done(result =>
             {
@@ -46,10 +48,11 @@ module ag
                if (this.underlyingSwapDeal.dealNumber)
                   url += "&dealNumber=" + encodeURIComponent(this.underlyingSwapDeal.dealNumber);
 
-               new ag.WindowManager({ url: url, name: "underlyingSwapDeal" });
+               underlyingSwapDealWindow.navigate(url);
             })
             .fail(result =>
             {
+               underlyingSwapDealWindow.close();
                utils.showErrorsFromResult(result);
             });
       }

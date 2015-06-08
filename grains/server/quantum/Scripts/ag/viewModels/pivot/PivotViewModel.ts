@@ -337,7 +337,7 @@ module ag
          {
             result[item + 'Filters[' + index + '].key'] = filter.key;
             result[item + 'Filters[' + index + '].fullKey'] = filter.fullKey;
-            result[item + 'Filters[' + index + '].value'] = encodeURIComponent(filter.value);
+            result[item + 'Filters[' + index + '].value'] = filter.value;
             result[item + 'Filters[' + index + '].name'] = filter.name;
             result[item + 'Filters[' + index + '].drillDownLevel'] = filter.drillDownLevel;
             result[item + 'Filters[' + index + '].dataType'] = filter.dataType;
@@ -487,6 +487,7 @@ module ag
          this.selectedDrillDown().max(result.maxDrillDownLevel);
 
          this.showEndTotals(false);
+         this.pivotHtml("");
          this.pivotHtml(result.pivotHtml);
          this.hasEndTotals(result.hasEndTotals);
          this.pivotData = result.pivotData;
@@ -518,7 +519,7 @@ module ag
 
          if (this.search.hasText())
          {
-            params.searchText = encodeURIComponent(this.search.text());
+            params.searchText = this.search.text();
          }
 
          $.extend(params, this.pivotFilters());
