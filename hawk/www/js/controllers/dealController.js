@@ -39,16 +39,16 @@ hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ion
         "nonBusinessDaySettlement": "10110002",
         "counterpartyReference": "",
         "counterpartyDealer": "",
-        "dealer": "baseline",
-        "strategy": "NONE",
-        "dealSet": "NONE",
-        "location": [
-            "Canberra",
-            "Sydney"
-        ],
-        "eligibleForClearing": false,
-        "reportToTradeRepository": false,
-        "comments": ""
+        "dealer": "baseline"
+        //"strategy": "NONE",
+        //"dealSet": "NONE",
+        //"location": [
+        //    "Canberra",
+        //    "Sydney"
+        //],
+        //"eligibleForClearing": false,
+        //"reportToTradeRepository": false,
+        //"comments": ""
     }
 
     $scope.commitToCloud = function () {
