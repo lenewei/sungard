@@ -3,25 +3,62 @@
  */
 var hawk = angular.module('hawk');
 
-hawk.controller('SearchController', function ($scope, $resource, $ionicModal, $ionicPlatform, $cordovaBarcodeScanner, $state) {
-
-    var dealResource = $resource("http://128.199.91.142:3000/deal/:id");
-    dealResource.get({id: 'No001'}, function (result) {
-        $scope.deal = result;
-    }, function (err) {
-        console.log(err + "---no--record");
-    });
-    $scope.user = {
-        firstName: "Steven",
-        lastName: "Xu",
-        comments: "This My Comments"
-    };
+hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ionicPlatform, $cordovaBarcodeScanner, $state) {
+    $scope.QR="";
+    $scope.size = 250;
+    $scope.correctionLevel = 'H';
+    $scope.typeNumber = 30;
+    $scope.inputMode = 'ALPHA_NUM';
+    $scope.image = true;
+    var dealResource = $resource("http://128.199.91.142:11111/fx/deal/:id");
+    //dealResource.get({id: 'No001'}, function (result) {
+    //    $scope.deal = result;
+    //}, function (err) {
+    //    console.log(err + "---no--record");
+    //});
+    $scope.deal = {
+        "dealNumber": "170",
+        "ticketNumber": "54242 - 1",
+        "instrument": "FX Forward - Time Option",
+        "dealType": "10090001",
+        "counterparty": "CITIBANK",
+        "entity": "Transactor - Level 2",
+        "facility": "",
+        "faceValue": "6435000.0000",
+        "currency": "USD",
+        "otherCurrency": "AUD",
+        "otherFaceValue": "10100000.0000",
+        "spotRate": "0.64",
+        "contractRate": "0.63712871",
+        "forwardPoints": "-28.7129",
+        "calculateBuyAmount": false,
+        "dealDate": "2007-10-02T00:00:00+08:00",
+        "startDate": "2007-10-02T00:00:00+08:00",
+        "maturityDate": "2007-10-04T00:00:00+08:00",
+        "term": "2",
+        "nonBusinessDaySettlement": "10110002",
+        "counterpartyReference": "",
+        "counterpartyDealer": "",
+        "dealer": "baseline",
+        "strategy": "NONE",
+        "dealSet": "NONE",
+        "location": [
+            "Canberra",
+            "Sydney"
+        ],
+        "eligibleForClearing": false,
+        "reportToTradeRepository": false,
+        "comments": ""
+    }
 
     $scope.commitToCloud = function () {
-        dealResource.save({id: 'No001'}, $scope.user);
+        dealResource.save({id: 'No001'}, $scope.deal);
+    }
+    $scope.loadFromCloud = function () {
+        dealResource.save({id: 'No001'}, $scope.deal);
     }
     $scope.generateQRCode = function () {
-        $scope.QR = angular.toJson($scope.user);
+        $scope.QR = angular.toJson($scope.deal);
     }
 
     $ionicModal.fromTemplateUrl('templates/QRCodeDialog.html', {
@@ -57,7 +94,7 @@ hawk.controller('SearchController', function ($scope, $resource, $ionicModal, $i
                 .then(function (barcodeData) {
                     // Success! Barcode data is here
                     //alert(barcodeData.text);
-                    $scope.user = angular.fromJson(barcodeData.text);
+                    $scope.deal = angular.fromJson(barcodeData.text);
                     console.log("Barcode Format -> " + barcodeData.format);
                     console.log("Cancelled -> " + barcodeData.cancelled);
                 }, function (error) {

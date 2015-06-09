@@ -4,7 +4,7 @@
 // 'hawk' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'hawk.controllers' is found in controllers.js
-angular.module('hawk', ['ionic', 'ngCordova', 'ngResource', 'ngStorage', 'pascalprecht.translate', 'angular-jwt', 'monospaced.qrcode'])
+angular.module('hawk', ['ionic', 'ngCordova', 'ngResource', 'ngStorage', 'pascalprecht.translate', 'angular-jwt', 'ja.qr'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -30,12 +30,12 @@ angular.module('hawk', ['ionic', 'ngCordova', 'ngResource', 'ngStorage', 'pascal
                 controller: 'HawkController'
             })
 
-            .state('app.search', {
-                url: "/search",
+            .state('app.deal', {
+                url: "/deal",
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/search.html",
-                        controller: 'SearchController'
+                        templateUrl: "templates/deal.html",
+                        controller: 'DealController'
                     }
                 }
             })
@@ -68,5 +68,5 @@ angular.module('hawk', ['ionic', 'ngCordova', 'ngResource', 'ngStorage', 'pascal
                 }
             });
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/search');
+        $urlRouterProvider.otherwise('/app/deal');
     });
