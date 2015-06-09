@@ -3,13 +3,23 @@
  */
 var hawk = angular.module('hawk');
 
-hawk.controller('SearchController', function ($scope, $ionicModal,$ionicPlatform,$cordovaBarcodeScanner,$state) {
+hawk.controller('SearchController', function ($scope, $resource, $ionicModal, $ionicPlatform, $cordovaBarcodeScanner, $state) {
+
+    var dealResource = $resource("http://128.199.91.142:3000/deal/:id");
+    dealResource.get({id: 'No001'}, function (result) {
+        $scope.deal = result;
+    }, function (err) {
+        console.log(err + "---no--record");
+    });
     $scope.user = {
-        firstName:"Steven",
-        lastName:"Xu",
-        comments:"This My Comments"
+        firstName: "Steven",
+        lastName: "Xu",
+        comments: "This My Comments"
     };
 
+    $scope.commitToCloud = function () {
+        dealResource.save({id: 'No001'}, $scope.user);
+    }
     $scope.generateQRCode = function () {
         $scope.QR = angular.toJson($scope.user);
     }
