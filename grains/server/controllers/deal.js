@@ -2,6 +2,93 @@ var mongoose = require('mongoose'),
     Deal = mongoose.model("Deal"),
     ObjectId = mongoose.Types.ObjectId
 
+//added by steven.xu
+exports.createDeal = function (req, res, next) {
+    var dealModel = new Deal(req.body);
+    dealModel.save(function (err, deal) {
+        if (err) {
+            res.status(500);
+            res.json({
+                type: false,
+                data: "Error occured: " + err
+            })
+        } else {
+            res.json({
+                type: true,
+                data: deal
+            })
+        }
+    })
+}
+
+//added by steven.xu
+exports.viewDeal = function (req, res, next) {
+    Deal.findById(new ObjectId(req.params.id), function (err, deal) {
+        if (err) {
+            res.status(500);
+            res.json({
+                type: false,
+                data: "Error occured: " + err
+            })
+        } else {
+            if (deal) {
+                res.json({
+                    type: true,
+                    data: deal
+                })
+            } else {
+                res.json({
+                    type: false,
+                    data: "Deal: " + req.params.id + " not found"
+                })
+            }
+        }
+    })
+}
+//added by steven.xu
+exports.updateDeal = function (req, res, next) {
+    var updatedDealModel = new Deal(req.body);
+    Deal.findByIdAndUpdate(new ObjectId(req.params.id), updatedDealModel, function (err, deal) {
+        if (err) {
+            res.status(500);
+            res.json({
+                type: false,
+                data: "Error occured: " + err
+            })
+        } else {
+            if (deal) {
+                res.json({
+                    type: true,
+                    data: deal
+                })
+            } else {
+                res.json({
+                    type: false,
+                    data: "Deal: " + req.params.id + " not found"
+                })
+            }
+        }
+    })
+}
+//added by steven.xu
+exports.deleteDeal = function (req, res, next) {
+    Deal.findByIdAndRemove(new Object(req.params.id), function (err, deal) {
+        if (err) {
+            res.status(500);
+            res.json({
+                type: false,
+                data: "Error occured: " + err
+            })
+        } else {
+            res.json({
+                type: true,
+                data: "Deal: " + req.params.id + " deleted successfully"
+            })
+        }
+    })
+}
+
+
 exports.list = function(req, res) {
     Deal.find( function(err, deals) {
         if (err) {

@@ -14,6 +14,23 @@ fs.readdirSync(controllers_path).forEach(function (file) {
 var server = restify.createServer();
 var io = socketio.listen(server);
 
+//customer restify header
+var restifyHeader = function (req, res, next) {
+    // CORS headers
+    res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    // Set custom headers for CORS
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//    res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+    if (req.method == 'OPTIONS') {
+        res.status(200).end();
+    } else {
+        next();
+    }
+}
+server.use(restifyHeader);
+server.use(restify.CORS());
+
 server
     .use(restify.fullResponse())
     .use(restify.bodyParser())
@@ -45,6 +62,12 @@ server.post("/account/createUser", controllers.user.createUser)
 server.get("/dealing/fx/edit", controllers.deal.edit)
 server.get("/dealing/fx/list", controllers.deal.list)
 server.get("/dealing/fx/GetNonBusinessDays", controllers.deal.getNonBusinessDays)
+
+// Article Start
+server.post("/fx/deal", controllers.deal.createDeal)
+server.put("/fx/deal/:id", controllers.deal.updateDeal)
+server.del("/fx/deal/:id", controllers.deal.deleteDeal)
+server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
 
 
 //server.put("/account/user/:id", controllers.user.updateUser)
