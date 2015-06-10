@@ -30,40 +30,21 @@ angular.module('hawk', ['ionic', 'ngCordova', 'ngResource', 'ngStorage', 'pascal
                 controller: 'HawkController'
             })
 
-            .state('app.deal', {
+            .state('app.dealLists', {
                 url: "/deal",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/dealList.html",
+                        controller: 'DealListController'
+                    }
+                }
+            })
+            .state('app.deal', {
+                url: "/deal/:id",
                 views: {
                     'menuContent': {
                         templateUrl: "templates/deal.html",
                         controller: 'DealController'
-                    }
-                }
-            })
-
-            .state('app.browse', {
-                url: "/browse",
-                views: {
-                    'menuContent': {
-                        templateUrl: "templates/browse.html"
-                    }
-                }
-            })
-            .state('app.playlists', {
-                url: "/playlists",
-                views: {
-                    'menuContent': {
-                        templateUrl: "templates/playlists.html",
-                        controller: 'PlayListController'
-                    }
-                }
-            })
-
-            .state('app.single', {
-                url: "/playlists/:playlistId",
-                views: {
-                    'menuContent': {
-                        templateUrl: "templates/playlist.html",
-                        controller: 'PlayListController'
                     }
                 }
             });
