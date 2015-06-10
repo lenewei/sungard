@@ -67,6 +67,7 @@ server.get("/dealing/fx/GetNonBusinessDays", controllers.deal.getNonBusinessDays
 server.post("/fx/deal", controllers.deal.createDeal)
 server.put("/fx/deal/:id", controllers.deal.updateDeal)
 server.del("/fx/deal/:id", controllers.deal.deleteDeal)
+server.get("/fx/deal/", controllers.deal.viewDeals)
 server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
 
 

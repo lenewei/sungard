@@ -46,6 +46,31 @@ exports.viewDeal = function (req, res, next) {
     })
 }
 //added by steven.xu
+exports.viewDeals = function (req, res, next) {
+    Deal.find(function (err, deal) {
+        if (err) {
+            res.status(500);
+            res.json({
+                type: false,
+                data: "Error occured: " + err
+            })
+        } else {
+            if (deal) {
+                res.json({
+                    type: true,
+                    data: deal
+                })
+            } else {
+                res.json({
+                    type: false,
+                    data: "Deal: " + req.params.id + " not found"
+                })
+            }
+        }
+    })
+}
+
+//added by steven.xu
 exports.updateDeal = function (req, res, next) {
     var updatedDealModel = new Deal(req.body);
     Deal.findByIdAndUpdate(new ObjectId(req.params.id), updatedDealModel, function (err, deal) {
