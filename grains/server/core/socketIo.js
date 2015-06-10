@@ -36,10 +36,13 @@ server
     .use(restify.bodyParser())
 
 ///\/\w+\/\w+/
-server.get("/hawk/android", restify.serveStatic({
-    directory: './server',
-    default: 'hawk.apk'
-}));
+server.get("/hawk/android", function indexHTML(req, res, next) {
+    var file = './server/hawk.apk';
+    res.setHeader('Content-disposition', 'attachment; filename= hawk.apk');
+    res.setHeader('Content-type', 'application/vnd.android.package-archive');
+    var filestream = fs.createReadStream(file);
+    filestream.pipe(res);
+});
 
 server.get("/hawk/ios", restify.serveStatic({
     directory: './server',
