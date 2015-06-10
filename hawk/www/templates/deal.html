@@ -1,103 +1,123 @@
 <ion-view view-title="Deal">
-  <ion-content>
-      <div class="list">
-          <label class="item item-input">
-              <input type="text" placeholder="Deal Number" ng-model="deal.dealNumber">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Ticket Number" ng-model="deal.ticketNumber">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Instrument" ng-model="deal.instrument">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Deal Type" ng-model="deal.dealType">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Counter Party" ng-model="deal.counterparty">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Entity" ng-model="deal.entity">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Facility" ng-model="deal.facility">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Currency" ng-model="deal.currency">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Buy Amount" ng-model="deal.faceValue">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Other Currency" ng-model="deal.otherCurrency">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Sell Amount" ng-model="deal.otherFaceValue">
-          </label>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Deal Number</span>
+                <input type="text" ng-model="deal.dealNumber">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Ticket Number</span>
+                <input type="text" ng-model="deal.ticketNumber">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Instrument</span>
+                <input type="text" ng-model="deal.instrument">
+            </label>
+            <!--<label class="item item-input">-->
+            <!--<span class="input-label">Deal Type</span>-->
+            <!--<input type="text" ng-model="deal.dealType">-->
+            <!--</label>-->
+            <label class="item item-input">
+                <span class="input-label">Counter Party</span>
+                <input type="text" ng-model="deal.counterparty">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Entity</span>
+                <input type="text" ng-model="deal.entity">
+            </label>
+            <!--<label class="item item-input">-->
+            <!--<span class="input-label">Facility</span>-->
+            <!--<input type="text" ng-model="deal.facility">-->
+            <!--</label>-->
+            <label class="item item-input">
+                <span class="input-label">Currency</span>
+                <input type="text" ng-model="deal.currency">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Buy Amount</span>
+                <input type="text" ng-model="deal.faceValue">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Other Currency</span>
+                <input type="text" ng-model="deal.otherCurrency">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Sell Amount</span>
+                <input type="text" ng-model="deal.otherFaceValue">
+            </label>
 
-          <label class="item item-input">
-              <input type="text" placeholder="Spot Rate" ng-model="deal.spotRate">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Contract Rate" ng-model="deal.contractRate">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Forward Points" ng-model="deal.forwardPoints">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Calculate BuyAmount" ng-model="deal.calculateBuyAmount">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Deal Date" ng-model="deal.dealDate">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Start Date" ng-model="deal.startDate">
-          </label>
+            <label class="item item-input">
+                <span class="input-label">Spot Rate</span>
+                <input type="text" ng-model="deal.spotRate">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Contract Rate</span>
+                <input type="text" ng-model="deal.contractRate">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Forward Points</span>
+                <input type="text" ng-model="deal.forwardPoints">
+            </label>
+            <!--<label class="item item-input">-->
+            <!--<span class="input-label">Calculate Buy Amount</span>-->
+            <!--<input type="text" ng-model="deal.calculateBuyAmount">-->
+            <!--</label>-->
+            <label class="item item-input">
+                <span class="input-label">Deal Date</span>
+                <input type="text" ng-model="deal.dealDate">
+            </label>
 
-          <label class="item item-input">
-              <input type="text" placeholder="Value Date" ng-model="deal.maturityDate">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Term" ng-model="deal.term">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Start Date" ng-model="deal.nonBusinessDaySettlement">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Counter Party Reference" ng-model="deal.counterpartyReference">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Counter Party Dealer" ng-model="deal.counterpartyDealer">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="Dealer" ng-model="deal.dealer">
-          </label>
-          <!--<label class="item item-input">-->
-              <!--<input type="text" placeholder="Strategy" ng-model="deal.strategy">-->
-          <!--</label>-->
-          <!--<label class="item item-input">-->
-              <!--<input type="text" placeholder="Deal Set" ng-model="deal.dealSet">-->
-          <!--</label>-->
-          <!--<label class="item item-input">-->
-              <!--<input type="text" placeholder="Location" ng-model="deal.location">-->
-          <!--</label>-->
-          <!--<label class="item item-input">-->
-              <!--<input type="text" placeholder="Eligible For Clearing" ng-model="deal.eligibleForClearing">-->
-          <!--</label>-->
-          <!--<label class="item item-input">-->
-              <!--<input type="text" placeholder="Report To TradeRepository" ng-model="deal.reportToTradeRepository">-->
-          <!--</label>-->
-          <!--<label class="item item-input">-->
-              <!--<textarea placeholder="Comments" ng-model="deal.comments"></textarea>-->
-          <!--</label>-->
+            <label class="item item-input">
+                <span class="input-label">Start Date</span>
+                <input type="text" ng-model="deal.startDate">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Value Date</span>
+                <input type="text" ng-model="deal.maturityDate">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Term</span>
+                <input type="text" ng-model="deal.term">
+            </label>
 
-          <div class="item">
-              <div class="button-bar">
-                  <button class="button button-icon icon ion-qr-scanner" ng-click="scanBarcode()"></button>
-                  <button class="button button-positive">Submit</button>
-                  <button class="button button-icon icon ion-share" ng-click="openModal()"></button>
-              </div>
-          </div>
-      </div>
-  </ion-content>
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Start Date" ng-model="deal.nonBusinessDaySettlement">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Counter Party Reference" ng-model="deal.counterpartyReference">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Counter Party Dealer" ng-model="deal.counterpartyDealer">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Dealer" ng-model="deal.dealer">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Strategy" ng-model="deal.strategy">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Deal Set" ng-model="deal.dealSet">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Location" ng-model="deal.location">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Eligible For Clearing" ng-model="deal.eligibleForClearing">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<input type="text" "Report To TradeRepository" ng-model="deal.reportToTradeRepository">-->
+            <!--</label>-->
+            <!--<label class="item item-input">-->
+            <!--<textarea "Comments" ng-model="deal.comments"></textarea>-->
+            <!--</label>-->
+
+            <div class="item">
+                <div class="button-bar">
+                    <button class="button button-icon icon ion-qr-scanner" ng-click="scanBarcode()"></button>
+                    <button class="button button-positive">Submit</button>
+                    <button class="button button-icon icon ion-share" ng-click="openModal()"></button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
