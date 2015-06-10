@@ -11,11 +11,7 @@ hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ion
     $scope.inputMode = 'ALPHA_NUM';
     $scope.image = true;
     var dealResource = $resource("http://128.199.91.142:11111/fx/deal/:id");
-    //dealResource.get({id: 'No001'}, function (result) {
-    //    $scope.deal = result;
-    //}, function (err) {
-    //    console.log(err + "---no--record");
-    //});
+
     $scope.deal = {
         "dealNumber": "170",
         "ticketNumber": "54242 - 1",
@@ -55,7 +51,11 @@ hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ion
         dealResource.save({id: 'No001'}, $scope.deal);
     }
     $scope.loadFromCloud = function () {
-        dealResource.save({id: 'No001'}, $scope.deal);
+        dealResource.get({id: 'No001'}, function (result) {
+            $scope.deal = result.data[0];
+        }, function (err) {
+            console.log(err + "---no--record");
+        });
     }
     $scope.generateQRCode = function () {
         $scope.QR = angular.toJson($scope.deal);

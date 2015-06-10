@@ -4,8 +4,8 @@
 
         <a class="item item-avatar" ng-repeat="deal in dealList" href="#/app/deal/{{deal.id}}">
             <img ng-src="img/sungard.png">
-            <h2>  {{deal.dealNumber}}</h2>
-            <p>Back off, man. I'm a scientist.</p>
+            <h2>  Deal No. {{deal.dealNumber}}</h2>
+            <p>Instrument is {{deal.instrument}}   And   Ticket No. is{{deal.ticketNumber}}</p>
         </a>
     </div>
   </ion-content>

@@ -23,7 +23,7 @@ exports.createDeal = function (req, res, next) {
 
 //added by steven.xu
 exports.viewDeal = function (req, res, next) {
-    Deal.findById(new ObjectId(req.params.id), function (err, deal) {
+    Deal.find({dealNumber:req.params.id}, function (err, deal) {
         if (err) {
             res.status(500);
             res.json({
