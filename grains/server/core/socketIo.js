@@ -147,5 +147,5 @@ io.sockets.on('connection', function (socket) {
 });
 
 server.listen(configuration.socketIoPort, function () {
-    console.log('socket.io server listening at %s', server.url);
+    console.log('server listening at %s', server.url);
 });
