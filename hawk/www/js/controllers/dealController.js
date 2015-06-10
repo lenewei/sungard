@@ -10,7 +10,7 @@ hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ion
     $scope.typeNumber = 30;
     $scope.inputMode = 'ALPHA_NUM';
     $scope.image = true;
-    var dealResource = $resource("http://128.199.91.142:11111/fx/deal/:id");
+    var dealResource = $resource("http://128.199.91.142/fx/deal/:id");
 
     $scope.deal = {
         "dealNumber": $stateParams.id

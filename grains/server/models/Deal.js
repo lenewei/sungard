@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Schema   = mongoose.Schema;
 
 var DealSchema = new Schema({
-    dealNumber: String,
+    dealNumber: Number,
     ticketNumber: String,
     instrument: String,
     counterparty: String,
