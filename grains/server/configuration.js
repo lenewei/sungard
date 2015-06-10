@@ -1,5 +1,5 @@
 module.exports = {
-    "socketIoPort":80,
+    "socketIoPort":11111,
     "tokenSecret":"super.super.secret.shhh",
     "backend": {
 	    "paths": ['login'], //paths to send to backend server

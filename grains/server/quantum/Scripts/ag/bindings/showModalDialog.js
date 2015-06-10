@@ -41,8 +41,9 @@ var ag;
             if (show) {
                 $element.css({ top: '', left: '' });
             }
-
             $element.modal(show ? "show" : "hide");
+
+           // $("#qrDialog").width(400);
         }
     };
 })(ag || (ag = {}));

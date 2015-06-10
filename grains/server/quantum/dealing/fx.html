@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html ng-app="dealing">
 <head>
    
    <meta charset="utf-8" />
@@ -29,17 +29,49 @@
 
          <link rel="shortcut icon" href="/content/img/favicon-green.ico" />
 
+    <script src="/Scripts/dependencies/angular/angular.js"></script>
+    <script src="/Scripts/dependencies/angular-qr/lib/qrcode.js"></script>
+    <script src="/Scripts/dependencies/angular-qr/src/angular-qr.js"></script>
 
-   
+   <script>
+
+       angular.module('dealing', ['ja.qr']).controller('fxController', function ($scope) {
+
+                   $scope.generateQRCode=function()
+                   {
+                       $scope.qrReady=false;
+
+
+                   var item=    ko.mapping.toJS(  ko.contextFor($("#Domain_DealNumber")[0]).$root.editingItem);
+                       var data=JSON.stringify(item);
+                       console.log(data);
+                       $scope.QR=data;
+                       $scope.qrReady=true;
+
+                   }
+
+                   $scope.close=function()
+                   {
+                       $scope.qrReady=false;
+                   }
+
+                   $scope.QR="";
+                   $scope.qrReady=false;
+
+               }
+       );
+
+   </script>
    
 
    
 </head>
-<body class="category-green banner-standard">
-   <div class="page-container loading">
+<body  ng-controller="fxController" class="category-green banner-standard">
+   <div  class="page-container loading">
       
 
-<div class="navbar navbar-fixed-top">
+<div   class="navbar navbar-fixed-top">
+
    <div class="navbar-inner container-fluid">
       <div class="restrict">
          <div class="nav dropdown">
@@ -363,7 +395,7 @@
          </li>
 
              <li>
-                 <a Data-Bind="click: generateQRCode" Id="generateBrCode" href="#">Generate QR Code</a>         </li>
+                 <a  Id="generateBrCode" ng-click="generateQRCode()" href="javascript:void(0)">Generate QR Code</a>         </li>
 
 
          <li class="divider"></li>
@@ -380,7 +412,7 @@
          <li>
                   <a href="#" id="rollbackAction" data-toggle="modal" data-bind="command: menuCommands.rollbackCommand">Rollback...</a>
          </li>
-         <li>
+         <li style="display:none;">
                   <a href="#" id="rateFixAction" data-toggle="modal" data-bind="command: menuCommands.rateFixCommand">Rate Fix...</a>
          </li>
          <li>
@@ -788,74 +820,27 @@
 <div Id="generalLedger" class="panel tab-pane" data-bind-active="tabs.g_LEntries" data-bind-tabid="f" data-title="G/L Entries" id="g_LEntries"><!-- ko if: ag.tabLoaders.a.f.isLoaded --><!-- ko component: '588a42a1-6a95-47c6-82c2-6fc7a12d950f' --><!-- /ko --><!-- /ko --></div>
 <div class="panel tab-pane" data-bind-active="tabs.analysisCodes" data-bind-tabid="g" data-title="Analysis Codes" id="analysisCodes"><!-- ko if: ag.tabLoaders.a.g.isLoaded --><!-- ko component: '5e6192a5-58d4-40e2-9506-0718197120be' --><!-- /ko --><!-- /ko --></div>
 <div Id="quotes" class="panel tab-pane" data-bind-active="tabs.quotes" data-bind-tabid="h" data-title="Quotes" id="quotes"><!-- ko if: ag.tabLoaders.a.h.isLoaded --><!-- ko component: '8aa53f63-15b7-4c10-a407-badd52c4b1f1' --><!-- /ko --><!-- /ko --></div>
-<div class="panel tab-pane" data-bind="visible: editingItem.showNotes" data-bind-active="tabs.notes" data-bind-tabid="i" data-title="Notes" id="notes"><!-- ko if: ag.tabLoaders.a.i.isLoaded --><!-- ko component: 'b97b4d79-7b78-4ca0-8b21-87c56a6a8526' --><!-- /ko --><!-- /ko --></div><div class="panel tab-pane" data-bind="visible: editingItem.showDealHedgeRelationshipLinks" data-bind-active="tabs.hedgeRelationships" data-bind-tabid="j" data-title="Hedge Relationships" id="hedgeRelationships"><!-- ko if: ag.tabLoaders.a.j.isLoaded --><!-- ko component: '4a611c3a-14c3-4349-a3bf-1570119a1025' --><!-- /ko --><!-- /ko --></div></div></div></script></form>   <form data-bind="if: actions.rateFix.isLoaded"><div data-bind="component: '9f81f0a6-5320-4f49-9e4a-760397fae886'"></div></form><script id="9f81f0a6-5320-4f49-9e4a-760397fae886Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rateFixDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Rate Fix</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel size3" data-title="">
-
-
-<div class="editor field">
-   <label for="RateFix_Domain_FixRate">Fix Rate</label>
-   <input class="text-box single-line decimal" data-bind="numericFormat: { value: model.fixRate, type: &#39;amount&#39;, scale: 12, removeTrailingZero: false }, fieldMeta: model.fixRate" data-prefix="model" id="RateFix_Domain_FixRate" name="RateFix.Domain.FixRate" type="text" value="" />
-   
-</div>
-<div class="editor field combined onetwo"><label for="">Settlement Currency</label>
-
-
-<div class="value1 editor field"><label class="hide" for="RateFix_Domain_Currency">Currency</label><input autocomplete="off" class="text-box single-line" data-bind="value: model.currency, fieldMeta: model.currency" data-prefix="model" id="RateFix_Domain_Currency" name="RateFix.Domain.Currency" type="text" value="" /></div>
-
-
-<div class="value2 editor field">
-   <label class="hide" for="RateFix_Domain_Amount">Amount</label>
-   <input class="text-box single-line decimal" data-bind="numericFormat: { value: model.amount, type: &#39;amount&#39;, scale: 0, scaleProperty: model.currency, removeTrailingZero: false }, fieldMeta: model.amount" data-prefix="model" id="RateFix_Domain_Amount" name="RateFix.Domain.Amount" type="text" value="" />
-   
-</div>
-</div></div><div class="panel size3" data-title="">
-
-   <div class="editor field calendar">
-      <label for="RateFix_Domain_FixDate">Fix Date</label>
-      <input class="text-box single-line date" data-bind="date: model.fixDate, fieldMeta: model.fixDate" id="RateFix_Domain_FixDate" name="RateFix.Domain.FixDate" type="text" value="" />
-      
-   </div>
+<div class="panel tab-pane" data-bind="visible: editingItem.showNotes" data-bind-active="tabs.notes" data-bind-tabid="i" data-title="Notes" id="notes"><!-- ko if: ag.tabLoaders.a.i.isLoaded --><!-- ko component: 'b97b4d79-7b78-4ca0-8b21-87c56a6a8526' --><!-- /ko --><!-- /ko --></div><div class="panel tab-pane" data-bind="visible: editingItem.showDealHedgeRelationshipLinks" data-bind-active="tabs.hedgeRelationships" data-bind-tabid="j" data-title="Hedge Relationships" id="hedgeRelationships"><!-- ko if: ag.tabLoaders.a.j.isLoaded --><!-- ko component: '4a611c3a-14c3-4349-a3bf-1570119a1025' --><!-- /ko --><!-- /ko --></div></div></div></script></form>
 
 
 
-   <div class="editor field calendar">
-      <label for="RateFix_Domain_SettlementDate">Settlement Date</label>
-      <input class="text-box single-line date" data-bind="date: model.settlementDate, fieldMeta: model.settlementDate" id="RateFix_Domain_SettlementDate" name="RateFix.Domain.SettlementDate" type="text" value="" />
-      
-   </div>
-
-</div><div class="panel size3" data-title=""><div class="panel size1" data-title="">
-
-
-   <div class="editor field lookup">
-      <label for="RateFix_Domain_Dealer"><a class="app-link" data-bind="href: { url: &#39;/static/dealer&#39;, observe: model.dealer, keyName: &#39;edit&#39; }" tabindex="-1">Dealer</a></label>
-      <input data-bind="filterValue: model.dealer, fieldMeta: model.dealer, filter: &#39;/dealing/fx/getdealerlookup&#39;, optionsText: &#39;__key__&#39;, optionsValue: &#39;__key__&#39;, restrictToList: &#39;The field Dealer has an invalid selection.&#39;" data-lookup-display-name="Dealer" data-prefix="model" id="RateFix_Domain_Dealer" name="RateFix.Domain.Dealer" type="text" value="" />
-      
-   </div>
+<form data-bind="if: actions.rateFix.isLoaded"><div data-bind="component: '9f81f0a6-5320-4f49-9e4a-760397fae886'"></div></form>
+<script id="9f81f0a6-5320-4f49-9e4a-760397fae886Template" type="text/template">
+    <div  class="modal hide" data-backdrop="static" abc="123" data-bind="showModalDialog: showDialog;" id="">
+        <div class="modal-header"><div class="row-fluid"><h3 class="span8">Generate QR Code</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none">
+        </div></div><div class="modal-body container-panel"><div id="" class="panel size3" data-title="">
 
 
+</div></div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a>
+  <!--<a href="#" data-dismiss="modal" class="btn">Cancel</a>-->
+
+</div></div>
+</script>
 
 
-   <div class="editor field multiselect">
-      <label for="RateFix_Domain_Location">Location</label>
-      <input type="text" autocomplete="off" class="search-field-input" data-bind="fieldMeta: model.location" />
-      <ul class="collection value" id="RateFix_Domain_Location" data-prefix="model" id="RateFix_Domain_Location" name="RateFix.Domain.Location" data-lookup-bind-key-column="true" data-bind=", fieldMeta: model.location, collection: model.location, optionsText: &#39;name&#39;, optionsTitle: &#39;name&#39;, sortable: { template: &#39;selectedMultiselectItemTemplate&#39;, data: model.location } "></ul>
-      <div class="toggle" data-lookup-display-name="Select Location" data-prefix="model" data-bind="explorerToggle: { source: &quot;/dealing/fx/getlocationlookup&quot;, selectedItems: model.location, keyField: &#39;name&#39;, mode: &#39;multi&#39; }, optionsText: &#39;name&#39;, optionsTitle: &#39;name&#39;, saveCallback: function(items) { model.location.updateSelectedItems(items); }">
-         <i class="icon-th"></i>
-      </div>
-      
-   </div>
 
-</div><div class="panel size2" data-title="">
-
-
-<div class="size2 editor field">
-   <label for="RateFix_Domain_Comment">Comments</label>
-   <textarea class="text-box multi-line" cols="20" data-bind="value: model.comment, fieldMeta: model.comment" data-prefix="model" id="RateFix_Domain_Comment" name="RateFix.Domain.Comment" rows="2">
-</textarea>
-   
-</div>
-
-</div></div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
 <form data-bind="if: actions.rollback.isLoaded"><div data-bind="component: 'b05c0370-5639-4cac-a1f7-e42276287b35'"></div></form><script id="b05c0370-5639-4cac-a1f7-e42276287b35Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rollbackDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Rollback</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
    <div id="imagesGridContainer" class="grid-container field size6" data-bind="with: grids.images, visible: grids.images.isVisible">
@@ -2260,10 +2245,7 @@
 <script src="/Scripts/dependencies/kendoui/kendo.all.js"></script>
 <script src="/Scripts/dependencies/kendoui/knockout-kendo.js"></script>
 
-
-
-
-<script type="text/javascript">
+   <script type="text/javascript">
 
    $(function ()
    {
@@ -4000,17 +3982,43 @@ app.currencies = ag.utils.inflateCurrencies([["default",2,8,8,10210002],["aga",2
             typeMetaDataUrl: app.typeMetaDataUrl,
             includeCompleteModel: true,
             additionalFields: "",
-            performGetRequestOnShow: true,
+            performGetRequestOnShow: false,
             isDialogAction: true,
-            model: {"dealNumber":0,"currency":null,"fixRate":"0","amount":"0","fixDate":"0001-01-01T00:00:00+08:00","settlementDate":"0001-01-01T00:00:00+08:00","dealer":null,"comment":null,"location":null},
+            model: {"dealNumber":0,"currency":null,
+                "fixRate":"0","amount":"0","fixDate":"0001-01-01T00:00:00+08:00",
+                "settlementDate":"0001-01-01T00:00:00+08:00",
+                "dealer":null,
+                "comment":null,
+                "location":null},
             lookups: {},
             lookupData: {},
-            dependencies: {"foreignExchangeRateFixMetadata":{"field":{"availability":{"currency":[{"value":false,"action":3,"applyAtStartUp":true}]},"refresh":{"fixRate":[{"associatedFields":"Amount","associatedLookups":"","action":"OnFixRateChanged","additionalFields":"DealNumber","suspendFields":"","dependentCondition":10,"dependent":"FixRate"}]}},"complex":[],"paths":[{"path":[],"isCollection":false,"isAction":true}]}},
+            dependencies: {"foreignExchangeRateFixMetadata":{}},
             typeMetadata: {},
             subActions: [],
             fieldCategories: {"keyFields":[]},
             
-               action: {"isDialogAction":true,"viewModel":{"lookups":{"lookups":{},"propertyLookupReferences":{}},"domain":{"dealNumber":0,"currency":null,"fixRate":"0","amount":"0","fixDate":"0001-01-01T00:00:00+08:00","settlementDate":"0001-01-01T00:00:00+08:00","dealer":null,"comment":null,"location":null},"dependencies":{"foreignExchangeRateFixMetadata":{"field":{"availability":{"currency":[{"value":false,"action":3,"applyAtStartUp":true}]},"refresh":{"fixRate":[{"associatedFields":"Amount","associatedLookups":"","action":"OnFixRateChanged","additionalFields":"DealNumber","suspendFields":"","dependentCondition":10,"dependent":"FixRate"}]}},"complex":[],"paths":[{"path":[],"isCollection":false,"isAction":true}]}},"typeViews":{},"responseOnly":"","postOnly":"","fieldCategories":{"keyFields":[]},"context":null},"performGetRequestOnShow":true,"subActions":[],"buttons":[{"action":"RateFix","actionCamelCase":"rateFix","displayName":"OK","disabled":null,"visible":null,"isPrimary":true,"isCancel":false},{"action":null,"actionCamelCase":null,"displayName":"Cancel","disabled":null,"visible":null,"isPrimary":false,"isCancel":true}],"title":null,"message":null,"dialogId":"rateFixDialog","onlyRequiredWhen":null,"includeCompleteModel":true,"additionalFields":null,"isCopyAction":false,"closeParentDialogWhenComplete":false,"action":"rateFix","completed":"updateItem"},
+               action: {"isDialogAction":true,"viewModel":{"lookups":{"lookups":{},"propertyLookupReferences":{}},
+                   "domain":{"dealNumber":0,"currency":null,"fixRate":"0","amount":"0",
+                       "fixDate":"0001-01-01T00:00:00+08:00","settlementDate":"0001-01-01T00:00:00+08:00",
+                       "dealer":null,"comment":null,"location":null},
+                   "dependencies":{"foreignExchangeRateFixMetadata":{
+                       "field":{"availability":{"currency":[{"value":false,"action":3,"applyAtStartUp":true}]},
+                           "refresh":{"fixRate":[{"associatedFields":"Amount","associatedLookups":"",
+                               "action":"OnFixRateChanged","additionalFields":"DealNumber","suspendFields":"",
+                               "dependentCondition":10,"dependent":"FixRate"}]}},
+                       "complex":[],"paths":[{"path":[],"isCollection":false,"isAction":true}]}},"typeViews":{},
+                   "responseOnly":"","postOnly":"","fieldCategories":{"keyFields":[]},"context":null},
+                   "performGetRequestOnShow":true,"subActions":[],
+
+                   "buttons":[{"action":"RateFix",
+                       "actionCamelCase":"rateFix","displayName":"OK","disabled":null,"visible":null,"isPrimary":true,"isCancel":false},
+                       {"action":null,"actionCamelCase":null,"displayName":"Cancel","disabled":null,"visible":null,
+                           "isPrimary":false,"isCancel":true}],
+
+                   "title":null,"message":null,"dialogId":"qrDialog",
+                   "onlyRequiredWhen":false,"includeCompleteModel":false,"additionalFields":null,"isCopyAction":false,
+                   "closeParentDialogWhenComplete":false,
+                   "action":"","completed":""},
    data: app.editingItem,
    responseOnly: app.responseOnly,
    postOnly: app.postOnly,
@@ -4122,7 +4130,14 @@ app.currencies = ag.utils.inflateCurrencies([["default",2,8,8,10210002],["aga",2
          menuCommands.auditHistoryCommand = ko.command({execute:function(data, event, complete){with(app){actions.auditHistory.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !(isNewItem());}},id: 'auditHistory'});
          menuCommands.undoDealActionsCommand = ko.command({execute:function(data, event, complete){with(app){actions.undoDealActions.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !((!editingItem.canUndoDealActions() || editingItem.deleted()));}},isVisible:function(){with(app){return (editingItem.canUndoDealActions() && !editingItem.deleted());}},id: 'undoDealActions'});
          menuCommands.rollbackCommand = ko.command({execute:function(data, event, complete){with(app){actions.rollback.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !((isNewItem() || !editingItem.canRollback()));}},isVisible:function(){with(app){return editingItem.allowedToRollback();}},id: 'rollback'});
-         menuCommands.rateFixCommand = ko.command({execute:function(data, event, complete){with(app){actions.rateFix.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !((isNewItem() || !editingItem.canRateFix()));}},isVisible:function(){with(app){return editingItem.allowedToRateFix();}},id: 'rateFix'});
+         menuCommands.rateFixCommand = ko.command(
+                 {
+                     execute:function(data, event, complete){with(app){actions.rateFix.show(data); }},
+             canExecute:function(isExecuting){with(app){return !isExecuting && !((isNewItem() ));}},
+             isVisible:function(){with(app){return editingItem.allowedToRateFix();}},
+             id: 'rateFix'
+                 }
+         );
          menuCommands.drawdownCommand = ko.command({execute:function(data, event, complete){with(app){actions.drawdown.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !((isNewItem() || !editingItem.canDrawdown()));}},isVisible:function(){with(app){return editingItem.allowedToDrawdown();}},id: 'drawdown'});
          menuCommands.predeliverorExtendCommand = ko.command({execute:function(data, event, complete){with(app){actions.newExtendPreDeliver.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !((isNewItem() || !editingItem.canExtendPreDeliver()));}},isVisible:function(){with(app){return editingItem.allowedToExtendPreDeliver();}},id: 'newExtendPreDeliver'});
          menuCommands.changeRateCommand = ko.command({execute:function(data, event, complete){with(app){actions.changeRateExtendPreDeliver.show(data); }},canExecute:function(isExecuting){with(app){return !isExecuting && !((isNewItem() || !editingItem.canExtendPreDeliver()));}},isVisible:function(){with(app){return editingItem.allowedToExtendPreDeliver();}},id: 'changeRateExtendPreDeliver'});
@@ -4133,15 +4148,44 @@ app.currencies = ag.utils.inflateCurrencies([["default",2,8,8,10210002],["aga",2
 
       ko.components.register('52d19288-f35c-4c91-8068-2793eccefe6a', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app; } }, template: { element: '52d19288-f35c-4c91-8068-2793eccefe6aTemplate' }, synchronous: true });ko.components.register('ff5bc733-7ee3-4c07-8b41-285f558d7b71', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: 'ff5bc733-7ee3-4c07-8b41-285f558d7b71Template' }, synchronous: true });ko.components.register('f971edf2-6169-43cd-bd26-41329cb0e8af', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: 'f971edf2-6169-43cd-bd26-41329cb0e8afTemplate' }, synchronous: true });ko.components.register('771b2ca7-1232-4e1a-9768-538873551d1c', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: '771b2ca7-1232-4e1a-9768-538873551d1cTemplate' }, synchronous: true });ko.components.register('588a42a1-6a95-47c6-82c2-6fc7a12d950f', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: '588a42a1-6a95-47c6-82c2-6fc7a12d950fTemplate' }, synchronous: true });ko.components.register('5e6192a5-58d4-40e2-9506-0718197120be', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: '5e6192a5-58d4-40e2-9506-0718197120beTemplate' }, synchronous: true });ko.components.register('8aa53f63-15b7-4c10-a407-badd52c4b1f1', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: '8aa53f63-15b7-4c10-a407-badd52c4b1f1Template' }, synchronous: true });ko.components.register('b97b4d79-7b78-4ca0-8b21-87c56a6a8526', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: 'b97b4d79-7b78-4ca0-8b21-87c56a6a8526Template' }, synchronous: true });ko.components.register('4a611c3a-14c3-4349-a3bf-1570119a1025', { viewModel: { createViewModel: function(params, component) { ag.dom.init($(component.element).parent()[0], app); return app; } }, template: { element: '4a611c3a-14c3-4349-a3bf-1570119a1025Template' }, synchronous: true });ko.components.register('9f81f0a6-5320-4f49-9e4a-760397fae886', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.rateFix; } }, template: { element: '9f81f0a6-5320-4f49-9e4a-760397fae886Template' }, synchronous: false });ko.components.register('b05c0370-5639-4cac-a1f7-e42276287b35', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.rollback; } }, template: { element: 'b05c0370-5639-4cac-a1f7-e42276287b35Template' }, synchronous: false });ko.components.register('6bd2e22e-b36f-422d-8bd2-9e302d3b3df8', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.drawdown; } }, template: { element: '6bd2e22e-b36f-422d-8bd2-9e302d3b3df8Template' }, synchronous: false });ko.components.register('f9915247-483b-4dd3-8784-52cb13237dbe', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.newExtendPreDeliver; } }, template: { element: 'f9915247-483b-4dd3-8784-52cb13237dbeTemplate' }, synchronous: false });ko.components.register('f3b85388-7e30-4daa-b6da-2e561231cd5e', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.changeRateExtendPreDeliver; } }, template: { element: 'f3b85388-7e30-4daa-b6da-2e561231cd5eTemplate' }, synchronous: false });ko.components.register('28d5e3b1-0214-4df0-841d-4b2ff4b3d4d6', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.delete; } }, template: { element: '28d5e3b1-0214-4df0-841d-4b2ff4b3d4d6Template' }, synchronous: false });ko.components.register('d89f9534-1a7b-43b9-b637-76aaaf549dff', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.approve; } }, template: { element: 'd89f9534-1a7b-43b9-b637-76aaaf549dffTemplate' }, synchronous: false });ko.components.register('c9c1bf9e-c368-4877-a834-7f073eb077ab', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.reject; } }, template: { element: 'c9c1bf9e-c368-4877-a834-7f073eb077abTemplate' }, synchronous: false });ko.components.register('4df62172-da0f-4134-8307-6eecf31cb868', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.auditHistory; } }, template: { element: '4df62172-da0f-4134-8307-6eecf31cb868Template' }, synchronous: false });ko.components.register('6c4556fa-8e91-449a-819a-aa4334b96f75', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return app.actions.undoDealActions; } }, template: { element: '6c4556fa-8e91-449a-819a-aa4334b96f75Template' }, synchronous: false });ko.components.register('117b5ab7-e961-4dcd-9059-3ee7da9ef457', { viewModel: { createViewModel: function(params, component) { ag.dom.init(component.element, app); return ag.confirmationViewModel.actions.confirmation; } }, template: { element: '117b5ab7-e961-4dcd-9059-3ee7da9ef457Template' }, synchronous: false });ag.components.registerAll();
 
-      app.generateQRCode=function(){
-
-      }
 
       ag.utils.applyBindings(app);
+
+       $("#divGenerateQRCode").show();
+       $("#divMask").show();
+
+
+
    });
+
+
+
 </script>
 
 
 
+   <div id="divGenerateQRCode" ng-show="qrReady" class="modal-scrollable" style="z-index: 1060;display: none;">
+       <div id="qrDialog" data-backdrop="static" class="modal hide in"
+            style="display: block; margin-top: -150.3833px; width: 330px;height:360px;"
+            aria-hidden="false" tabindex="-1">
+           <form onsubmit="return false;">
+               <div class="modal-header">
+                   <div class="row-fluid">
+                       <h3 class="span8">QR Code</h3>
+                       <button aria-hidden="true" data-dismiss="modal" class="close" ng-click="close()" type="button">×</button>
+                       <img width="16" height="11" style="display: none" alt="Processing ..." src="/Content/img/ajax-loader.gif" class="processing pull-right">
+                   </div>
+               </div>
+               <div class="modal-body container-panel">
+                   <div data-title="" class="panel size3" id="qrContainer">
+                       <div id="qr" style="width:250px;height:250px;margin-left:20px;margin-top:18px;border:5px solid black;">
+                           <qr text="QR"></qr>
+                       </div>
+                   </div>
+               </div>
+           </form>
+       </div>
+   </div>
+   <div id="divMask" ng-show="qrReady" class="modal-backdrop in" style="z-index: 1050;display: none;"></div>
 </body>
 </html>

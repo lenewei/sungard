@@ -60,23 +60,32 @@ server.post("/account/login", controllers.user.login)
 server.post("/account/createUser", controllers.user.createUser)
 
 server.get("/dealing/fx/edit", controllers.deal.edit)
+
+server.post("/dealing/fx/edit", controllers.deal.save)
 server.get("/dealing/fx/list", controllers.deal.list)
 server.get("/dealing/fx/GetNonBusinessDays", controllers.deal.getNonBusinessDays)
 
-// Article Start
-server.post("/fx/deal", controllers.deal.createDeal)
-server.put("/fx/deal/:id", controllers.deal.updateDeal)
-server.del("/fx/deal/:id", controllers.deal.deleteDeal)
-server.get("/fx/deal/", controllers.deal.viewDeals)
-server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
 
+//server.post("/fx/deal", controllers.deal.createDeal)
+//server.put("/fx/deal/:id", controllers.deal.updateDeal)
+//server.del("/fx/deal/:id", controllers.deal.deleteDeal)
+//server.get("/fx/deal/", controllers.deal.viewDeals)
+//server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
+//lookup request
 
-//server.put("/account/user/:id", controllers.user.updateUser)
-//server.del("/account/:id", controllers.user.deleteUser)
-//server.get("/account/user/:id", controllers.user.viewUser)
+server.get("/dealing/fx/transactions", controllers.lookup.transactions)
+server.post("/dealing/fx/getexternalEntityName", controllers.lookup.getExternalEntityName)
+server.post("/dealing/fx/getexternalCounterpartyName", controllers.lookup.getExternalCounterpartyName)
+server.post("/dealing/fx/getcounterpartylookup", controllers.lookup.getCounterpartyLookup)
+server.post("/dealing/fx/getentitylookup", controllers.lookup.getEntityLookup)
+server.post("/dealing/fx/getfilteredfacilitylookup", controllers.lookup.getFilteredFacilityLookup)
+server.post("/dealing/fx/getcurrencylookup", controllers.lookup.getCurrencyLookup)
+server.post("/dealing/fx/getcounterpartydealercontactlookup", controllers.lookup.getCounterpartyDealerContactLookup)
+server.post("/dealing/fx/getdealerlookup", controllers.lookup.getDealerLookup)
+server.post("/dealing/fx/getstrategylookup", controllers.lookup.getStrategyLookup)
+server.post("/dealing/fx/getdealsetlookup", controllers.lookup.getDealsetLookup)
+server.post("/dealing/fx/getlocationlookup", controllers.lookup.getLocationLookup)
 
-// Chatroom
-// usernames which are currently connected to the chat
 var usernames = {};
 var numUsers = 0;
 

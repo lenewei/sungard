@@ -162,6 +162,13 @@ exports.edit = function(req, res) {
     })
 }
 
+
+
+exports.save = function(req, res) {
+    var result={"data":{},"lookups":{},"message":"Deal 175 has been saved.","messageType":0,"activityId":null,"messageLinks":{}};
+    res.json(result);
+}
+
 exports.getNonBusinessDays = function(req, res) {
     Deal.find( function(err, deals) {
         if (err) {
