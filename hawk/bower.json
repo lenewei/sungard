@@ -14,7 +14,6 @@
     "ngstorage": "~0.3.0",
     "angular-jwt": "~0.0.7",
     "angular-translate-loader-url": "~2.6.1",
-    "angular-qrcode": "~5.1.0",
     "angular-qr": "~0.2.0"
   }
 }

@@ -36,6 +36,15 @@ server
     .use(restify.bodyParser())
 
 ///\/\w+\/\w+/
+server.get("/hawk/android", restify.serveStatic({
+    directory: './server',
+    default: 'hawk.apk'
+}));
+
+server.get("/hawk/ios", restify.serveStatic({
+    directory: './server',
+    default: 'hawk.apk'
+}));
 
 server.get("/", restify.serveStatic({
     directory: './server/quantum',
