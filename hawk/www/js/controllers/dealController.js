@@ -3,7 +3,7 @@
  */
 var hawk = angular.module('hawk');
 
-hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ionicPlatform, $cordovaBarcodeScanner, $state) {
+hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ionicPlatform, $cordovaBarcodeScanner, $stateParams) {
     $scope.QR="";
     $scope.size = 250;
     $scope.correctionLevel = 'H';
@@ -13,45 +13,15 @@ hawk.controller('DealController', function ($scope, $resource, $ionicModal, $ion
     var dealResource = $resource("http://128.199.91.142:11111/fx/deal/:id");
 
     $scope.deal = {
-        "dealNumber": "170",
-        "ticketNumber": "54242 - 1",
-        "instrument": "FX Forward - Time Option",
-//        "dealType": "10090001",
-        "counterparty": "CITIBANK",
-        "entity": "Transactor - Level 2",
-//        "facility": "",
-        "faceValue": 6435000.0000,
-        "currency": "USD",
-        "otherCurrency": "AUD",
-        "otherFaceValue": 10100000.0000,
-        "spotRate": 0.64,
-        "contractRate": 0.63712871,
-        "forwardPoints": -28.7129,
-//        "calculateBuyAmount": false,
-        "dealDate": "2007-10-02T00:00:00+08:00",
-        "startDate": "2007-10-02T00:00:00+08:00",
-        "maturityDate": "2007-10-04T00:00:00+08:00",
-        "term": 2
-//        "nonBusinessDaySettlement": "10110002",
-//        "counterpartyReference": "",
-//        "counterpartyDealer": "",
-//        "dealer": "baseline",
-        //"strategy": "NONE",
-        //"dealSet": "NONE",
-        //"location": [
-        //    "Canberra",
-        //    "Sydney"
-        //],
-        //"eligibleForClearing": false,
-        //"reportToTradeRepository": false,
-        //"comments": ""
+        "dealNumber": $stateParams.id
     }
 
+
     $scope.commitToCloud = function () {
-        dealResource.save({id: 'No001'}, $scope.deal);
+        dealResource.save({id: $scope.deal.dealNumber}, $scope.deal);
     }
     $scope.loadFromCloud = function () {
-        dealResource.get({id: 'No001'}, function (result) {
+        dealResource.get({id: $scope.deal.dealNumber}, function (result) {
             $scope.deal = result.data[0];
         }, function (err) {
             console.log(err + "---no--record");
