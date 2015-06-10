@@ -162,7 +162,7 @@
          </li>
 
          <li class="big-item" data-bind="visible: isLoading()">
-            <img src="/content/img/ajax-loader.gif" width="16" height="11" alt="Loading..." />
+            <img src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Loading..." />
          </li>
 
          
@@ -180,7 +180,7 @@
          <!-- /ko -->
 
          
-         <li class="nav-header clearfix" data-bind="visible: inProgressList().length">In Progress<img class="pull-right" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..."></li>
+         <li class="nav-header clearfix" data-bind="visible: inProgressList().length">In Progress<img class="pull-right" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..."></li>
          <!-- ko foreach: inProgressList -->
          <li data-bind="css: $data.categoryColour">
             <a>
@@ -262,7 +262,7 @@
 
                      
 <header class="header row-fluid restrict main">
-   <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+   <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
             <h6>FX Deal 
                </h6>
             <h1>
@@ -788,7 +788,7 @@
 <div Id="generalLedger" class="panel tab-pane" data-bind-active="tabs.g_LEntries" data-bind-tabid="f" data-title="G/L Entries" id="g_LEntries"><!-- ko if: ag.tabLoaders.a.f.isLoaded --><!-- ko component: '588a42a1-6a95-47c6-82c2-6fc7a12d950f' --><!-- /ko --><!-- /ko --></div>
 <div class="panel tab-pane" data-bind-active="tabs.analysisCodes" data-bind-tabid="g" data-title="Analysis Codes" id="analysisCodes"><!-- ko if: ag.tabLoaders.a.g.isLoaded --><!-- ko component: '5e6192a5-58d4-40e2-9506-0718197120be' --><!-- /ko --><!-- /ko --></div>
 <div Id="quotes" class="panel tab-pane" data-bind-active="tabs.quotes" data-bind-tabid="h" data-title="Quotes" id="quotes"><!-- ko if: ag.tabLoaders.a.h.isLoaded --><!-- ko component: '8aa53f63-15b7-4c10-a407-badd52c4b1f1' --><!-- /ko --><!-- /ko --></div>
-<div class="panel tab-pane" data-bind="visible: editingItem.showNotes" data-bind-active="tabs.notes" data-bind-tabid="i" data-title="Notes" id="notes"><!-- ko if: ag.tabLoaders.a.i.isLoaded --><!-- ko component: 'b97b4d79-7b78-4ca0-8b21-87c56a6a8526' --><!-- /ko --><!-- /ko --></div><div class="panel tab-pane" data-bind="visible: editingItem.showDealHedgeRelationshipLinks" data-bind-active="tabs.hedgeRelationships" data-bind-tabid="j" data-title="Hedge Relationships" id="hedgeRelationships"><!-- ko if: ag.tabLoaders.a.j.isLoaded --><!-- ko component: '4a611c3a-14c3-4349-a3bf-1570119a1025' --><!-- /ko --><!-- /ko --></div></div></div></script></form>   <form data-bind="if: actions.rateFix.isLoaded"><div data-bind="component: '9f81f0a6-5320-4f49-9e4a-760397fae886'"></div></form><script id="9f81f0a6-5320-4f49-9e4a-760397fae886Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rateFixDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Rate Fix</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel size3" data-title="">
+<div class="panel tab-pane" data-bind="visible: editingItem.showNotes" data-bind-active="tabs.notes" data-bind-tabid="i" data-title="Notes" id="notes"><!-- ko if: ag.tabLoaders.a.i.isLoaded --><!-- ko component: 'b97b4d79-7b78-4ca0-8b21-87c56a6a8526' --><!-- /ko --><!-- /ko --></div><div class="panel tab-pane" data-bind="visible: editingItem.showDealHedgeRelationshipLinks" data-bind-active="tabs.hedgeRelationships" data-bind-tabid="j" data-title="Hedge Relationships" id="hedgeRelationships"><!-- ko if: ag.tabLoaders.a.j.isLoaded --><!-- ko component: '4a611c3a-14c3-4349-a3bf-1570119a1025' --><!-- /ko --><!-- /ko --></div></div></div></script></form>   <form data-bind="if: actions.rateFix.isLoaded"><div data-bind="component: '9f81f0a6-5320-4f49-9e4a-760397fae886'"></div></form><script id="9f81f0a6-5320-4f49-9e4a-760397fae886Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rateFixDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Rate Fix</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel size3" data-title="">
 
 
 <div class="editor field">
@@ -856,7 +856,7 @@
 </div>
 
 </div></div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
-<form data-bind="if: actions.rollback.isLoaded"><div data-bind="component: 'b05c0370-5639-4cac-a1f7-e42276287b35'"></div></form><script id="b05c0370-5639-4cac-a1f7-e42276287b35Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rollbackDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Rollback</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
+<form data-bind="if: actions.rollback.isLoaded"><div data-bind="component: 'b05c0370-5639-4cac-a1f7-e42276287b35'"></div></form><script id="b05c0370-5639-4cac-a1f7-e42276287b35Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rollbackDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Rollback</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
    <div id="imagesGridContainer" class="grid-container field size6" data-bind="with: grids.images, visible: grids.images.isVisible">
       
@@ -955,7 +955,7 @@
 
    </div>
 </div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
-<form data-bind="if: actions.drawdown.isLoaded"><div data-bind="component: '6bd2e22e-b36f-422d-8bd2-9e302d3b3df8'"></div></form><script id="6bd2e22e-b36f-422d-8bd2-9e302d3b3df8Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="drawdownDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Time Option Drawdown</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
+<form data-bind="if: actions.drawdown.isLoaded"><div data-bind="component: '6bd2e22e-b36f-422d-8bd2-9e302d3b3df8'"></div></form><script id="6bd2e22e-b36f-422d-8bd2-9e302d3b3df8Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="drawdownDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Time Option Drawdown</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
 <div class="editor field"><label for="Drawdown_Domain_BuyCurrency"><a class="app-link" data-bind="href: { url: &#39;/static/currency&#39;, observe: model.buyCurrency, keyName: &#39;edit&#39; }" tabindex="-1">Buy Currency</a></label><input class="text-box single-line disabled" data-bind="fieldMeta: model.buyCurrency, value: model.buyCurrency" data-prefix="model" disabled="disabled" id="Drawdown_Domain_BuyCurrency" name="Drawdown.Domain.BuyCurrency" type="text" value="" /></div>
 
@@ -1032,7 +1032,7 @@
    
 </div>
 </div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
-<form data-bind="if: actions.newExtendPreDeliver.isLoaded"><div data-bind="component: 'f9915247-483b-4dd3-8784-52cb13237dbe'"></div></form><script id="f9915247-483b-4dd3-8784-52cb13237dbeTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="newExtendPreDeliverDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">New Predeliver or Extend Transaction</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
+<form data-bind="if: actions.newExtendPreDeliver.isLoaded"><div data-bind="component: 'f9915247-483b-4dd3-8784-52cb13237dbe'"></div></form><script id="f9915247-483b-4dd3-8784-52cb13237dbeTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="newExtendPreDeliverDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">New Predeliver or Extend Transaction</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
 
 
@@ -1148,7 +1148,7 @@
          <div class="row-fluid">
             <h3 class="span8" data-bind="text: dialogTitle"></h3>
             <button id="transactionsGridCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-               <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+               <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
          </div>
       </div>
@@ -1262,7 +1262,7 @@
 
 
 </div></div><div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Close</a><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">NewExtendPreDeliver</a></div></div></script>
-<form data-bind="if: actions.changeRateExtendPreDeliver.isLoaded"><div data-bind="component: 'f3b85388-7e30-4daa-b6da-2e561231cd5e'"></div></form><script id="f3b85388-7e30-4daa-b6da-2e561231cd5eTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="changeRateExtendPreDeliverDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Change Predeliver or Extend Transaction Rate</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title=""><div class="panel" data-title="">
+<form data-bind="if: actions.changeRateExtendPreDeliver.isLoaded"><div data-bind="component: 'f3b85388-7e30-4daa-b6da-2e561231cd5e'"></div></form><script id="f3b85388-7e30-4daa-b6da-2e561231cd5eTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="changeRateExtendPreDeliverDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Change Predeliver or Extend Transaction Rate</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title=""><div class="panel" data-title="">
 
 
    <div class="editor field">
@@ -1329,7 +1329,7 @@
       
 
 
-<form data-bind="if: actions.delete.isLoaded"><div data-bind="component: '28d5e3b1-0214-4df0-841d-4b2ff4b3d4d6'"></div></form><script id="28d5e3b1-0214-4df0-841d-4b2ff4b3d4d6Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="deleteDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Delete</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
+<form data-bind="if: actions.delete.isLoaded"><div data-bind="component: '28d5e3b1-0214-4df0-841d-4b2ff4b3d4d6'"></div></form><script id="28d5e3b1-0214-4df0-841d-4b2ff4b3d4d6Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="deleteDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Delete</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
 
 <div class="size6 editor field">
@@ -1352,7 +1352,7 @@
    
 </div>   <!-- /ko -->
 </div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">Delete</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
-<form data-bind="if: actions.approve.isLoaded"><div data-bind="component: 'd89f9534-1a7b-43b9-b637-76aaaf549dff'"></div></form><script id="d89f9534-1a7b-43b9-b637-76aaaf549dffTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="approveDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Approve</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
+<form data-bind="if: actions.approve.isLoaded"><div data-bind="component: 'd89f9534-1a7b-43b9-b637-76aaaf549dff'"></div></form><script id="d89f9534-1a7b-43b9-b637-76aaaf549dffTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="approveDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Approve</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
    <div id="unapprovedGridContainer" class="grid-container field size6" data-bind="with: grids.unapproved, visible: grids.unapproved.isVisible">
       
@@ -1516,7 +1516,7 @@
 
    </div>
 </div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">Approve</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
-<form data-bind="if: actions.reject.isLoaded"><div data-bind="component: 'c9c1bf9e-c368-4877-a834-7f073eb077ab'"></div></form><script id="c9c1bf9e-c368-4877-a834-7f073eb077abTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rejectDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Reject</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel size5" data-title="">
+<form data-bind="if: actions.reject.isLoaded"><div data-bind="component: 'c9c1bf9e-c368-4877-a834-7f073eb077ab'"></div></form><script id="c9c1bf9e-c368-4877-a834-7f073eb077abTemplate" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="rejectDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Reject</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel size5" data-title="">
 
 
 <div class="size5 editor field">
@@ -1788,7 +1788,7 @@
 
    </div>
 </div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">Reject</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>
-<form data-bind="if: actions.auditHistory.isLoaded"><div data-bind="component: '4df62172-da0f-4134-8307-6eecf31cb868'"></div></form><script id="4df62172-da0f-4134-8307-6eecf31cb868Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="auditHistoryDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Audit History</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
+<form data-bind="if: actions.auditHistory.isLoaded"><div data-bind="component: '4df62172-da0f-4134-8307-6eecf31cb868'"></div></form><script id="4df62172-da0f-4134-8307-6eecf31cb868Template" type="text/template"><div class="container container-panel modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="auditHistoryDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Audit History</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel" data-title="">
 
    <div id="auditsGridContainer" class="grid-container field size6" data-bind="with: grids.audits, visible: grids.audits.isVisible">
       
@@ -1894,7 +1894,7 @@
       
 
 
-<form data-bind="if: actions.undoDealActions.isLoaded"><div data-bind="component: '6c4556fa-8e91-449a-819a-aa4334b96f75'"></div></form><script id="6c4556fa-8e91-449a-819a-aa4334b96f75Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="undoDealActionsDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Undo Deal Actions</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel pre-wrap message"><span>This deal has had actions applied. Undoing the deal actions will clear the deal map and regenerate it on the next financial change. Do you want to continue?</span></div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>   </div>
+<form data-bind="if: actions.undoDealActions.isLoaded"><div data-bind="component: '6c4556fa-8e91-449a-819a-aa4334b96f75'"></div></form><script id="6c4556fa-8e91-449a-819a-aa4334b96f75Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="undoDealActionsDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Undo Deal Actions</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel"><div class="panel pre-wrap message"><span>This deal has had actions applied. Undoing the deal actions will clear the deal map and regenerate it on the next financial change. Do you want to continue?</span></div></div><div class="modal-footer"><a href="#" class="btn btn-primary" data-bind="command: invokeCommand">OK</a><a href="#" data-dismiss="modal" class="btn">Cancel</a></div></div></script>   </div>
 </section>
 
 
@@ -1905,7 +1905,7 @@
             
             
    
-<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: '117b5ab7-e961-4dcd-9059-3ee7da9ef457'"></div></form><script id="117b5ab7-e961-4dcd-9059-3ee7da9ef457Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
+<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: '117b5ab7-e961-4dcd-9059-3ee7da9ef457'"></div></form><script id="117b5ab7-e961-4dcd-9059-3ee7da9ef457Template" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
    <ul data-bind="foreach: model.messages, css: { 'unstyled' : model.messages().length === 1 }">
       <li>
          <span data-bind="text: $data"></span>
@@ -1979,7 +1979,7 @@
       <div class="modal-header">
          <div class="row-fluid">
             <h3 data-bind="text: lookupDisplayName" class="span8">Explorer</h3>
-               <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+               <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <input class="search span4" data-bind="value: search.text, valueUpdate: 'keyup'" type="text" placeholder="Search" />
@@ -2071,7 +2071,7 @@
    
    <div class="inline explorer hide">
       <div class="row-fluid">
-            <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+            <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
          <input class="search span4" data-bind="value: search.text, valueUpdate: 'keyup'" type="text" placeholder="Search" />
       </div>
@@ -2179,7 +2179,7 @@
             <div class=" row-fluid">
                <h3 class="span8">Expression Builder</h3>
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+                  <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
             </div>
          </div>
@@ -3683,7 +3683,7 @@
          <div class="row-fluid">
             <h3 class="span8" data-bind="text: dialogTitle"></h3>
             <button id="notesGridCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-               <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+               <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
          </div>
       </div>

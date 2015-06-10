@@ -1,0 +1,12 @@
+<ion-view view-title="Deal List">
+  <ion-content>
+      <div class="list">
+
+        <a class="item item-avatar" ng-repeat="deal in dealList" href="#/app/deal/{{deal.id}}">
+            <img ng-src="img/sungard.png">
+            <h2>  {{deal.dealNumber}}</h2>
+            <p>Back off, man. I'm a scientist.</p>
+        </a>
+    </div>
+  </ion-content>
+</ion-view>

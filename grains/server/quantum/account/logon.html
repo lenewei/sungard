@@ -20,7 +20,7 @@
 <link href="/Content/bootstrap-notify/bootstrap-notify.css" rel="stylesheet"/>
 <link href="/Content/bootstrap-modal.css" rel="stylesheet"/>
 <link href="/Content/styles.css" rel="stylesheet"/>
-<link href="/Content/richtexteditor/redactor.css" rel="stylesheet"/>
+<link href="/Content/richTextEditor/redactor.css" rel="stylesheet"/>
 <link href="/Content/kendoui/kendo.common.css" rel="stylesheet"/>
 <link href="/Content/kendoui/kendo.default.css" rel="stylesheet"/>
 <link href="/Content/kendoui/kendo.dataviz.css" rel="stylesheet"/>
@@ -91,7 +91,7 @@
 
                      
 <header class="header row-fluid restrict main">
-   <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+   <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
    
 
@@ -178,7 +178,7 @@
             
             
    
-<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: '817c105f-edd3-4363-847e-1402e6f55eea'"></div></form><script id="817c105f-edd3-4363-847e-1402e6f55eeaTemplate" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
+<form data-bind="if: ag.confirmationViewModel.actions.confirmation.isLoaded"><div data-bind="component: '817c105f-edd3-4363-847e-1402e6f55eea'"></div></form><script id="817c105f-edd3-4363-847e-1402e6f55eeaTemplate" type="text/template"><div class="modal hide" data-backdrop="static" data-bind="showModalDialog: showDialog" id="confirmationDialog"><div class="modal-header"><div class="row-fluid"><h3 class="span8">Confirm to Continue</h3><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img class="processing pull-right" src="/Content/img/ajax-loader.gif" alt="Processing ..." width="16" height="11" style="display: none"></div></div><div class="modal-body container-panel">   <p data-bind="visible: model.messages().length > 1">To continue, you need to confirm all of the following:</p>
    <ul data-bind="foreach: model.messages, css: { 'unstyled' : model.messages().length === 1 }">
       <li>
          <span data-bind="text: $data"></span>
@@ -224,7 +224,7 @@
       <div class="modal-header">
          <div class="row-fluid">
             <h3 data-bind="text: lookupDisplayName" class="span8">Explorer</h3>
-               <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+               <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <input class="search span4" data-bind="value: search.text, valueUpdate: 'keyup'" type="text" placeholder="Search" />
@@ -316,7 +316,7 @@
    
    <div class="inline explorer hide">
       <div class="row-fluid">
-            <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+            <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
          <input class="search span4" data-bind="value: search.text, valueUpdate: 'keyup'" type="text" placeholder="Search" />
       </div>
@@ -424,7 +424,7 @@
             <div class=" row-fluid">
                <h3 class="span8">Expression Builder</h3>
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <img class="processing" src="/content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
+                  <img class="processing" src="/Content/img/ajax-loader.gif" width="16" height="11" alt="Processing ..." style="display: none;" />
 
             </div>
          </div>
