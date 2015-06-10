@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     models_path = process.cwd() + '/server/models'
 
 //set mongodb url manually
-process.env.MONGO_URL = "mongodb://128.199.91.142/reaper"
+process.env.MONGO_URL = "mongodb://0.0.0.0/reaper"
 
 mongoose.connect(process.env.MONGO_URL, {server:{auto_reconnect:true}});
 var db = mongoose.connection;
