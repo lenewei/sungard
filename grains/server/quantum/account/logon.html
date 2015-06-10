@@ -155,7 +155,7 @@
             </div>
          </div>
          <div class="modal-footer">
-             <div class="field" style="float: right; width: 50%;"><input id="createButton" type="button" value="Create" class="btn btn-primary btn-large" style="height: 40px;display: none;"/></div>
+             <div class="field" style="float: right; width: 50%;"><input id="createButton" type="button" value="Create" class="btn btn-primary btn-large" style="height: 40px;"/></div>
 
              <div class="field" style="float: right; width: 50%;"><input id="logonButton" type="button" value="Log On" class="btn btn-primary btn-large" style="height: 40px;"/></div>
             <div class="field" style="float: right; padding-right: 20px;"><a id="forgottenPassword" href="#" style="line-height: 40px;">Forgotten Password?</a></div>
@@ -1102,7 +1102,7 @@
               var password=$("#Password").val();
               var network=new   ag.utils.Network();
               network.postJson("createUser",{"userName":userName,
-                  "password":password,"email":""}).always(function(){alert(1);});
+                  "password":password,"email":""}).always(function(){});
           });
 
 
