@@ -36,10 +36,13 @@ server
     .use(restify.bodyParser())
 
 ///\/\w+\/\w+/
-server.get("/hawk/android", restify.serveStatic({
-    directory: './server',
-    default: 'hawk.apk'
-}));
+server.get("/hawk/android", function indexHTML(req, res, next) {
+    var file = './server/hawk.apk';
+    res.setHeader('Content-disposition', 'attachment; filename= hawk.apk');
+    res.setHeader('Content-type', 'application/vnd.android.package-archive');
+    var filestream = fs.createReadStream(file);
+    filestream.pipe(res);
+});
 
 server.get("/hawk/ios", restify.serveStatic({
     directory: './server',
@@ -75,11 +78,11 @@ server.get("/dealing/fx/list", controllers.deal.list)
 server.get("/dealing/fx/GetNonBusinessDays", controllers.deal.getNonBusinessDays)
 
 
-//server.post("/fx/deal", controllers.deal.createDeal)
-//server.put("/fx/deal/:id", controllers.deal.updateDeal)
-//server.del("/fx/deal/:id", controllers.deal.deleteDeal)
-//server.get("/fx/deal/", controllers.deal.viewDeals)
-//server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
+server.post("/fx/deal", controllers.deal.createDeal)
+server.put("/fx/deal/:id", controllers.deal.updateDeal)
+server.del("/fx/deal/:id", controllers.deal.deleteDeal)
+server.get("/fx/deal/", controllers.deal.viewDeals)
+server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
 //lookup request
 
 server.get("/dealing/fx/transactions", controllers.lookup.transactions)
