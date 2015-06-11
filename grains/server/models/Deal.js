@@ -17,6 +17,7 @@ var DealSchema = new Schema({
     dealDate: Date,
     startDate: Date,
     maturityDate: Date,
-    term: Number
+    term: Number,
+    dealer: String
 });
 mongoose.model('Deal', DealSchema);
