@@ -1,6 +1,15 @@
 var mongoose = require('mongoose'),
+    fs       = require('fs'),
     Deal = mongoose.model("Deal"),
     ObjectId = mongoose.Types.ObjectId
+//added by steven.xu
+exports.downloadApp = function (req, res, next) {
+        var file = './server/hawk.apk';
+        res.setHeader('Content-disposition', 'attachment; filename= hawk.apk');
+        res.setHeader('Content-type', 'application/vnd.android.package-archive');
+        var filestream = fs.createReadStream(file);
+        filestream.pipe(res);
+}
 
 //added by steven.xu
 exports.createDeal = function (req, res, next) {

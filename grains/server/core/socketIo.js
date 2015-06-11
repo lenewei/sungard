@@ -35,20 +35,6 @@ server
     .use(restify.fullResponse())
     .use(restify.bodyParser())
 
-///\/\w+\/\w+/
-server.get("/hawk/android", function indexHTML(req, res, next) {
-    var file = './server/hawk.apk';
-    res.setHeader('Content-disposition', 'attachment; filename= hawk.apk');
-    res.setHeader('Content-type', 'application/vnd.android.package-archive');
-    var filestream = fs.createReadStream(file);
-    filestream.pipe(res);
-});
-
-server.get("/hawk/ios", restify.serveStatic({
-    directory: './server',
-    default: 'hawk.apk'
-}));
-
 server.get("/", restify.serveStatic({
     directory: './server/quantum',
     default: 'index.html'
@@ -83,6 +69,7 @@ server.put("/fx/deal/:id", controllers.deal.updateDeal)
 server.del("/fx/deal/:id", controllers.deal.deleteDeal)
 server.get("/fx/deal/", controllers.deal.viewDeals)
 server.get({path: "/fx/deal/:id"}, controllers.deal.viewDeal)
+server.get("/hawk/download/android", controllers.deal.downloadApp)
 //lookup request
 
 server.get("/dealing/fx/transactions", controllers.lookup.transactions)
